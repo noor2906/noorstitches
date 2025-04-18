@@ -1,0 +1,54 @@
+# === Java & Maven ===
+target/
+build/
+out/
+*.log
+*.tmp
+*.bak
+*.swp
+*.orig
+
+# === Archivos sensibles ===
+**/application.properties
+**/application.yml
+**/application-*.properties
+**/application-*.yml
+.env
+
+# === IDEs ===
+
+## VS Code
+.vscode/
+
+## IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+## Eclipse / STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+## NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# === Maven Wrapper ===
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
+
+# === Sistema Operativo ===
+.DS_Store
+Thumbs.db
+
+# === Otros archivos temporales o personales ===
+HELP.md

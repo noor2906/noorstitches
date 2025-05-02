@@ -8,7 +8,7 @@ CREATE TABLE usuarios (
     nombre VARCHAR(255) NOT NULL,
     apellidos VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    passwd VARCHAR(500) NOT NULL, 
+    passwd VARCHAR(255) NOT NULL, 
     foto_perfil VARCHAR(255) NOT NULL DEFAULT 'user.png', 
     telefono VARCHAR(15) -- VARCHAR(15) para incluir prefijos internacionales en el futuro
 );
@@ -22,7 +22,8 @@ CREATE TABLE categorias (
 -- Tabla de subcategorías
 CREATE TABLE subcategorias (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
+    imagen VARCHAR(255),
     id_categoria BIGINT NOT NULL,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id)
 );
@@ -39,7 +40,7 @@ CREATE TABLE marcas (
 -- Tabla productos
 CREATE TABLE productos (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
     descripcion TEXT,
     imagen VARCHAR(255),
     precio DECIMAL(10, 2) NOT NULL,
@@ -50,7 +51,7 @@ CREATE TABLE productos (
     composicion VARCHAR(255), -- opcional: 60% algodón, 40% acrílico
     marca VARCHAR(255),
     activo boolean default true,
-	id_subcategoria BIGINT,
+	id_subcategoria BIGINT NOT NULL,
     FOREIGN KEY (id_subcategoria) REFERENCES subcategorias(id)
 );
 

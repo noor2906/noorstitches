@@ -6,3 +6,11 @@ JOIN categorias c ON s.id_categoria = c.id;
 select * from usuarios;
 
 select * from productos;
+
+select * from subcategorias where id_categoria = 1;
+
+select * from categorias;
+
+select * from subcategorias;
+
+insert into subcategorias(nombre, imagen, id_categoria) value ("prueba", "pruabe.jpg", 2);

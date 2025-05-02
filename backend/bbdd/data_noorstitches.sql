@@ -13,28 +13,29 @@ INSERT INTO categorias (nombre) VALUES
 ('Kits');
 
 -- Para Lanas & Hilos
-INSERT INTO subcategorias (nombre, id_categoria) VALUES 
-('Algodón', 1), -- 1
-('Acrílico', 1), -- 2
-('Mezclas', 1); -- 3
+INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
+('Algodón', 'lanas.jpg', 1),     -- 1
+('Acrílico', 'acrilico.jpg', 1), -- 2
+('Mezclas', 'mezclas.jpg', 1);   -- 3
 
 -- Para Handmade
-INSERT INTO subcategorias (nombre, id_categoria) VALUES 
-('Peluches', 2), -- 4
-('Decoración', 2), -- 5
-('Ropa', 2), -- 6 
-('Accesorios', 2); -- 7
+INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
+('Peluches', 'peluches.jpg', 2),      -- 4
+('Decoración', 'decoracion.jpg', 2),  -- 5
+('Ropa', 'ropa.jpg', 2),              -- 6 
+('Accesorios', 'accesorios.jpg', 2);  -- 7
 
 -- Para Mercería
-INSERT INTO subcategorias (nombre, id_categoria) VALUES 
-('Agujas de crochet', 3), -- 8
-('Marcadores', 3), -- 9
-('Tijeras', 3); -- 10
+INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
+('Agujas de crochet', 'agujas.jpg', 3),  -- 8
+('Marcadores', 'marcadores.jpg', 3),    -- 9
+('Tijeras', 'tijeras.jpg', 3);          -- 10
 
 -- Para Kits
-INSERT INTO subcategorias (nombre, id_categoria) VALUES 
-('Kit peluche', 4), -- 11
-('Kit principiante', 4); -- 12
+INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
+('Kit peluche', 'kit_peluche.jpg', 4),          -- 11
+('Kit principiante', 'kit_principiante.jpg', 4);-- 12
+
 
 INSERT INTO productos (nombre, descripcion, imagen, precio, stock, peso, longitud, material, composicion, marca, activo, id_subcategoria) 
 VALUES 

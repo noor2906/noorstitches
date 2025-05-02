@@ -36,8 +36,7 @@ INSERT INTO subcategorias (nombre, id_categoria) VALUES
 ('Kit peluche', 4), -- 11
 ('Kit principiante', 4); -- 12
 
-
-INSERT INTO productos (nombre, descripcion, precio, stock, peso, longitud, material, composicion, id_subcategoria) 
+INSERT INTO productos (nombre, descripcion, imagen, precio, stock, peso, longitud, material, composicion, marca, activo, id_subcategoria) 
 VALUES 
-('Lana Cotton Soft', 'Lana suave ideal para prendas de verano. Tacto fresco y agradable.', 4.99, 100, 100.00, 150.00, 'Algodón', '60% algodón, 40% acrílico', 1),
-('Peluche Conejito Rosa', 'Peluche hecho a mano con hilo de algodón y relleno hipoalergénico. Ideal para regalar.', 19.95, 5, null, null, 'Algodón', null, 4);
+('Lana Cotton Soft', 'Lana suave ideal para prendas de verano. Tacto fresco y agradable.', 'lana.jpg', 4.99, 100, 100.00, "10X15", 'Algodón', '60% algodón, 40% acrílico', 'Cotton Soft', true, 1),
+('Peluche Conejito Rosa', 'Peluche hecho a mano con hilo de algodón y relleno hipoalergénico. Ideal para regalar.', 'peluche.jpg', 19.95, 5, null, "70X100", 'Algodón', null, 'Handmade', true, 4);

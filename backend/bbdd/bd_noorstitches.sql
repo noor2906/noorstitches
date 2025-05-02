@@ -13,18 +13,20 @@ CREATE TABLE usuarios (
     telefono VARCHAR(15) -- VARCHAR(15) para incluir prefijos internacionales en el futuro
 );
 
--- Tabla categorías de productos
+-- Tabla de categorías
 CREATE TABLE categorias (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL
 );
 
+-- Tabla de subcategorías
 CREATE TABLE subcategorias (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    id_categoria BIGINT,
+    id_categoria BIGINT NOT NULL,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id)
 );
+
 
 /*
 CREATE TABLE marcas (
@@ -39,13 +41,15 @@ CREATE TABLE productos (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
+    imagen VARCHAR(255),
     precio DECIMAL(10, 2) NOT NULL,
     stock INT DEFAULT 0,
     peso DECIMAL(6, 2), -- opcional, en gramos
-    longitud DECIMAL(6, 2), -- opcional, en metros o cm
-    material VARCHAR(100), -- opcional: algodón, acrílico, etc.
+    longitud VARCHAR(255), -- opcional, en metros o cm
+    material VARCHAR(255), -- opcional: algodón, acrílico, etc.
     composicion VARCHAR(255), -- opcional: 60% algodón, 40% acrílico
     marca VARCHAR(255),
+    activo boolean default true,
 	id_subcategoria BIGINT,
     FOREIGN KEY (id_subcategoria) REFERENCES subcategorias(id)
 );

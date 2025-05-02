@@ -39,8 +39,7 @@ public class ProductoServiceImpl implements ProductoService {
 
 	@Override
 	public ProductoDTO findById(ProductoDTO productoDTO) {
-		log.info(ProductoServiceImpl.class.getSimpleName() + " - findById: Buscar producto por id: "
-				+ productoDTO.getId());
+		log.info(ProductoServiceImpl.class.getSimpleName() + " - findById: Buscar producto por id: " + productoDTO.getId());
 
 		Optional<Producto> producto = productoRepository.findById(productoDTO.getId());
 		if (producto.isPresent()) {
@@ -53,8 +52,7 @@ public class ProductoServiceImpl implements ProductoService {
 
 	@Override
 	public ProductoDTO save(ProductoDTO productoDTO) {
-		log.info(
-				ProductoServiceImpl.class.getSimpleName() + " - save: Salvamos el producto: " + productoDTO.toString());
+		log.info(ProductoServiceImpl.class.getSimpleName() + " - save: Salvamos el producto: " + productoDTO.toString());
 
 		// Pasamos a entidad el productoDTO
 		Producto producto = ProductoDTO.convertToEntity(productoDTO);

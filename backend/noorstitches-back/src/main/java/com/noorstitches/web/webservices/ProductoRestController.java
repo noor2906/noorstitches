@@ -104,6 +104,5 @@ public class ProductoRestController {
 	
 		 return new ResponseEntity<>("Producto borrado satisfactoriamente", HttpStatus.OK);
 	 }	
-	 
 	
 }

@@ -2,11 +2,20 @@ package com.noorstitches.model.dto;
 
 import java.io.Serializable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.noorstitches.repository.entity.Producto;
+
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 public class ProductoDTO implements Serializable {
+	
+	private static final Logger log = LoggerFactory.getLogger(ProductoDTO.class);		
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
@@ -22,6 +31,8 @@ public class ProductoDTO implements Serializable {
 	private String marca;
 	private boolean activo;
 	
+	@ToString.Exclude
+	private SubcategoriaDTO subcategoriaDTO;
 
 	// Convierte una entidad a un objeto DTO
     public static ProductoDTO convertToDTO(Producto p) {
@@ -41,6 +52,8 @@ public class ProductoDTO implements Serializable {
     	productoDTO.setMarca(p.getMarca());
     	productoDTO.setActivo(p.isActivo());
     	
+    	productoDTO.setSubcategoriaDTO(SubcategoriaDTO.convertToDTO(p.getSubcategoria()));
+    	    	
         // Retorna el DTO
         return productoDTO;
     }
@@ -63,7 +76,10 @@ public class ProductoDTO implements Serializable {
     	p.setMarca(pDTO.getMarca());
     	p.setActivo(pDTO.isActivo());
 
+    	p.setSubcategoria(SubcategoriaDTO.convertToEntity(pDTO.getSubcategoriaDTO()));
+    	
         // Retorna la entidad
         return p;
     }
+    
 }

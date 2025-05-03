@@ -9,9 +9,6 @@ out/
 *.orig
 
 # === Archivos sensibles ===
-**/application.properties
-**/application.yml
-**/application-*.yml
 .env
 
 # === IDEs ===

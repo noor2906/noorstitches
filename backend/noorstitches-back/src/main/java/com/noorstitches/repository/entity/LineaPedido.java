@@ -1,37 +1,43 @@
 package com.noorstitches.repository.entity;
 
 import java.util.Objects;
-import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.ToString;
 
 @Data
 @Entity
-@Table(name = "categorias")
-public class Categoria {
+@Table(name = "lineas_pedido")
+public class LineaPedido {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "nombre")
-	private String nombre;
+	@Column(name = "cantidad")
+	private int cantidad;
 
-	// Mapeo de la lista de subcategorias con Set
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categoria")
+	@Column(name = "importe")
+	private Float importe;
+
+	@ManyToOne
+	@JoinColumn(name = "id_producto")
 	@ToString.Exclude
-	private Set<Subcategoria> listaSubcategorias;
+	private Producto producto;
+
+	// TODO: mapeo pedidos!!
+	/*
+	 * @ManyToOne private Pedido pedido;
+	 */
 
 	@Override
 	public boolean equals(Object obj) {
@@ -41,7 +47,7 @@ public class Categoria {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		LineaPedido other = (LineaPedido) obj;
 		return Objects.equals(id, other.id);
 	}
 

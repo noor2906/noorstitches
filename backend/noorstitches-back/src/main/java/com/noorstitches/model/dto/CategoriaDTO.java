@@ -10,35 +10,44 @@ import lombok.ToString;
 
 @Data
 public class CategoriaDTO {
-	
+
 	private Long id;
 	private String nombre;
-	
-	@ToString.Exclude 
+
+	@ToString.Exclude
 	@JsonManagedReference
 	private List<SubcategoriaDTO> listaSubcategoriaDTO;
-	
+
 	// Convierte una entidad a un objeto DTO
-    public static CategoriaDTO convertToDTO(Categoria c) {
+	public static CategoriaDTO convertToDTO(Categoria c) {
 
-        // Creamos el categoriaDTO y asignamos los valores básicos
-        CategoriaDTO cDTO = new CategoriaDTO();
-        cDTO.setId(c.getId());
-        cDTO.setNombre(c.getNombre());
-        
+		if (c == null) {
+			return null;
+		}
+
+		// Creamos el categoriaDTO y asignamos los valores básicos
+		CategoriaDTO cDTO = new CategoriaDTO();
+		cDTO.setId(c.getId());
+		cDTO.setNombre(c.getNombre());
+
 		// Retorna el DTO
-        return cDTO;
-    }
+		return cDTO;
+	}
 
-    // Convierte un objeto DTO a una entidad
-    public static Categoria convertToEntity(CategoriaDTO cDTO) {
-        // Creamos la entidad categoria y le asignamos los valores
-        Categoria c = new Categoria();
-        c.setId(cDTO.getId());
-        c.setNombre(cDTO.getNombre());
+	// Convierte un objeto DTO a una entidad
+	public static Categoria convertToEntity(CategoriaDTO cDTO) {
+
+		if (cDTO == null) {
+			return null;
+		}
+
+		// Creamos la entidad categoria y le asignamos los valores
+		Categoria c = new Categoria();
+		c.setId(cDTO.getId());
+		c.setNombre(cDTO.getNombre());
 
 		// Retorna la entidad
-        return c;
-    }
+		return c;
+	}
 
 }

@@ -1,0 +1,11 @@
+backend/.metadata/.lock
+backend/.metadata/.plugins/org.eclipse.m2e.logback/0.log
+
+# Archivos generados por Eclipse/STS en el proyecto backend
+backend/.metadata/
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/*.iml
+backend/target/
+backend/.factorypath

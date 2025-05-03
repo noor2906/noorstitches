@@ -5,6 +5,8 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.noorstitches.repository.entity.LineaPedido;
 
 @Data
@@ -17,6 +19,10 @@ public class LineaPedidoDTO implements Serializable {
 
 	@ToString.Exclude
 	private ProductoDTO productoDTO;
+	
+	@ToString.Exclude
+	@JsonManagedReference
+	private PedidoDTO pedidoDTO;
 
 	// Convierte una entidad a un objeto DTO
 	public static LineaPedidoDTO convertToDTO(LineaPedido lp) {
@@ -28,6 +34,7 @@ public class LineaPedidoDTO implements Serializable {
 		lpDTO.setImporte(lp.getImporte());
 
 		lpDTO.setProductoDTO(ProductoDTO.convertToDTO(lp.getProducto()));
+		lpDTO.setPedidoDTO(PedidoDTO.convertToDTO(lp.getPedido()));
 
 		// Retorna el DTO
 		return lpDTO;
@@ -43,6 +50,7 @@ public class LineaPedidoDTO implements Serializable {
 		lp.setImporte(lpDTO.getImporte());
 
 		lp.setProducto(ProductoDTO.convertToEntity(lpDTO.getProductoDTO()));
+		lp.setPedido(PedidoDTO.convertToEntity(lpDTO.getPedidoDTO()));
 
 		// Retorna el DTO
 		return lp;

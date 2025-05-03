@@ -1,43 +1,53 @@
 package com.noorstitches.repository.entity;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.noorstitches.model.enums.EnumEstadoPedido;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.ToString;
 
 @Data
 @Entity
-@Table(name = "lineas_pedido")
-public class LineaPedido {
-
+@Table(name = "pedidos")
+public class Pedido {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-
-	@Column(name = "cantidad")
-	private int cantidad;
-
+	
 	@Column(name = "importe")
-	private Float importe;
+	private float importe;
 
-	@ManyToOne
-	@JoinColumn(name = "id_producto")
-	@ToString.Exclude
-	private Producto producto;
+	@Column(name = "fecha")
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
+	private Date fecha;
 
-	@ManyToOne
+	@Column(name = "estado")
+	@Enumerated(EnumType.STRING)
+	private EnumEstadoPedido estado;
+	
+	@OneToMany
 	@JoinColumn(name = "id_pedido")
 	@ToString.Exclude
-	private Pedido pedido;
+	private List<LineaPedido> listaLineasPedido;
+	
+	//TODO: USUARIO
 
 	@Override
 	public boolean equals(Object obj) {
@@ -47,7 +57,7 @@ public class LineaPedido {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LineaPedido other = (LineaPedido) obj;
+		Pedido other = (Pedido) obj;
 		return Objects.equals(id, other.id);
 	}
 
@@ -55,5 +65,5 @@ public class LineaPedido {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
+	
 }

@@ -87,5 +87,38 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 		}
 		
 	}
-	
+
+	@Override
+	public List<SubcategoriaDTO> findAllByCategoria(Long idCategoria) {
+		
+		//Nos traemos la lista de subcategorias Entity del respositorio
+		List<Subcategoria> listaSubcategorias = subcategoriaRepository.findAllByCategoria(idCategoria);
+		
+		//Nos creamos una lista de subcategorias DTO 
+		List<SubcategoriaDTO> listaSubcategoriasDTO = new ArrayList<SubcategoriaDTO>();
+		
+		//Convertimos al lista de subcategorias de Entity a DTO
+		
+		for (int i = 0; i < listaSubcategorias.size(); i++) {
+			SubcategoriaDTO subcategoriaDTO = SubcategoriaDTO.convertToDTO(listaSubcategorias.get(i));
+			listaSubcategoriasDTO.add(subcategoriaDTO);
+		}
+		
+		return listaSubcategoriasDTO;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+

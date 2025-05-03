@@ -1,5 +1,6 @@
 package com.noorstitches.web.webservices;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.noorstitches.model.dto.CategoriaDTO;
+import com.noorstitches.model.dto.SubcategoriaDTO;
 import com.noorstitches.service.CategoriaService;
+import com.noorstitches.service.SubcategoriaService;
+import com.noorstitches.service.SubcategoriaServiceImpl;
 
 @RestController
 @RequestMapping("/categorias")
@@ -27,6 +31,9 @@ public class CategoriaRestController {
 
 	@Autowired
 	private CategoriaService categoriaService;	
+	
+	@Autowired
+	private SubcategoriaService subcategoriaService;
 	
 	// Listar las categorias 
 	 @GetMapping("")
@@ -55,6 +62,31 @@ public class CategoriaRestController {
 	 		return new ResponseEntity<>(categoriaDTO, HttpStatus.OK);
 	 	}
 	 }
+	 
+	// Listar todas las subcategorias dado un id de categoria
+	 @GetMapping("/{idCategoria}/subcategorias")
+	 public ResponseEntity<List<SubcategoriaDTO>> findSubcategoriasByIdCategoria(@PathVariable("idCategoria") Long idCategoria) {
+
+	 	log.info(CategoriaRestController.class.getSimpleName() + " - findSubcategoriasByIdCategoria: Mostramos la información de las subcategorias de una categoria:" + idCategoria);
+
+	 	// Obtenemos la categoría
+	 	CategoriaDTO categoriaDTO = new CategoriaDTO();
+	 	categoriaDTO.setId(idCategoria);
+	 	categoriaDTO = categoriaService.findById(categoriaDTO);
+	 	
+	 	List<SubcategoriaDTO> listaSubcategoriasDTO = new ArrayList<SubcategoriaDTO>();
+	 	
+	 	if(categoriaDTO != null) {
+	 		listaSubcategoriasDTO = subcategoriaService.findAllByCategoria(idCategoria);
+	 	}
+
+	 	if (listaSubcategoriasDTO == null) {
+	 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+	 	} else {
+	 		return new ResponseEntity<>(listaSubcategoriasDTO, HttpStatus.OK);
+	 	}
+	 }
+ 
 
 	 // Salvar categoría
 	 @PostMapping("/add")

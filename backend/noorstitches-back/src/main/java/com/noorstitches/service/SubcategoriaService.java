@@ -12,6 +12,9 @@ public interface SubcategoriaService {
 
 	SubcategoriaDTO save(SubcategoriaDTO subcategoriaDTO);
 
-	int delete(SubcategoriaDTO subcategoriaDTO);	
+	int delete(SubcategoriaDTO subcategoriaDTO);
 
+	List<SubcategoriaDTO> findAllByCategoria(Long idCategoria);	
+
+	
 }

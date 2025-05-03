@@ -1,2 +1,16 @@
-/.metadata/
+# Ignorar binarios compilados
+/bin/
+**/bin/
 
+# Archivos de configuración de Eclipse/STS
+.metadata/
+.classpath
+.project
+.settings/
+.factorypath
+
+# Objetos compilados
+*.class
+
+# Carpetas de salida de compilación
+target/

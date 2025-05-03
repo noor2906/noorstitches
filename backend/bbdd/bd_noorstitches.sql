@@ -60,8 +60,8 @@ CREATE TABLE pedidos (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     id_usuario BIGINT,
     fecha DATETIME,
-    importe DECIMAL(10, 2), 
-    estado ENUM('pendiente', 'enviado', 'cancelado') DEFAULT 'pendiente',
+    importe DECIMAL(10, 2)  NOT NULL, 
+    estado ENUM('pendiente', 'completado', 'cancelado') DEFAULT 'pendiente',
     -- num_seguimiento VARCHAR(255),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
@@ -72,8 +72,7 @@ CREATE TABLE lineas_pedido (
     id_pedido BIGINT,
     id_producto BIGINT,
     cantidad INT NOT NULL,
---     precio_unitario DECIMAL(10, 2) NOT NULL,
---     precio_total DECIMAL(10, 2) AS (cantidad * precio_unitario) STORED, -- precioTotal se calcula como cantidad * precioUnitario y se almacena en la base de datos con 'STORED'
+    importe FLOAT NOT NULL,
     FOREIGN KEY (id_pedido) REFERENCES pedidos(id),
     FOREIGN KEY (id_producto) REFERENCES productos(id)
 );

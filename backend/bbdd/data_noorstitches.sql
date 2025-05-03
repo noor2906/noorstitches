@@ -33,11 +33,23 @@ INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES
 
 -- Para Kits
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
-('Kit peluche', 'kit_peluche.jpg', 4),          -- 11
+('Kit ganchillo', 'kit_ganchillo.jpg', 4),          -- 11
 ('Kit principiante', 'kit_principiante.jpg', 4);-- 12
 
 
 INSERT INTO productos (nombre, descripcion, imagen, precio, stock, peso, longitud, material, composicion, marca, activo, id_subcategoria) 
 VALUES 
 ('Lana Cotton Soft', 'Lana suave ideal para prendas de verano. Tacto fresco y agradable.', 'lana.jpg', 4.99, 100, 100.00, "10X15", 'Algodón', '60% algodón, 40% acrílico', 'Cotton Soft', true, 1),
-('Peluche Conejito Rosa', 'Peluche hecho a mano con hilo de algodón y relleno hipoalergénico. Ideal para regalar.', 'peluche.jpg', 19.95, 5, null, "70X100", 'Algodón', null, 'Handmade', true, 4);
+('Peluche Conejito Rosa', 'Peluche hecho a mano con hilo de algodón y relleno hipoalergénico. Ideal para regalar.', 'peluche.jpg', 19.95, 5, null, "70X100", 'Algodón', null, 'Handmade', true, 4),
+('Kit ganchillo tulip rose', 'Kit completo de ganchillo con agujas ergonómicas y ovillos en tonos rosa. Ideal para principiantes.', 'kit_tulip_rose.jpg', 24.90, 20, 350.00, '25X20', 'Algodón y acero inoxidable', '70% algodón, 30% acero', 'Tulip', true, 11);
+
+
+INSERT INTO pedidos (id_usuario, fecha, importe)
+VALUES (1, NOW(), 29.93);  -- 4.99 * 2 + 19.95 = 29.93
+
+-- Insertar líneas de pedido
+INSERT INTO lineas_pedido (id_pedido, id_producto, cantidad, importe)
+VALUES 
+(1, 1, 2, 9.98),       -- 2 unidades de "Lana Cotton Soft"
+(1, 2, 1, 19.95);      -- 1 unidad de "Peluche Conejito Rosa"
+

@@ -7,10 +7,14 @@ select * from usuarios;
 
 select * from productos;
 
-select * from subcategorias where id_categoria = 1;
+select * from subcategorias where id_categoria = 4;
 
 select * from categorias;
 
 select * from subcategorias;
 
 insert into subcategorias(nombre, imagen, id_categoria) value ("prueba", "pruabe.jpg", 2);
+
+select * from pedidos;
+select * from lineas_pedido;
+select * from lineas_pedido where id_pedido = 1;

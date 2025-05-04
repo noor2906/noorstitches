@@ -45,11 +45,10 @@ VALUES
 
 
 INSERT INTO pedidos (id_usuario, fecha, importe)
-VALUES (1, NOW(), 29.93);  -- 4.99 * 2 + 19.95 = 29.93
+VALUES (1, NOW(), 30.0);  -- 4.99 * 2 + 19.95 = 29.93
 
 -- Insertar líneas de pedido
 INSERT INTO lineas_pedido (id_pedido, id_producto, cantidad, importe)
 VALUES 
-(1, 1, 2, 9.98),       -- 2 unidades de "Lana Cotton Soft"
-(1, 2, 1, 19.95);      -- 1 unidad de "Peluche Conejito Rosa"
-
+(1, 1, 2, 10.0),       -- 2 unidades de "Lana Cotton Soft"
+(1, 2, 1, 20.0);      -- 1 unidad de "Peluche Conejito Rosa"

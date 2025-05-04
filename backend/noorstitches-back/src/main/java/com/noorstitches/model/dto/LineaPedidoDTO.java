@@ -6,6 +6,7 @@ import lombok.ToString;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.noorstitches.repository.entity.LineaPedido;
 
@@ -21,7 +22,7 @@ public class LineaPedidoDTO implements Serializable {
 	private ProductoDTO productoDTO;
 	
 	@ToString.Exclude
-	@JsonManagedReference
+	@JsonIgnore
 	private PedidoDTO pedidoDTO;
 
 	// Convierte una entidad a un objeto DTO

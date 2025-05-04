@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.noorstitches.model.dto.CategoriaDTO;
 import com.noorstitches.model.dto.LineaPedidoDTO;
 import com.noorstitches.model.dto.PedidoDTO;
 import com.noorstitches.model.dto.UsuarioDTO;
@@ -121,7 +120,8 @@ public class PedidoRestController {
 		PedidoDTO pedidoExDTO = new PedidoDTO();
 		pedidoExDTO.setId(pedidoDTO.getId());
 		pedidoExDTO = pedidoService.findById(pedidoExDTO);
-
+		pedidoExDTO = pedidoService.finalizarCompra(pedidoExDTO);
+		
 		if (pedidoExDTO == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
@@ -143,4 +143,22 @@ public class PedidoRestController {
 		return new ResponseEntity<>("Pedido borrado satisfactoriamente", HttpStatus.OK);
 	}
 
+	
+	// Finalizar compra
+	@PutMapping("/finalizarCompra")
+	public ResponseEntity<PedidoDTO> finalizarCompra(@RequestBody PedidoDTO pedidoDTO) {
+
+		log.info(PedidoRestController.class.getSimpleName() + "- finalizarCompra: Modificamos el estado y el importe del pedido: " + pedidoDTO.getId());
+
+		pedidoDTO = pedidoService.findById(pedidoDTO);
+		pedidoDTO = pedidoService.finalizarCompra(pedidoDTO);
+
+		if (pedidoDTO == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(pedidoDTO, HttpStatus.OK);
+		}
+	}
+	
+	
 }

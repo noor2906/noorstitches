@@ -16,4 +16,7 @@ public interface PedidoService {
 
 	List<PedidoDTO> findAllByUsuario(Long idUsuario);
 
+	PedidoDTO finalizarCompra(PedidoDTO pedidoDTO);
+	
+
 }

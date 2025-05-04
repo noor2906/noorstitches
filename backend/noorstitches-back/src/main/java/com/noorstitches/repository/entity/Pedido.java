@@ -36,7 +36,7 @@ public class Pedido {
 	private float importe;
 
 	@Column(name = "fecha")
-	@DateTimeFormat(pattern = "dd.MM.yyyy")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private Date fecha;
 
 	@Column(name = "estado")

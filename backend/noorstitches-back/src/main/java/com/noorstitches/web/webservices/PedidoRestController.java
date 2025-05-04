@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.noorstitches.model.dto.CategoriaDTO;
 import com.noorstitches.model.dto.LineaPedidoDTO;
 import com.noorstitches.model.dto.PedidoDTO;
+import com.noorstitches.model.dto.UsuarioDTO;
 import com.noorstitches.service.LineaPedidoService;
 import com.noorstitches.service.PedidoService;
+import com.noorstitches.service.UsuarioService;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -33,6 +36,10 @@ public class PedidoRestController {
 
 	@Autowired
 	private LineaPedidoService lpService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
+
 
 	// Listar los pedidos 
 	@GetMapping("")
@@ -86,16 +93,20 @@ public class PedidoRestController {
 	}
 
 	// Salvar pedido
-	@PostMapping("/add")
-	public ResponseEntity<PedidoDTO> add(@RequestBody PedidoDTO pedidoDTO) {
+	@PostMapping("/add/{idUsuario}")
+	public ResponseEntity<PedidoDTO> add(@RequestBody PedidoDTO pedidoDTO, @PathVariable("idUsuario") Long idUsuario) {
 
 		log.info(PedidoRestController.class.getSimpleName() + " - add: Salvamos los datos del pedido:" + pedidoDTO.toString());
+		
+		UsuarioDTO usuarioDTO = new UsuarioDTO();
+		usuarioDTO.setId(idUsuario);
+		usuarioDTO = usuarioService.findById(usuarioDTO);
+		
+		pedidoDTO.setUsuarioDTO(usuarioDTO);
+		pedidoDTO = pedidoService.save(pedidoDTO);
 
-		PedidoDTO pedidoInsertado = new PedidoDTO();
-		pedidoInsertado = pedidoService.save(pedidoDTO);
-
-		if (pedidoInsertado != null) {
-			return new ResponseEntity<>(pedidoInsertado, HttpStatus.OK);
+		if (pedidoDTO != null) {
+			return new ResponseEntity<>(pedidoDTO, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

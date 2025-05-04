@@ -1,6 +1,7 @@
 package com.noorstitches.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,9 +12,11 @@ import org.springframework.stereotype.Service;
 
 import com.noorstitches.model.dto.LineaPedidoDTO;
 import com.noorstitches.model.dto.PedidoDTO;
+import com.noorstitches.model.dto.SubcategoriaDTO;
 import com.noorstitches.repository.dao.PedidoRepository;
 import com.noorstitches.repository.entity.LineaPedido;
 import com.noorstitches.repository.entity.Pedido;
+import com.noorstitches.repository.entity.Subcategoria;
 
 @Service
 public class PedidoServiceImpl implements PedidoService {
@@ -55,9 +58,20 @@ public class PedidoServiceImpl implements PedidoService {
 		log.info(PedidoServiceImpl.class.getSimpleName() + " - save: Salvamos el pedido: " + pedidoDTO.toString());
 
 		Pedido pedido = PedidoDTO.convertToEntity(pedidoDTO);
+		pedido.setFecha(new Date());
 		pedido = pedidoRepository.save(pedido);
 
-		return PedidoDTO.convertToDTO(pedido);
+		// Buscamos el pedido que acabamos de insertar para mostrarlo
+		Optional<Pedido> p = pedidoRepository.findById(pedido.getId());
+
+		// Cambiamos de Optional a DTO
+		PedidoDTO pedidoInsertado = new PedidoDTO();
+
+		if (p.isPresent()) {
+			pedidoInsertado = PedidoDTO.convertToDTO(p.get());
+		}
+
+		return pedidoInsertado;
 	}
 
 	@Override

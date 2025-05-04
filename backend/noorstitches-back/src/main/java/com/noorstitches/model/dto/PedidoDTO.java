@@ -29,7 +29,6 @@ public class PedidoDTO implements Serializable {
 	private List<LineaPedido> listaLineasPedido;
 	
 	@ToString.Exclude
-	@JsonManagedReference
 	private UsuarioDTO usuarioDTO;
 
 	// Convierte una entidad a un objeto DTO

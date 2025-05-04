@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.noorstitches.repository.entity.Pedido;
 import com.noorstitches.repository.entity.Usuario;
 
@@ -23,12 +24,14 @@ public class UsuarioDTO implements Serializable {
 	private String telefono;
 	
 	@ToString.Exclude
-	@JsonBackReference
 	private List<Pedido> listaPedidos;
-	
 
 	 // Convierte una entidad a un objeto DTO
     public static UsuarioDTO convertToDTO(Usuario usuario) {
+    	
+    	if (usuario == null) {
+            return null;
+        }
 
         // Creamos el UsuarioDTO y asignamos los valores básicos
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -46,6 +49,11 @@ public class UsuarioDTO implements Serializable {
 
     // Convierte un objeto DTO a una entidad
     public static Usuario convertToEntity(UsuarioDTO usuarioDTO) {
+    	
+    	if (usuarioDTO == null) {
+            return null; 
+        }
+    	
         // Creamos la entidad Usuario y le asignamos los valores
         Usuario usuario = new Usuario();
         usuario.setId(usuarioDTO.getId());

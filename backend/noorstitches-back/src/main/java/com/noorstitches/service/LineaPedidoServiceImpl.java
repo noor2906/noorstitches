@@ -77,4 +77,22 @@ public class LineaPedidoServiceImpl implements LineaPedidoService {
 			return 0;
 		}
 	}
+
+	@Override
+	public List<LineaPedidoDTO> findAllByPedido(Long idPedido) {
+		//Nos traemos la lista de lineas de pedido Entity del respositorio
+		List<LineaPedido> listaLineasPedido = lpRepository.findAllByPedido(idPedido);
+		
+		//Nos creamos una lista de subcategorias DTO 
+		List<LineaPedidoDTO> listaLineasPedidoDTO = new ArrayList<LineaPedidoDTO>();
+		
+		//Convertimos al lista de lineas pedido de Entity a DTO
+		
+		for (int i = 0; i < listaLineasPedido.size(); i++) {
+			LineaPedidoDTO lineaPedidoDTO = LineaPedidoDTO.convertToDTO(listaLineasPedido.get(i));
+			listaLineasPedidoDTO.add(lineaPedidoDTO);
+		}
+		
+		return listaLineasPedidoDTO;
+	}
 }

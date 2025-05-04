@@ -63,9 +63,9 @@ public class CategoriaRestController {
 	 	}
 	 }
 	 
-	// Listar todas las subcategorias dado un id de categoria
+	 // Listar todas las subcategorias dado un id de categoria
 	 @GetMapping("/{idCategoria}/subcategorias")
-	 public ResponseEntity<List<SubcategoriaDTO>> findSubcategoriasByIdCategoria(@PathVariable("idCategoria") Long idCategoria) {
+	 public ResponseEntity<List<SubcategoriaDTO>> findSubcategoriasByCategoria(@PathVariable("idCategoria") Long idCategoria) {
 
 	 	log.info(CategoriaRestController.class.getSimpleName() + " - findSubcategoriasByIdCategoria: Mostramos la información de las subcategorias de una categoria:" + idCategoria);
 

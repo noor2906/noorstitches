@@ -14,4 +14,6 @@ public interface LineaPedidoService {
 
 	int delete(LineaPedidoDTO lineaPedidoDTO);
 
+	List<LineaPedidoDTO> findAllByPedido(Long idPedido);
+
 }

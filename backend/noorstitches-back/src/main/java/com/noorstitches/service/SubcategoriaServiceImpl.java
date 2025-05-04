@@ -107,18 +107,6 @@ public class SubcategoriaServiceImpl implements SubcategoriaService {
 		return listaSubcategoriasDTO;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 

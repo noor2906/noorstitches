@@ -1,5 +1,6 @@
 package com.noorstitches.web.webservices;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.noorstitches.model.dto.LineaPedidoDTO;
 import com.noorstitches.model.dto.PedidoDTO;
 import com.noorstitches.service.LineaPedidoService;
 import com.noorstitches.service.PedidoService;
@@ -29,8 +31,8 @@ public class PedidoRestController {
 	@Autowired
 	private PedidoService pedidoService;	
 
-	//@Autowired
-	//private LineaPedidoService lineaPedidoService;
+	@Autowired
+	private LineaPedidoService lpService;
 
 	// Listar los pedidos 
 	@GetMapping("")
@@ -59,13 +61,12 @@ public class PedidoRestController {
 		}
 	}
 
-	//TODO: HACER
-	/*
+
 	// Listar todas las líneas de pedido dado un id de pedido
 	@GetMapping("/{idPedido}/lineaspedido")
-	public ResponseEntity<List<LineaPedidoDTO>> findLineasPedidoByIdPedido(@PathVariable("idPedido") Long idPedido) {
+	public ResponseEntity<List<LineaPedidoDTO>> findLineasPedidoByPedido(@PathVariable("idPedido") Long idPedido) {
 
-		log.info(PedidoRestController.class.getSimpleName() + " - findLineasPedidoByIdPedido: Mostramos la información de las líneas de pedido de un pedido:" + idPedido);
+		log.info(PedidoRestController.class.getSimpleName() + " - findLineasPedidoByPedido: Mostramos la información de las líneas de pedido de un pedido:" + idPedido);
 
 		PedidoDTO pedidoDTO = new PedidoDTO();
 		pedidoDTO.setId(idPedido);
@@ -74,7 +75,7 @@ public class PedidoRestController {
 		List<LineaPedidoDTO> listaLineasPedidoDTO = new ArrayList<>();
 
 		if (pedidoDTO != null) {
-			listaLineasPedidoDTO = lineaPedidoService.findAllByPedido(idPedido);
+			listaLineasPedidoDTO = lpService.findAllByPedido(idPedido);
 		}
 
 		if (listaLineasPedidoDTO == null) {
@@ -84,7 +85,6 @@ public class PedidoRestController {
 		}
 	}
 
-*/
 	// Salvar pedido
 	@PostMapping("/add")
 	public ResponseEntity<PedidoDTO> add(@RequestBody PedidoDTO pedidoDTO) {

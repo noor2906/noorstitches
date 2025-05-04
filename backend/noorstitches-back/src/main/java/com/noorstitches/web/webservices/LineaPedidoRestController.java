@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.noorstitches.model.dto.CategoriaDTO;
 import com.noorstitches.model.dto.LineaPedidoDTO;
+import com.noorstitches.model.dto.PedidoDTO;
 import com.noorstitches.service.LineaPedidoService;
+import com.noorstitches.service.PedidoService;
 
 @RestController
 @RequestMapping("/lineaspedido")
@@ -27,6 +30,9 @@ public class LineaPedidoRestController {
 
 	@Autowired
 	private LineaPedidoService lpService;	
+	
+	@Autowired
+	private PedidoService pedidoService;
 	
 	// Listar las líneas de pedido 
 	@GetMapping("")
@@ -55,17 +61,40 @@ public class LineaPedidoRestController {
 		}
 	}
 
-	// Guardar línea de pedido
-	@PostMapping("/add")
-	public ResponseEntity<LineaPedidoDTO> add(@RequestBody LineaPedidoDTO lineaPedidoDTO) {
+	
+	// Actualizar cantidad productos en linea pedido
+	@PutMapping("/{idLineaPedido}/updateCantidad")
+	public ResponseEntity<LineaPedidoDTO> updateCantidadProducto(@RequestBody int cantidadProducto, @PathVariable("idLineaPedido") Long idLineaPedido) {
+		log.info(LineaPedidoRestController.class.getSimpleName() + " - updateCantidadProductoLineaPedido: Actualizamos la cantidad de producto en la línea de pedido: " + idLineaPedido);
+
+		LineaPedidoDTO lineaPedidoDTO = new LineaPedidoDTO();
+		lineaPedidoDTO.setId(idLineaPedido);
+		lineaPedidoDTO = lpService.findById(lineaPedidoDTO);
+		lineaPedidoDTO = lpService.updateCantidadProducto(lineaPedidoDTO, cantidadProducto);
+		
+		if(lineaPedidoDTO == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(lineaPedidoDTO, HttpStatus.OK);
+		}
+	}
+
+	
+	// Guardar línea de pedido en un pedido
+	@PostMapping("/add/{idPedido}")
+	public ResponseEntity<LineaPedidoDTO> add(@RequestBody LineaPedidoDTO lineaPedidoDTO, @PathVariable("idPedido") Long idPedido) {
 
 		log.info(LineaPedidoRestController.class.getSimpleName() + " - add: Salvamos los datos de la línea de pedido: " + lineaPedidoDTO.toString());
 
-		LineaPedidoDTO lineaPedidoInsertada = new LineaPedidoDTO();
-		lineaPedidoInsertada = lpService.save(lineaPedidoDTO);
+		PedidoDTO pedidoDTO = new PedidoDTO();
+		pedidoDTO.setId(idPedido);
+		pedidoDTO = pedidoService.findById(pedidoDTO);
+		
+		lineaPedidoDTO.setPedidoDTO(pedidoDTO);
+		lineaPedidoDTO = lpService.save(lineaPedidoDTO);
 
-		if(lineaPedidoInsertada != null) {
-			return new ResponseEntity<>(lineaPedidoInsertada, HttpStatus.OK);
+		if(lineaPedidoDTO != null) {
+			return new ResponseEntity<>(lineaPedidoDTO, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -80,11 +109,11 @@ public class LineaPedidoRestController {
 		LineaPedidoDTO lineaPedidoExDTO = new LineaPedidoDTO();
 		lineaPedidoExDTO.setId(lineaPedidoDTO.getId());
 		lineaPedidoExDTO = lpService.findById(lineaPedidoExDTO);
+		lineaPedidoDTO = lpService.save(lineaPedidoDTO);
 
 		if(lineaPedidoExDTO == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			lineaPedidoDTO = lpService.save(lineaPedidoDTO);
 			return new ResponseEntity<>(lineaPedidoDTO, HttpStatus.OK);
 		}
 	}

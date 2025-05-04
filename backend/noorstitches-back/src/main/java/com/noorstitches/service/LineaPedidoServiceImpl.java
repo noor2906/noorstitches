@@ -67,6 +67,22 @@ public class LineaPedidoServiceImpl implements LineaPedidoService {
 	}
 
 	@Override
+	public LineaPedidoDTO updateCantidadProducto(LineaPedidoDTO lineaPedidoDTO, int cantidadProducto) {
+		log.info(LineaPedidoServiceImpl.class.getSimpleName() + " - saveCantidadProducto: Salvamos la cantidad de producto: " + cantidadProducto + " en la línea de pedido: " + lineaPedidoDTO.toString());
+
+		Optional<LineaPedido> lineapedido = lpRepository.findById(lineaPedidoDTO.getId());
+		lineapedido.get().setCantidad(cantidadProducto);
+		lpRepository.save(lineapedido.get());
+
+
+		if (lineapedido.isPresent()) {
+			lineaPedidoDTO = LineaPedidoDTO.convertToDTO(lineapedido.get());
+		}
+
+		return lineaPedidoDTO;
+	}
+	
+	@Override
 	public int delete(LineaPedidoDTO lineaPedidoDTO) {
 		log.info(LineaPedidoServiceImpl.class.getSimpleName() + " - delete: Borramos la línea de pedido: " + lineaPedidoDTO.getId());
 

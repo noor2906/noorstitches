@@ -10,13 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.noorstitches.model.dto.LineaPedidoDTO;
 import com.noorstitches.model.dto.PedidoDTO;
-import com.noorstitches.model.dto.SubcategoriaDTO;
+import com.noorstitches.model.enums.EnumEstadoPedido;
 import com.noorstitches.repository.dao.PedidoRepository;
 import com.noorstitches.repository.entity.LineaPedido;
 import com.noorstitches.repository.entity.Pedido;
-import com.noorstitches.repository.entity.Subcategoria;
 
 @Service
 public class PedidoServiceImpl implements PedidoService {
@@ -103,4 +101,44 @@ public class PedidoServiceImpl implements PedidoService {
 		return listaPedidosDTO;
 	}
 
+	@Override
+	public PedidoDTO finalizarCompra(PedidoDTO pedidoDTO) {
+		log.info(PedidoServiceImpl.class.getSimpleName() + " - finalizarCompra: Finalizamos la compra del pedido: " + pedidoDTO.toString());
+
+		Optional<Pedido> pedido = pedidoRepository.findById(pedidoDTO.getId());
+		
+		pedido.get().setFecha(new Date());
+		pedido.get().setEstado(EnumEstadoPedido.completado);
+		pedido = calcularImportePedido(pedido);
+		
+		pedidoRepository.save(pedido.get());
+
+		if (pedido.isPresent()) {
+			pedidoDTO = PedidoDTO.convertToDTO(pedido.get());
+		}
+
+		return pedidoDTO;
+	}
+
+	public Optional<Pedido> calcularImportePedido(Optional<Pedido> pedido) {
+				
+		List<LineaPedido> listaLineasPedido = pedido.get().getListaLineasPedido();
+		
+		int importeTotal = 0;
+		
+		for (LineaPedido lineaPedido : listaLineasPedido) {
+			importeTotal += lineaPedido.getImporte();
+		}
+		
+		pedido.get().setImporte(importeTotal);
+		
+		return pedido;
+	}
+	
+	
+	
+	
+	
+	
+	
 }

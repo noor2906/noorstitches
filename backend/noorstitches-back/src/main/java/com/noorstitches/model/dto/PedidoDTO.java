@@ -5,13 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.noorstitches.model.enums.EnumEstadoPedido;
 import com.noorstitches.repository.entity.LineaPedido;
 import com.noorstitches.repository.entity.Pedido;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.ToString;
 

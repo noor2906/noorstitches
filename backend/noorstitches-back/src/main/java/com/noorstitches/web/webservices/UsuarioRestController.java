@@ -1,5 +1,6 @@
 package com.noorstitches.web.webservices;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.noorstitches.model.dto.LineaPedidoDTO;
+import com.noorstitches.model.dto.PedidoDTO;
 import com.noorstitches.model.dto.UsuarioDTO;
 import com.noorstitches.repository.entity.Usuario;
+import com.noorstitches.service.PedidoService;
 import com.noorstitches.service.UsuarioService;
 
 @RestController
@@ -28,7 +32,10 @@ public class UsuarioRestController {
 	private static final Logger log = LoggerFactory.getLogger(UsuarioRestController.class);		
 	
 	@Autowired
-	private UsuarioService usuarioService;	
+	private UsuarioService usuarioService;
+	
+	@Autowired
+	private PedidoService pedidoService;
 	
 	// Listar los usuarios 
 	 @GetMapping("")
@@ -38,6 +45,29 @@ public class UsuarioRestController {
 		 List<UsuarioDTO> listaUsuariosDTO = usuarioService.findAll();
 		 
 		 return new ResponseEntity<>(listaUsuariosDTO, HttpStatus.OK);
+	}
+	 
+	// Listar todos los pedidos dado un id de usuario
+	@GetMapping("/{idUsuario}/pedidos")
+	public ResponseEntity<List<PedidoDTO>> findPedidosByUsuario(@PathVariable("idUsuario") Long idUsuario) {
+
+		log.info(UsuarioRestController.class.getSimpleName() + " - findPedidosByUsuario: Mostramos la información de los pedidos de un usuario:" + idUsuario);
+
+		UsuarioDTO usuarioDTO = new UsuarioDTO();
+		usuarioDTO.setId(idUsuario);
+		usuarioDTO = usuarioService.findById(usuarioDTO);
+
+		List<PedidoDTO> listaPedidosDTO = new ArrayList<>();
+
+		if (usuarioDTO != null) {
+			listaPedidosDTO = pedidoService.findAllByUsuario(idUsuario);
+		}
+
+		if (listaPedidosDTO == null) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(listaPedidosDTO, HttpStatus.OK);
+		}
 	}
 	
 	// Visualizar la informacion de un usuario

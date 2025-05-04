@@ -1,5 +1,6 @@
 package com.noorstitches.repository.entity;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,8 +8,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -37,6 +41,11 @@ public class Usuario {
 	
 	@Column(name = "telefono")	
 	private String telefono;
+	
+	@OneToMany
+	@JoinColumn(name = "id_usuario")
+	@ToString.Exclude
+	private List<Pedido> listaPedidos;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -54,13 +63,5 @@ public class Usuario {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
-	public Usuario() {
-		//TODO: inicializar relaciones
-	}
-	
-	
-	
-	
 	
 }

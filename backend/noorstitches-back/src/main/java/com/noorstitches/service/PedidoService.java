@@ -14,4 +14,6 @@ public interface PedidoService {
 
 	int delete(PedidoDTO pedidoDTO);
 
+	List<PedidoDTO> findAllByUsuario(Long idUsuario);
+
 }

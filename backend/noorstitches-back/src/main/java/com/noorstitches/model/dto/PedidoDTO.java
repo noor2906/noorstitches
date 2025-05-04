@@ -28,7 +28,9 @@ public class PedidoDTO implements Serializable {
 	@JsonBackReference
 	private List<LineaPedido> listaLineasPedido;
 	
-	//TODO: USUARIO
+	@ToString.Exclude
+	@JsonManagedReference
+	private UsuarioDTO usuarioDTO;
 
 	// Convierte una entidad a un objeto DTO
 	public static PedidoDTO convertToDTO(Pedido p) {
@@ -39,6 +41,8 @@ public class PedidoDTO implements Serializable {
 		pDTO.setImporte(p.getImporte());
 		pDTO.setFecha(p.getFecha());
 		pDTO.setEstado(p.getEstado());
+		pDTO.setUsuarioDTO(UsuarioDTO.convertToDTO(p.getUsuario()));
+
 				
 		// Retorna el DTO
 		return pDTO;
@@ -53,6 +57,7 @@ public class PedidoDTO implements Serializable {
 		p.setImporte(pDTO.getImporte());
 		p.setFecha(pDTO.getFecha());
 		p.setEstado(pDTO.getEstado());
+		p.setUsuario(UsuarioDTO.convertToEntity(pDTO.getUsuarioDTO()));
 
 		// Retorna el DTO
 		return p;

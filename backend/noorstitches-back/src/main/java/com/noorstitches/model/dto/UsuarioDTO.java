@@ -1,10 +1,14 @@
 package com.noorstitches.model.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.noorstitches.repository.entity.Pedido;
 import com.noorstitches.repository.entity.Usuario;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 public class UsuarioDTO implements Serializable {
@@ -17,6 +21,11 @@ public class UsuarioDTO implements Serializable {
 	private String email;
 	private String fotoPerfil;
 	private String telefono;
+	
+	@ToString.Exclude
+	@JsonBackReference
+	private List<Pedido> listaPedidos;
+	
 
 	 // Convierte una entidad a un objeto DTO
     public static UsuarioDTO convertToDTO(Usuario usuario) {

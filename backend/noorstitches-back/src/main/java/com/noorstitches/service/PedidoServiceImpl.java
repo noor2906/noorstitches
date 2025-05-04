@@ -9,8 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.noorstitches.model.dto.LineaPedidoDTO;
 import com.noorstitches.model.dto.PedidoDTO;
 import com.noorstitches.repository.dao.PedidoRepository;
+import com.noorstitches.repository.entity.LineaPedido;
 import com.noorstitches.repository.entity.Pedido;
 
 @Service
@@ -67,6 +69,24 @@ public class PedidoServiceImpl implements PedidoService {
 			return 1;
 		}
 		return 0;
+	}
+
+	@Override
+	public List<PedidoDTO> findAllByUsuario(Long idUsuario) {
+		//Nos traemos la lista de pedidos Entity del respositorio
+		List<Pedido> listaPedidos = pedidoRepository.findAllByUsuario(idUsuario);
+		
+		//Nos creamos una lista de pedidos DTO 
+		List<PedidoDTO> listaPedidosDTO = new ArrayList<PedidoDTO>();
+		
+		//Convertimos al lista de pedidos de Entity a DTO
+		
+		for (int i = 0; i < listaPedidos.size(); i++) {
+			PedidoDTO pedidoDTO = PedidoDTO.convertToDTO(listaPedidos.get(i));
+			listaPedidosDTO.add(pedidoDTO);
+		}
+		
+		return listaPedidosDTO;
 	}
 
 }

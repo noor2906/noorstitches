@@ -70,16 +70,14 @@
     background-color: var(--morado-intermedio-2);
 }
 
-.link-active:hover {
-    text-decoration: underline;
-    color: var(--morado-intermedio-2);
+.h2 {
+    font-size: 48px;
+    color: var(--morado-intermedio-1);
+    font-weight: bold;
 }
 
-.background-image-tulipanes {
-  background-image: url("/assets/imgs/tulipanes-oscuro.webp");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  /* filter: blur(2px); */
+.h3 {
+    font-size: 24px;
+    color: var(--morado-intermedio-1);
+    font-weight: bold;
 }

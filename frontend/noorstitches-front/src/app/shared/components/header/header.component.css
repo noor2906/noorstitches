@@ -1,0 +1,4 @@
+.link-active:hover {
+    text-decoration: underline;
+    color: var(--morado-intermedio-2);
+}

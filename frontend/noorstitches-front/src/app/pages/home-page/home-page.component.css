@@ -1,0 +1,43 @@
+.fondo-degradado {
+  background: linear-gradient(140deg, var(--morado-claro), var(--morado-intermedio-1)); 
+}
+
+.category-item {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px dashed var(--morado-intermedio-1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: var(--blanco);
+}
+
+.category-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  background-color: var(--morado-intermedio-2);
+}
+
+.category-item:hover .category-text {
+  color: var(--blanco);
+}
+
+.category-item.active {
+  background-color: var(--morado-intermedio-1);
+  border: 2px solid var(--morado-intermedio-1);
+}
+
+.category-item.active .category-text {
+  color: var(--blanco);
+}
+
+.category-text {
+  color: var(--morado-intermedio-1);
+  font-size: 18px;
+  text-align: center;
+  padding: 10px;
+  font-weight: 600;
+} 

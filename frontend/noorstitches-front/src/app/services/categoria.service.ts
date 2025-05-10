@@ -11,7 +11,7 @@ export class CategoriaService {
     apiUrl: string = `${environment.apiUrl}/categorias`;
     http = inject(HttpClient);
 
-    //GET CATEGORIAS
+    //get categorias
     getCategorias() {
         return this.http.get<Categoria[]>(`${this.apiUrl}`);
     }

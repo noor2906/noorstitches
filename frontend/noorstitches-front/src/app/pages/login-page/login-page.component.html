@@ -1,32 +1,50 @@
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow" style="width: 24rem;">
-        <h3 class="text-center mb-4">Login</h3>
+<div class="container-fluid d-flex justify-content-center align-items-center background-image-tulipanes">
 
-        @if (loginStatus() == 'error') {
-            <div class="alert alert-danger text-center" role="alert">
-                <i class="bi bi-exclamation-circle me-2"></i>
-                Invalid email or password. Please try again.
+    <div class="d-flex justify-content-center align-items-center row w-75" style="height: 60%;">
+        <div class="col-2"></div>
+
+        <div class="d-flex flex-column justify-content-center align-items-center gap-5 p-5 bg-morado-intermedio-2 col-4 h-100 shadow" style="  border-top-left-radius: 8px; border-bottom-left-radius: 1rem;">
+            <h2 class="text-blanco bold" >Bienvenidx de nuevo</h2>
+            <div class="w-100" style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem;">
+                <img src="/assets/imgs/tulipanes-oscuro.webp" alt="tulipanes crochet" class="img-fluid w-100 h-100 object-fit-cover">
             </div>
-        } @else if (loginStatus() == 'success') {
-            <div class="alert alert-success text-center" role="alert">
-                <i class="bi bi-check-circle me-2"></i>
-                Welcome back!
-            </div>
-        }
-      
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
-            <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter your email" formControlName="email" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter your password" formControlName="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
-            <div class="text-center mt-3">
-                <a href="#" class="text-decoration-none">Forgot password?</a>
-            </div>
-        </form>
+        </div>
+
+        <div class="d-flex flex-column justify-content-center align-items-center gap-5 bg-blanco p-5 col-4 h-100 p-5 shadow" style="  border-top-right-radius: 8px; border-bottom-right-radius: 1rem;">
+            <h2 class="text-negro regular" >Login</h2>
+
+            @if (loginStatus() == 'error') {
+                <div class="alert alert-danger text-center" role="alert">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    Invalid email or password. Please try again.
+                </div>
+            } @else if (loginStatus() == 'success') {
+                <div class="alert alert-success text-center" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Welcome back!
+                </div>
+            }
+        
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" formControlName="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" formControlName="password" required>
+                </div>
+                <button type="submit" class="btn bg-morado-intermedio-2 text-blanco w-100">Login</button>
+                <div class="text-center mt-3">
+                    <a href="/register" class="text-morado-intermedio-1">¿No tienes cuenta? ¡Regístrate!</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-2"></div>
+
     </div>
+
+
+   
 </div>

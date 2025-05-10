@@ -1,1 +1,85 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --morado-oscuro: #221950;
+    --morado-intermedio-1: #8457B1;
+    --morado-intermedio-2: #C0B2DE;
+    --morado-claro: #DCCDFB;
+    --blanco: #FFFFFF;
+    --negro: #000000;
+}
+
+* {
+  font-family: "Baloo 2", sans-serif;
+}
+
+/* FUENTES -------------------------*/
+.regular {
+    font-weight: 400;
+}
+
+.medium {
+    font-weight: 500;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.extrabold {
+    font-weight: 800;
+}
+
+/* COLORES -------------------------*/
+
+.text-morado-oscuro {
+    color: var(--morado-oscuro) !important;
+}
+
+.text-morado-intermedio-1 {
+    color: var(--morado-intermedio-1);
+}
+
+.text-morado-intermedio-2 {
+    color: var(--morado-intermedio-2)
+}
+
+.text-morado-claro {
+    color: var(--morado-claro)
+}
+
+.text-blanco {
+    color: var(--blanco)
+}
+
+.text-negro {
+    color: var(--negro)
+}
+
+.bg-blanco {
+    background-color: var(--blanco);
+}
+
+.bg-morado-oscuro {
+    background-color: var(--morado-oscuro);
+}
+
+.bg-morado-intermedio-1 {
+    background-color: var(--morado-intermedio-1);
+}
+
+.bg-morado-intermedio-2 {
+    background-color: var(--morado-intermedio-2);
+}
+
+.link-active:hover {
+    text-decoration: underline;
+    color: var(--morado-intermedio-2);
+}
+
+.background-image-tulipanes {
+  background-image: url("/assets/imgs/tulipanes-oscuro.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  /* filter: blur(2px); */
+}

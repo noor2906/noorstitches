@@ -54,6 +54,8 @@
     color: var(--negro)
 }
 
+/* BACKGROUND COLOR -----------------*/
+
 .bg-blanco {
     background-color: var(--blanco);
 }
@@ -70,6 +72,15 @@
     background-color: var(--morado-intermedio-2);
 }
 
+/* BORDES ---------------------------------*/
+
+.border-morado-intermedio-1 {
+    border: 2px solid var(--morado-intermedio-1);
+    border-radius: 8px;
+}
+
+/* TITULOS ------------------------------- */
+
 .h2 {
     font-size: 48px;
     color: var(--morado-intermedio-1);
@@ -80,4 +91,15 @@
     font-size: 24px;
     color: var(--morado-intermedio-1);
     font-weight: bold;
+}
+
+/* BOTONES -------------------------------- */
+
+.btnConIcono:hover {
+    background-color: var(--morado-intermedio-1);
+    color: var(--blanco);
+    
+    mat-icon {
+        color: var(--blanco);
+    }
 }

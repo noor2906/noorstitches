@@ -65,7 +65,7 @@ export class RegisterPageComponent {
         localStorage.setItem('isLoggedIn', 'true');
         this.alertService.success('Noorstitches', '¡Registro realizado correctamente!.');
         localStorage.setItem('user', JSON.stringify(response));  // Guardamos la respuesta del backend (que contiene la info del usuario)
-        setTimeout(() => this.router.navigate(['/login']), 2000);
+        setTimeout(() => this.router.navigate(['/']), 2000);
       },
       error: (error) => {
         console.error('Error inesperado:', error);      

@@ -35,6 +35,8 @@ public class ProductoRestController {
 		 
 		 List<ProductoDTO> listaProductoDTO = productoService.findAll();
 		 
+		 log.info("                                                      " +  listaProductoDTO);
+		 
 		 return new ResponseEntity<>(listaProductoDTO, HttpStatus.OK);
 	}
 	

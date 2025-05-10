@@ -41,3 +41,21 @@
   padding: 10px;
   font-weight: 600;
 } 
+
+.grid-productos {
+  /* display: grid;
+  row-gap: 4em;
+  grid-template-columns: repeat(4, 1fr);  */
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4em;
+  justify-content: center;
+  align-items: center;
+  place-items: center;
+}
+
+.tarjeta-producto {
+  width: 18rem;
+  height: 25em;
+}

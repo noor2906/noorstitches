@@ -77,7 +77,7 @@ public class ProductoDTO implements Serializable {
     	p.setComposicion(pDTO.getComposicion());
     	p.setMarca(pDTO.getMarca());
     	p.setActivo(pDTO.isActivo());
-    	p.setEsDestacado(pDTO.esDestacado);
+    	p.setEsDestacado(pDTO.isEsDestacado());
 
     	p.setSubcategoria(SubcategoriaDTO.convertToEntity(pDTO.getSubcategoriaDTO()));
     	

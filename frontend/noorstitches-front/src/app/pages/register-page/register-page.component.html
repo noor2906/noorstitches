@@ -6,22 +6,34 @@
                     <h3>Registro</h3>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form [formGroup]="registerForm" (ngSubmit)="registro()">
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre" required>
+                            <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre" formControlName="nombre" required>
                         </div>
                         <div class="mb-3">
-                            <label for="email" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo" required>
+                            <label for="apellidos" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="apellidos" placeholder="Ingresa tus apellidos" formControlName="apellidos" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Ingresa tu email" formControlName="email" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required>
+                            <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" formControlName="password" required>
                         </div>
                         <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
-                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirma tu contraseña" required>
+                            <label for="passwordConfirm" class="form-label">Repitir contraseña</label>
+                            <input type="password" class="form-control" id="password" placeholder="Repite la contraseña" formControlName="passwordConfirm" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="number" class="form-control" id="telefono" placeholder="Ingresa tu teléfono" maxlength="12" formControlName="telefono" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fotoPerfil" class="form-label">Foto de Perfil</label>
+                            <input type="text" class="form-control" id="fotoPerfil" placeholder="Ingresa la URL de tu foto de perfil" formControlName="fotoPerfil" required>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Registrarse</button>
                     </form>

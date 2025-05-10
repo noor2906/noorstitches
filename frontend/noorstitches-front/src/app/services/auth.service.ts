@@ -8,12 +8,14 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
 
   apiUrl: string = `${environment.apiUrl}/usuarios`;
   http = inject(HttpClient);
   router = inject(Router);
 
+
+  //LOGIN
   login(email: string, password: string): Observable<Usuario> {
     const user = {
       id: null,
@@ -28,19 +30,15 @@ export class LoginService {
     return this.http.post<Usuario>(`${this.apiUrl}/login`, user);
   }
 
+  //LOGOUT
   logout(): void {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
-  
 
-  isLoggedIn(): boolean {
-    return localStorage.getItem('isLoggedIn') === 'true';
-  }
-
-  getUsername(): string | null {
-    return localStorage.getItem('username');
-  }
-  
+  //REGISTER
+    register(user: Usuario): Observable<Usuario> {
+        return this.http.post<Usuario>(`${this.apiUrl}/registro`, user);
+    }
 }

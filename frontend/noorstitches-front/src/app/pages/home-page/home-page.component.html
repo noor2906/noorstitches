@@ -38,32 +38,20 @@
     </div>
     </div>
 
-
     <!-- categorias-->
     <div class="row p-5 d-flex gap-4 mt-3">
         <div class="row">
             <p class="h3 text-center">Categorías</p>
         </div>
         <div class="row d-flex flex-wrap justify-content-center gap-5 mx-3 my-auto">
-            <!-- @for (categoria of categorias(); track categoria.id) {
-                 <div class="category-item">
-                <div class="category-text">tejidos</div>
-            </div>
-            } -->
-             <div class="category-item">
-                <div class="category-text">lana & hilos</div>
-            </div>
-             <div class="category-item">
-                <div class="category-text">mercería</div>
-            </div>
-             <div class="category-item">
-                <div class="category-text">handmade</div>
-            </div>
-             <div class="category-item">
-                <div class="category-text">kits</div>
-            </div>
+            @for (categoria of categorias(); track categoria.id) {
+                <div class="category-item">
+                    <div class="category-text">{{ categoria.nombre }}</div>
+                </div>
+            }
         </div>
     </div>
+
 
     <!-- productos destacados-->
     <div class="row">

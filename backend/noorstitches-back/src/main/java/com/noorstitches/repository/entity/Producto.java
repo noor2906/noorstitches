@@ -58,8 +58,8 @@ public class Producto {
 	@Column(name = "activo")	
 	private boolean activo;
 	
-	//TODO: OBJETO CATEGORÍA
-	
+	@Column(name = "es_destacado")
+	private boolean esDestacado;
 	
 	//Relacion N a 1
 	@ManyToOne

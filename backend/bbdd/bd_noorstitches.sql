@@ -51,6 +51,7 @@ CREATE TABLE productos (
     composicion VARCHAR(255), -- opcional: 60% algodón, 40% acrílico
     marca VARCHAR(255),
     activo boolean default true,
+	es_destacado boolean default false,
 	id_subcategoria BIGINT NOT NULL,
     FOREIGN KEY (id_subcategoria) REFERENCES subcategorias(id)
 );

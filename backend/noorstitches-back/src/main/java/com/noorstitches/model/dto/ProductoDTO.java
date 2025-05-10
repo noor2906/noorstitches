@@ -30,6 +30,7 @@ public class ProductoDTO implements Serializable {
 	private String composicion;
 	private String marca;
 	private boolean activo;
+	private boolean esDestacado;
 	
 	@ToString.Exclude
 	private SubcategoriaDTO subcategoriaDTO;
@@ -51,6 +52,7 @@ public class ProductoDTO implements Serializable {
     	productoDTO.setComposicion(p.getComposicion());
     	productoDTO.setMarca(p.getMarca());
     	productoDTO.setActivo(p.isActivo());
+    	productoDTO.setEsDestacado(p.isEsDestacado());
     	
     	productoDTO.setSubcategoriaDTO(SubcategoriaDTO.convertToDTO(p.getSubcategoria()));
     	    	
@@ -75,6 +77,7 @@ public class ProductoDTO implements Serializable {
     	p.setComposicion(pDTO.getComposicion());
     	p.setMarca(pDTO.getMarca());
     	p.setActivo(pDTO.isActivo());
+    	p.setEsDestacado(pDTO.esDestacado);
 
     	p.setSubcategoria(SubcategoriaDTO.convertToEntity(pDTO.getSubcategoriaDTO()));
     	

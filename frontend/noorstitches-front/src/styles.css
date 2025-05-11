@@ -1,3 +1,6 @@
+
+/* COLORES --------------------------------------- */
+
 :root {
     --morado-oscuro: #221950;
     --morado-intermedio-1: #8457B1;
@@ -7,11 +10,15 @@
     --negro: #000000;
 }
 
+/* ESTILOS GLOBALES --------------------------------------- */
+
 * {
   font-family: "Baloo 2", sans-serif;
 }
 
-/* FUENTES -------------------------*/
+
+/* FUENTES --------------------------------------- */
+
 .regular {
     font-weight: 400;
 }
@@ -28,7 +35,7 @@
     font-weight: 800;
 }
 
-/* COLORES -------------------------*/
+/* COLORES TEXTO --------------------------------- */
 
 .text-morado-oscuro {
     color: var(--morado-oscuro) !important;
@@ -54,7 +61,8 @@
     color: var(--negro)
 }
 
-/* BACKGROUND COLOR -----------------*/
+/* BACKGROUND COLOR ------------------------------- */
+
 
 .bg-blanco {
     background-color: var(--blanco);
@@ -72,14 +80,14 @@
     background-color: var(--morado-intermedio-2);
 }
 
-/* BORDES ---------------------------------*/
+/* BORDES --------------------------------------- */
 
 .border-morado-intermedio-1 {
     border: 2px solid var(--morado-intermedio-1);
     border-radius: 8px;
 }
 
-/* TITULOS ------------------------------- */
+/* TITULOS --------------------------------------- */
 
 .h2 {
     font-size: 48px;
@@ -93,7 +101,7 @@
     font-weight: bold;
 }
 
-/* BOTONES -------------------------------- */
+/* BOTONES --------------------------------------- */
 
 .btnConIcono:hover {
     background-color: var(--morado-intermedio-1);
@@ -103,6 +111,9 @@
         color: var(--blanco);
     }
 }
+
+/* PRODUCT-CARD -------------------------------- */
+
 .tarjeta-producto {
   width: 18rem;
   height: 25em;

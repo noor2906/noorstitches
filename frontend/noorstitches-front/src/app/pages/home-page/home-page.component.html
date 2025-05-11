@@ -45,9 +45,15 @@
         </div>
         <div class="row p-0 m-0 d-flex flex-wrap justify-content-center gap-5 my-auto">
             @for (categoria of categorias(); track categoria.id) {
-                <div class="category-item">
+               @if (categoria.nombre == "LanasAndHilos") {
+                 <div class="category-item">
+                    <div class="category-text">Lanas&Hilos</div>
+                </div>
+               } @else {
+                 <div class="category-item">
                     <div class="category-text">{{ categoria.nombre }}</div>
                 </div>
+               }
             }
         </div>
     </div>

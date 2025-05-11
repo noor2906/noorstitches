@@ -48,9 +48,9 @@ public class ProductoDTO implements Serializable {
     	
     	
     	// Solo generar la URL si hay nombre de imagen
-        if (p.getImagen() != null && !p.getImagen().isEmpty()) {
-            productoDTO.setUrlImagen("http://localhost:8888/imgs/productos/" + p.getImagen());
-        } else {
+        if(p.getImagen() != null && !p.getImagen().isEmpty()){
+            productoDTO.setUrlImagen("http://localhost:8888/imgs/productos/"+ p.getSubcategoria().getCategoria().getNombre().toLowerCase() + "/" + p.getImagen());
+        }else {
             productoDTO.setUrlImagen("http://localhost:8888/imgs/productos/por_defecto.webp");
         }
     	

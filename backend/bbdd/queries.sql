@@ -18,3 +18,5 @@ insert into subcategorias(nombre, imagen, id_categoria) value ("prueba", "pruabe
 select * from pedidos;
 select * from lineas_pedido;
 select * from lineas_pedido where id_pedido = 1;
+
+select * from productos where es_destacado = 1;

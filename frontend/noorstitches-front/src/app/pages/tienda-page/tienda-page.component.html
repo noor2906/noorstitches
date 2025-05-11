@@ -22,6 +22,12 @@
 
             <!-- Filtros -->
             <div class="col-md-4">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Filtrar por categoria</option>
+                    @for (sub of subcategorias(); track sub.id) {
+                        <option>{{sub.nombre}}</option>
+                    }
+                </select>
             </div>
 
         </div>

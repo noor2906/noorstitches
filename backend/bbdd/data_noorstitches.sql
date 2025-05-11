@@ -40,7 +40,7 @@ INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES
 INSERT INTO productos (nombre, descripcion, imagen, precio, stock, peso, longitud, material, composicion, marca, activo, es_destacado, id_subcategoria) 
 VALUES 
 ('Lana Cotton Soft', 'Lana suave ideal para prendas de verano. Tacto fresco y agradable.', 'lanas.webp', 4.99, 100, 100.00, "10X15", 'Algodón', '60% algodón, 40% acrílico', 'Cotton Soft', 1, 1, 1),
-('Peluche Conejito Rosa', 'Peluche hecho a mano con hilo de algodón y relleno hipoalergénico. Ideal para regalar.', 'peluche.webp', 19.95, 5, null, "70X100", 'Algodón', null, 'Handmade', 1, 0, 4),
+('Peluche Conejito Rosa', 'Peluche hecho a mano con hilo de algodón y relleno hipoalergénico. Ideal para regalar.', '', 19.95, 5, null, "70X100", 'Algodón', null, 'Handmade', 1, 0, 4),
 ('Kit ganchillo tulip rose', 'Kit completo de ganchillo con agujas ergonómicas y ovillos en tonos rosa. Ideal para principiantes.', 'kit_tulip_rose.webp', 24.90, 20, 350.00, '25X20', 'Algodón y acero inoxidable', '70% algodón, 30% acero', 'Tulip', 1, 1, 11);
 
 

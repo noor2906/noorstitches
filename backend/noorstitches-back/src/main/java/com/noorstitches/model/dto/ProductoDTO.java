@@ -45,7 +45,16 @@ public class ProductoDTO implements Serializable {
     	productoDTO.setNombre(p.getNombre());
     	productoDTO.setDescripcion(p.getDescripcion());
     	productoDTO.setImagen(p.getImagen());
-    	productoDTO.setUrlImagen("http://localhost:8888/imgs/productos/" + p.getImagen());
+    	
+    	
+    	// Solo generar la URL si hay nombre de imagen
+        if (p.getImagen() != null && !p.getImagen().isEmpty()) {
+            productoDTO.setUrlImagen("http://localhost:8888/imgs/productos/" + p.getImagen());
+        } else {
+            productoDTO.setUrlImagen("http://localhost:8888/imgs/productos/por_defecto.webp");
+        }
+    	
+    	
     	productoDTO.setPrecio(p.getPrecio());
     	productoDTO.setStock(p.getStock());
     	productoDTO.setPeso(p.getPeso());

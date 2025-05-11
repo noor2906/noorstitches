@@ -12,5 +12,5 @@ export interface Producto {
   marca: string | undefined;
   activo: boolean | undefined;
   esDestacado?: boolean;
-  urlImagen: string;
+  urlImagen: string | null;
 }

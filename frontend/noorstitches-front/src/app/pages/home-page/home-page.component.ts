@@ -39,8 +39,8 @@ export class HomePageComponent implements OnInit {
   getProductos(){
     this.productoService.getProductos().subscribe(
       (response) => {
-        console.log(response);
         this.productosDestacables.set(response.filter(destacable => destacable.esDestacado == true));
+        console.log(this.productosDestacables());
       },
       (error) => {
         console.error("Error al cargar los productos: " + error)

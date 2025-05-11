@@ -11,5 +11,6 @@ export interface Producto {
   composicion: string | undefined;
   marca: string | undefined;
   activo: boolean | undefined;
-  esDestacado: boolean | undefined;
+  esDestacado?: boolean;
+  urlImagen: string;
 }

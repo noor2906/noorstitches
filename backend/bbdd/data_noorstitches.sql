@@ -14,34 +14,34 @@ INSERT INTO categorias (nombre) VALUES
 
 -- Para Lanas & Hilos
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
-('Algodón', 'lanas.jpg', 1),     -- 1
-('Acrílico', 'acrilico.jpg', 1), -- 2
-('Mezclas', 'mezclas.jpg', 1);   -- 3
+('Algodón', 'lanas.webp', 1),     -- 1
+('Acrílico', 'acrilico.webp', 1), -- 2
+('Mezclas', 'mezclas.webp', 1);   -- 3
 
 -- Para Handmade
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
-('Peluches', 'peluches.jpg', 2),      -- 4
-('Decoración', 'decoracion.jpg', 2),  -- 5
-('Ropa', 'ropa.jpg', 2),              -- 6 
-('Accesorios', 'accesorios.jpg', 2);  -- 7
+('Peluches', 'peluches.webp', 2),      -- 4
+('Decoración', 'decoracion.webp', 2),  -- 5
+('Ropa', 'ropa.webp', 2),              -- 6 
+('Accesorios', 'accesorios.webp', 2);  -- 7
 
 -- Para Mercería
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
-('Agujas de crochet', 'agujas.jpg', 3),  -- 8
-('Marcadores', 'marcadores.jpg', 3),    -- 9
-('Tijeras', 'tijeras.jpg', 3);          -- 10
+('Agujas de crochet', 'agujas.webp', 3),  -- 8
+('Marcadores', 'marcadores.webp', 3),    -- 9
+('Tijeras', 'tijeras.webp', 3);          -- 10
 
 -- Para Kits
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
-('Kit ganchillo', 'kit_ganchillo.jpg', 4),          -- 11
-('Kit principiante', 'kit_principiante.jpg', 4);-- 12
+('Kit ganchillo', 'kit_ganchillo.webp', 4),          -- 11
+('Kit principiante', 'kit_principiante.webp', 4);-- 12
 
 
 INSERT INTO productos (nombre, descripcion, imagen, precio, stock, peso, longitud, material, composicion, marca, activo, es_destacado, id_subcategoria) 
 VALUES 
-('Lana Cotton Soft', 'Lana suave ideal para prendas de verano. Tacto fresco y agradable.', 'lana.jpg', 4.99, 100, 100.00, "10X15", 'Algodón', '60% algodón, 40% acrílico', 'Cotton Soft', 1, 0, 1),
-('Peluche Conejito Rosa', 'Peluche hecho a mano con hilo de algodón y relleno hipoalergénico. Ideal para regalar.', 'peluche.jpg', 19.95, 5, null, "70X100", 'Algodón', null, 'Handmade', 1, 0, 4),
-('Kit ganchillo tulip rose', 'Kit completo de ganchillo con agujas ergonómicas y ovillos en tonos rosa. Ideal para principiantes.', 'kit_tulip_rose.jpg', 24.90, 20, 350.00, '25X20', 'Algodón y acero inoxidable', '70% algodón, 30% acero', 'Tulip', 1, 0, 11);
+('Lana Cotton Soft', 'Lana suave ideal para prendas de verano. Tacto fresco y agradable.', 'lanas.webp', 4.99, 100, 100.00, "10X15", 'Algodón', '60% algodón, 40% acrílico', 'Cotton Soft', 1, 1, 1),
+('Peluche Conejito Rosa', 'Peluche hecho a mano con hilo de algodón y relleno hipoalergénico. Ideal para regalar.', 'peluche.webp', 19.95, 5, null, "70X100", 'Algodón', null, 'Handmade', 1, 0, 4),
+('Kit ganchillo tulip rose', 'Kit completo de ganchillo con agujas ergonómicas y ovillos en tonos rosa. Ideal para principiantes.', 'kit_tulip_rose.webp', 24.90, 20, 350.00, '25X20', 'Algodón y acero inoxidable', '70% algodón, 30% acero', 'Tulip', 1, 1, 11);
 
 
 INSERT INTO pedidos (id_usuario, fecha, importe)

@@ -62,7 +62,7 @@
             @for (producto of productosDestacables(); track producto.id) {
                 <div class="tarjeta-producto">
                     <div class="w-100" style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem;">
-                        <img src="../../../assets/imgs/tulipanes.webp" alt="tulipanes crochet" class="img-fluid w-100 h-100 object-fit-cover">
+                        <img src={{producto.urlImagen}} alt={{producto.nombre}} class="img-fluid w-100 h-100 object-fit-cover">
                     </div>
                     <div class="d-flex flex-column gap-2 mt-2">
                         <h4 class="text-black medium text-break mt-3">{{ producto.nombre }}</h4>

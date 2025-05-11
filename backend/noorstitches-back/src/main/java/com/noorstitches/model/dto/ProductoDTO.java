@@ -22,6 +22,7 @@ public class ProductoDTO implements Serializable {
 	private String nombre;
 	private String descripcion;	
 	private String imagen;
+	private String urlImagen;
 	private Float precio;
 	private int stock;	
 	private Float peso;
@@ -31,19 +32,20 @@ public class ProductoDTO implements Serializable {
 	private String marca;
 	private boolean activo;
 	private boolean esDestacado;
-	
+
 	@ToString.Exclude
 	private SubcategoriaDTO subcategoriaDTO;
 
 	// Convierte una entidad a un objeto DTO
     public static ProductoDTO convertToDTO(Producto p) {
-
+    	
         // Creamos el ProductoDTO y asignamos los valores básicos
     	ProductoDTO productoDTO = new ProductoDTO();
     	productoDTO.setId(p.getId());
     	productoDTO.setNombre(p.getNombre());
     	productoDTO.setDescripcion(p.getDescripcion());
     	productoDTO.setImagen(p.getImagen());
+    	productoDTO.setUrlImagen("http://localhost:8888/imgs/productos/" + p.getImagen());
     	productoDTO.setPrecio(p.getPrecio());
     	productoDTO.setStock(p.getStock());
     	productoDTO.setPeso(p.getPeso());

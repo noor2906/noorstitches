@@ -1,0 +1,30 @@
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center w-100 gap-3 m-0 p-5">
+    
+    <!-- productos destacados-->
+    <div class="row p-5 d-flex justify-content-start gap-5 mt-3 w-100">
+        <div class="row p-0 m-0 divider-con-borde">
+            <p class="h3">Tienda</p>
+        </div>
+
+        <div class="grid-productos m-0 w-75">
+            @for (producto of productosTienda(); track producto.id) {
+                <div class="tarjeta-producto">
+                    <div class="w-100" style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem;">
+                        @if (producto.urlImagen != null) {
+                            <img src={{producto.urlImagen}} alt={{producto.nombre}} class="img-fluid w-100 h-100 object-fit-cover">
+                        } @else {
+                            <img src="http://localhost:8888/imgs/productos/por_defecto.webp" alt={{producto.nombre}} class="img-fluid w-100 h-100 object-fit-cover">
+                        }
+                    </div>
+                    <div class="d-flex flex-column gap-2 mt-2">
+                        <h4 class="text-black medium text-break mt-3">{{ producto.nombre }}</h4>
+                        <div>
+                            <p class="text-black bold fs-4">{{producto.precio}}€</p>
+                        </div>
+                    </div>
+                </div> 
+            }
+        </div>
+    </div>
+
+</div>

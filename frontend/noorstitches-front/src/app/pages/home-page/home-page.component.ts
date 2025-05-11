@@ -39,8 +39,7 @@ export class HomePageComponent implements OnInit {
   getProductos(){
     this.productoService.getProductos().subscribe(
       (response) => {
-        // this.productosDestacables.set(response.filter(destacable => destacable.esDestacado == true));
-        this.productosDestacables.set(response);
+        this.productosDestacables.set(response.filter(destacable => destacable.esDestacado == true));
         console.log(this.productosDestacables());
       },
       (error) => {

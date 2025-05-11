@@ -103,3 +103,16 @@
         color: var(--blanco);
     }
 }
+.tarjeta-producto {
+  width: 18rem;
+  height: 25em;
+}
+
+.grid-productos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4em;
+  justify-content: center;
+  align-items: center;
+  place-items: center;
+}

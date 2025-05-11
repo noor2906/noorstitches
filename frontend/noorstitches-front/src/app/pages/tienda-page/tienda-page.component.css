@@ -1,0 +1,14 @@
+.divider-con-borde {
+  position: relative;
+}
+
+.divider-con-borde::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3.5px; 
+  width: 100%;
+  background-color: var(--morado-intermedio-1);
+  border-radius: 999px; 
+}

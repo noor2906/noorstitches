@@ -127,3 +127,11 @@
   align-items: center;
   place-items: center;
 }
+
+.separacion-header {
+    margin-top: 1000px;
+}
+
+.separacion-header-home {
+    margin-top: 118px !important;
+}

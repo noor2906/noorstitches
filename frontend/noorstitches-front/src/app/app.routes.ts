@@ -1,3 +1,4 @@
+import { ProductoPageComponent } from './pages/producto-page/producto-page.component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -16,5 +17,9 @@ export const routes: Routes = [
     {
         path: 'tienda',
         loadComponent: () => import('./pages/tienda-page/tienda-page.component').then(m => m.TiendaPageComponent)
+    },
+     {
+        path: 'producto-page',
+        loadComponent: () => import('./pages/producto-page/producto-page.component').then(m => m.ProductoPageComponent)
     }
 ];

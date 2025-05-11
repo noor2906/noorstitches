@@ -1,5 +1,5 @@
 export interface Subcategoria {
-  id: number | null | undefined;
+  id: number;
   nombre: string | null | undefined;
   imagen: string | null | undefined;
 }

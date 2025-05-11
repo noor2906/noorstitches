@@ -1,7 +1,7 @@
+import { Subcategoria } from './../../interfaces/subcategoria.interface';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ProductoService } from '../../services/producto.service';
 import { Producto } from '../../interfaces/producto.interface';
-import { Subcategoria } from '../../interfaces/subcategoria.interface';
 import { SubcategoriaService } from '../../services/subcategorias.service';
 
 @Component({
@@ -17,7 +17,6 @@ export class TiendaPageComponent implements OnInit{
 
   productosTienda = signal<Producto[]>([]);  // Productos completos
   productosABuscar = signal<Producto[]>([]); // Productos filtrados
-  productosFiltrados = signal<Producto[]>([]); 
   subcategorias = signal<Subcategoria[]>([]); 
 
   ngOnInit() {
@@ -57,5 +56,22 @@ export class TiendaPageComponent implements OnInit{
         
       }
     )
+  }
+
+  filtrarPorSubcategoria(event: Event) {
+
+    const selectElement = event.target as HTMLSelectElement;
+    const value = selectElement?.value;
+
+    if (!value) {
+      this.productosABuscar.set(this.productosTienda());
+      return;
+    }
+
+    const filtered = this.productosTienda().filter(
+      producto => producto.subcategoriaDTO.id === +value //+value -> convierte a number: '3' → 3
+    );
+
+    this.productosABuscar.set(filtered);
   }
 }

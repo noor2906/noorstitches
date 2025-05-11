@@ -7,7 +7,7 @@ select * from usuarios;
 
 select * from productos;
 
-select * from subcategorias where id_categoria = 4;
+select * from subcategorias where id_categoria = 2;
 
 select * from categorias;
 

@@ -22,10 +22,10 @@
 
             <!-- Filtros -->
             <div class="col-md-4">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Filtrar por categoria</option>
+                <select class="form-select" aria-label="Default select example" (change)="filtrarPorSubcategoria($event)">
+                    <option selected value="">Filtrar por categoria</option>
                     @for (sub of subcategorias(); track sub.id) {
-                        <option>{{sub.nombre}}</option>
+                        <option value="{{sub.id}}">{{sub.nombre}}</option>
                     }
                 </select>
             </div>

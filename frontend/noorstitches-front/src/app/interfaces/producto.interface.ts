@@ -1,3 +1,5 @@
+import { Subcategoria } from "./subcategoria.interface";
+
 export interface Producto {
   id: number | null | undefined;
   nombre: string | null | undefined;
@@ -13,4 +15,5 @@ export interface Producto {
   activo: boolean | undefined;
   esDestacado?: boolean;
   urlImagen: string | null;
+  subcategoriaDTO: Subcategoria;
 }

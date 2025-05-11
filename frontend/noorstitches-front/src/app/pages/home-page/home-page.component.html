@@ -58,7 +58,7 @@
             <p class="h3 text-center">Nuevos productos más destacados</p>
         </div>
 
-        <div class="grid-productos m-0 p-5 w-75">
+        <div class="grid-productos m-0 w-75">
             @for (producto of productosDestacables(); track producto.id) {
                 <div class="tarjeta-producto">
                     <div class="w-100" style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem;">
@@ -84,6 +84,19 @@
     </div>
 
     <!-- info compra tienda-->
-    <div class="row"></div>
+    <div class="row d-flex gap-5 p-5 justify-content-center">
+        <div class="col-4 w-25 d-flex flex-column gap-2 justify-content-center align-items-center">
+            <img src="../../../assets/svg/local_shipping.svg" alt="local shipping icon">
+            <p class="fw-medium text-morado-intermedio-1 text-center">ENVÍOS SOLO PENÍNSULA Y BALEARES</p>
+        </div>
+        <div class="col-4 w-25 d-flex flex-column gap-2 justify-content-center align-items-center">
+            <img src="../../../assets/svg/delivery_truck_speed.svg" alt="delivery truck icon">
+            <p class="fw-medium text-morado-intermedio-1 text-center">ENTREGA 24/48H EXCEPTO FESTIVOS Y FINES DE SEMANA</p>
+        </div>
+        <div class="col-4 w-25 d-flex flex-column gap-2 justify-content-center align-items-center">
+            <img src="../../../assets/svg/lock_person.svg" alt="lock person icon">
+            <p class="fw-medium text-morado-intermedio-1 text-center">GARANTÍA DE PAGO 100% SEGURO</p>
+        </div>
+    </div>
 
 </div>

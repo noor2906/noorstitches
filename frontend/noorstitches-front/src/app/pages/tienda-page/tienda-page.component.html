@@ -5,8 +5,29 @@
             <p class="h3">Tienda</p>
         </div>
 
+        <div class="row mb-4">
+
+            <!-- Buscador -->
+            <div class="col-md-4 d-flex gap-3">
+                <input class="form-control mr-sm-2" 
+                        type="search" 
+                        placeholder="Buscar productos..." 
+                        aria-label="Search"
+                        (input)="onSearch(txtSearch.value)"
+                        #txtSearch
+                >
+            </div>
+
+            <div class="col-4"></div>
+
+            <!-- Filtros -->
+            <div class="col-md-4">
+            </div>
+
+        </div>
+
         <div class="grid-productos m-0 w-100">
-            @for (producto of productosTienda(); track producto.id) {
+            @for (producto of productosABuscar(); track producto.id) {
                 <div class="tarjeta-producto">
                     <div class="w-100" style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem;">
                         @if (producto.urlImagen != null) {

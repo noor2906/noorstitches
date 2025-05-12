@@ -45,12 +45,12 @@ export class LoginPageComponent {
       next: (response) => {
         console.log('Login successful:', response);
         this.loginStatus.set('success');
-        this.alertService.success('Noorstitches', '¡Acceso correcto!.');
+        this.alertService.success('Noorstitches', '¡Acceso correcto!', '/home');
 
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('user', JSON.stringify(response));  // Guardamos la respuesta del backend (que contiene la info del usuario)
         // TODO: para usarlo -> const user = JSON.parse(localStorage.getItem('user') || '{}');
-        setTimeout(() => this.router.navigate(['/home']), 2000);
+        //setTimeout(() => this.router.navigate(['/home']), 2000);
       },
       error: (error) => {
         if (error.status === 401) {

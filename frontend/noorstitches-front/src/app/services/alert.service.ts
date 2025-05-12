@@ -1,19 +1,25 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AlertsService {
-  constructor() {}
+
+  router = inject(Router);
 
   // mensaje de éxito
-  success(title: string, text: string): void {
+  success(title: string, text: string, routering: string): void {
     Swal.fire({
       icon: 'success',
       title: title,
       text: text,
       confirmButtonText: 'Aceptar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate([routering]);
+      }
     });
   }
 

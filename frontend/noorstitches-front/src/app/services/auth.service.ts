@@ -31,6 +31,8 @@ export class AuthService {
   }
 
   //LOGOUT
+  //TODO: esto no debe estar aquí
+
   logout(): void {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('user');

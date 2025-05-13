@@ -41,7 +41,7 @@
                 Ésta categoria no tiene productos aún :(
             } @else {
                   @for (producto of productosABuscar(); track producto.id) {
-                    <div class="tarjeta-producto" [routerLink]="['/productos', producto.id]">
+                    <a class="tarjeta-producto text-decoration-none" [routerLink]="['/productos', producto.id]" [state]="{ origen: 'tienda' }">
                         <div class="w-100" style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem;">
                             @if (producto.urlImagen != null) {
                                 <img src={{producto.urlImagen}} alt={{producto.nombre}} class="img-fluid w-100 h-100 object-fit-cover">
@@ -55,7 +55,7 @@
                                 <p class="text-black bold fs-4">{{producto.precio}}€</p>
                             </div>
                         </div>
-                    </div> 
+                    </a> 
                 }
             }
 

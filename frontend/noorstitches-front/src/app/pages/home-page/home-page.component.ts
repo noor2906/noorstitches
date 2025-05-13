@@ -24,11 +24,10 @@ export class HomePageComponent implements OnInit {
   
   ngOnInit() {
     this.getCategorias();
-    this.getProductos();
+    this.getProductosDestacados();
 
     //Recogemos el id de la ruta
     const id = Number(this.route.snapshot.params['id']);
-    this.getProductoById(id);
   }
 
   getCategorias() {
@@ -43,14 +42,14 @@ export class HomePageComponent implements OnInit {
     );
   }
 
-  getProductos(){
+  getProductosDestacados(){
     this.productoService.getProductos().subscribe(
       (response) => {
         this.productosDestacables.set(response.filter(destacable => destacable.esDestacado == true));
         console.log(this.productosDestacables());
       },
       (error) => {
-        console.error("Error al cargar los productos: " + error)
+        console.error("Error al cargar los productos destacados: " + error)
       }
     )
   }
@@ -58,7 +57,7 @@ export class HomePageComponent implements OnInit {
   getProductoById(id: number){
     this.productoService.getProductoById(id).subscribe((producto) => {
       this.producto.set(producto);
-      console.log("Producto: " + producto.id);
+      console.log("Producto de id: " + producto.id);
     })
   }
   

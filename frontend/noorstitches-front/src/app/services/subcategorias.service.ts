@@ -11,9 +11,4 @@ export class SubcategoriaService {
     apiUrl: string = `${environment.apiUrl}/subcategorias`;
     http = inject(HttpClient);
 
-    //get categorias
-    getSubcategorias() {
-        return this.http.get<Subcategoria[]>(`${this.apiUrl}`);
-    }
-
 }

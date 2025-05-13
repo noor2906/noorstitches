@@ -16,7 +16,7 @@ INSERT INTO categorias (nombre) VALUES
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
 ('Lanas', 'lanas.webp', 1),     -- 1
 ('Hilos', 'acrilico.webp', 1), -- 2
-('Lanas&hilos_otros', 'otros.webp', 3); -- 3
+('Lanas&hilos_otros', 'otros.webp', 1); -- 3
 
 -- Para Handmade
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
@@ -24,7 +24,7 @@ INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES
 ('Decoración', 'decoracion.webp', 2),  -- 5
 ('Ropa', 'ropa.webp', 2),              -- 6 
 ('Accesorios', 'accesorios.webp', 2),  -- 7
-('Handmade_otros', 'otros.webp', 3); -- 8
+('Handmade_otros', 'otros.webp', 2); -- 8
 
 -- Para Mercería
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
@@ -38,7 +38,7 @@ INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
 ('Kit crochet', 'kit_ganchillo.webp', 4), -- 14
 ('Kit herramientas', 'kit_principiante.webp', 4), -- 15
-('Kits_otros', 'otros.webp', 3); -- 16
+('Kits_otros', 'otros.webp', 4); -- 16
 
 -- Productos metidos después
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
@@ -61,13 +61,13 @@ VALUES
 ('Dragón Random', 'Peluche de dragón hecho a mano con detalles coloridos.', 'dragon_radom.webp', 16.50, 10, 170.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 0, 4),
 ('Florecitas Hawaianas', 'Adorable conjunto de flores hawaianas de crochet, ideal para decorar.', 'florecitas_hawaianas.webp', 9.99, 15, 80.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 0, 5),
 ('Flowers', 'Hermosas flores de crochet para añadir un toque colorido a tu hogar.', 'flowers.webp', 11.99, 20, 90.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 1, 5),
-('Herramienta de Costura Ergonómica', 'Herramienta ergonómica para facilitar la costura y crochet.', 'herramienta_costura_ergonomica.webp', 15.00, 8, 200.00, '12 cm', 'Plástico y acero', NULL, 'Clover', 1, 0, 3),
+('Herramienta de Costura Ergonómica', 'Herramienta ergonómica para facilitar la costura y crochet.', 'herramienta_costura_ergonomica.webp', 15.00, 8, 200.00, '12 cm', 'Plástico y acero', NULL, 'Clover', 1, 0, 13),
 ('Hilo Grueso para Ganchillo Blanco', 'Hilo grueso de alta calidad, ideal para proyectos de crochet.', 'hilo_ganchillo_grueso_blanco.webp', 4.20, 50, 30.00, '100 m', 'Algodón', NULL, 'Noorstitches', 1, 0, 2),
 ('Kit Crochet Girasol', 'Kit completo para crear un hermoso girasol de crochet.', 'kit_crochet_girasol.webp', 25.00, 12, 250.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 0, 14),
 ('Kit Crochet Planta Colgante', 'Kit para tejer una planta colgante, ideal para decorar tu hogar.', 'kit_crochet_planta_colgante.webp', 27.50, 10, 270.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 0, 14),
 ('Kit Crochet Ramo', 'Kit para tejer un ramo de flores, perfecto para regalar.', 'kit_crochet_ramo.webp', 23.00, 14, 220.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 0, 14),
 ('Kit Ganchillo Avanzado', 'Kit avanzado para proyectos de crochet más complejos.', 'kit_ganchillo_avanzado.webp', 30.00, 8, 300.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 0, 15),
-('Kit Tulip Rose', 'Kit para hacer una rosa de tulipán de crochet.', 'kit_tulip_rose.webp', 22.00, 15, 200.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 0, 14),
+('Kit Tulip Rose', 'Kit para hacer una rosa de tulipán de crochet.', 'kit_tulip_rose.webp', 22.00, 15, 200.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 0, 15),
 ('Lana Wool Blanca', 'Lana de alta calidad para proyectos de crochet.', 'lana_wool_blanco.webp', 5.50, 50, 60.00, '100 g', 'Algodón', NULL, 'Noorstitches', 1, 0, 1),
 ('Lana Wool Morada', 'Lana morada para proyectos creativos de crochet.', 'lana_wool_morado.webp', 6.00, 45, 65.00, '100 g', 'Algodón', NULL, 'Noorstitches', 1, 0, 1),
 ('Lana Wool Negra', 'Lana negra, ideal para proyectos de crochet de contraste.', 'lana_wool_negro.webp', 5.80, 40, 60.00, '100 g', 'Algodón', NULL, 'Noorstitches', 1, 0, 1),

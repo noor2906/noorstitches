@@ -1,8 +1,12 @@
 import { Subcategoria } from './../../interfaces/subcategoria.interface';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ProductoService } from '../../services/producto.service';
 import { Producto } from '../../interfaces/producto.interface';
 import { SubcategoriaService } from '../../services/subcategorias.service';
+import { CategoriaService } from '../../services/categoria.service';
+import { CategoriaConSubcategorias } from '../../interfaces/categoriaconsubcategorias.interface';
+import { forkJoin, map } from 'rxjs';
+import { Categoria } from '../../interfaces/categoria.interface';
 
 @Component({
   selector: 'app-tienda-page',
@@ -13,15 +17,29 @@ import { SubcategoriaService } from '../../services/subcategorias.service';
 export class TiendaPageComponent implements OnInit{
 
   productoService = inject(ProductoService);
+  categoriaService = inject(CategoriaService);
   subcategoriaService = inject(SubcategoriaService);
+
 
   productosTienda = signal<Producto[]>([]);  // Productos completos
   productosABuscar = signal<Producto[]>([]); // Productos filtrados
-  subcategorias = signal<Subcategoria[]>([]); 
+  categoriasConSubcategorias = signal<CategoriaConSubcategorias[]>([]);
+  categorias = signal<Categoria[]>([]);
+
+  subcategoriaNombresNuevosMap: { 
+    [key: string]: string; 
+  } = {
+    'Lanas&hilos_otros': 'Otros (lanas&hilos)',
+    'Handmade_otros': 'Otros (handmade)',
+    'Merceria_otros': 'Otros (mercería)',
+    'Kits_otros': 'Otros (kits)',
+  };
+
 
   ngOnInit() {
     this.getProductosTienda();
-    this.cargaSubcategorias();
+    this.cargarCategorias();
+    this.cargarCategoriasConSubcategorias();
   }
 
   // Función para cargar los productos desde el servicio
@@ -47,16 +65,45 @@ export class TiendaPageComponent implements OnInit{
     this.productosABuscar.set(filtered);  // Actualizamos los productos a mostrar
   }
 
-  // Cargamos las subcategorías
-  cargaSubcategorias() {
-    this.subcategoriaService.getSubcategorias().subscribe(
+  // Cargamos las categorías
+  cargarCategorias() {
+    this.categoriaService.getCategorias().subscribe(
       (response) => {
-        this.subcategorias.set(response);
-        console.log("Subcategorias: " + response);
-        
-      }
-    )
+        this.categorias.set(response);
+
+        console.log("Categorias: " + response);
+      })
   }
+
+
+  // Cargamos las subcategorias por categoria
+  cargarCategoriasConSubcategorias() {
+    this.categoriaService.getCategorias().subscribe(categorias => {
+      const peticiones = categorias.map(cat =>
+        this.categoriaService.getSubcategoriasPorCategoria(cat.id).pipe(
+          map(subs => {
+           // Modificamos los nombres de las subcategorías usando el mapa
+            subs.forEach(sub => {
+              if (this.subcategoriaNombresNuevosMap[sub.nombre]) {
+                sub.nombre = this.subcategoriaNombresNuevosMap[sub.nombre];
+              }
+            });
+
+            return {
+              id: cat.id,
+              nombre: cat.nombre,
+              subcategorias: subs
+            };
+          })
+        )
+      );
+
+      forkJoin(peticiones).subscribe((resultado: CategoriaConSubcategorias[]) => {
+          this.categoriasConSubcategorias.set(resultado);
+      });
+    });
+  }
+
 
   filtrarPorSubcategoria(event: Event) {
 

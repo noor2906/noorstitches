@@ -15,4 +15,9 @@ export class ProductoService {
     getProductos() {
         return this.http.get<Producto[]>(`${this.apiUrl}`);
     }
+
+    //get productos by id
+    getProductoById(id: number) {
+      return this.http.get<Producto>(`${this.apiUrl}/${id}`)
+    }
 }

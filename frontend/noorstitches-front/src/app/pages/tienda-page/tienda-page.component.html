@@ -24,7 +24,7 @@
             <div class="col-md-4">
                 <select class="form-select" aria-label="Default select example" (change)="filtrarPorSubcategoria($event)">
                     <option selected value="">Filtrar por categoria</option>
-                    @for (categoria of categoriasConSubcategorias(); track categoria.id) {
+                    @for (categoria of categoriasConSubcategorias(); track categoria.id) { 
                         <optgroup [label]="categoria.nombre">
                             @for (sub of categoria.subcategorias; track sub.id) {
                                 <option [value]="sub.id">{{ sub.nombre }}</option>
@@ -41,7 +41,7 @@
                 Ésta categoria no tiene productos aún :(
             } @else {
                   @for (producto of productosABuscar(); track producto.id) {
-                    <div class="tarjeta-producto">
+                    <div class="tarjeta-producto" [routerLink]="['/productos', producto.id]">
                         <div class="w-100" style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem;">
                             @if (producto.urlImagen != null) {
                                 <img src={{producto.urlImagen}} alt={{producto.nombre}} class="img-fluid w-100 h-100 object-fit-cover">

@@ -7,10 +7,11 @@ import { CategoriaService } from '../../services/categoria.service';
 import { CategoriaConSubcategorias } from '../../interfaces/categoriaconsubcategorias.interface';
 import { forkJoin, map } from 'rxjs';
 import { Categoria } from '../../interfaces/categoria.interface';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-tienda-page',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './tienda-page.component.html',
   styleUrl: './tienda-page.component.css'
 })

@@ -2,10 +2,11 @@ import { Producto } from './../../interfaces/producto.interface';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ProductoService } from '../../services/producto.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-producto-page',
-  imports: [],
+  imports: [MatIcon],
   templateUrl: './producto-page.component.html',
   styleUrl: './producto-page.component.css'
 })

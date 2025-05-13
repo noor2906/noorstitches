@@ -12,3 +12,8 @@
   background-color: var(--morado-intermedio-1);
   border-radius: 999px; 
 }
+
+input.form-control:focus, select:focus {
+  border-color: var(--morado-intermedio-1) !important; /* por ejemplo, morado */
+  box-shadow: 0 0 0 0.25rem var(--morado-intermedio-2) !important;
+}

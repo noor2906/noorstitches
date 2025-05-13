@@ -112,6 +112,16 @@
     }
 }
 
+.btnConIconoReverse:hover {
+    background-color: var(--blanco);
+    color: var(--morado-intermedio-1);
+    border: 2px solid var(--morado-intermedio-1);
+    
+    mat-icon {
+        color: var(--morado-intermedio-1);
+    }
+}
+
 .btnSinIcono {
     background-color: var(--morado-intermedio-1);
     color: var(--blanco);

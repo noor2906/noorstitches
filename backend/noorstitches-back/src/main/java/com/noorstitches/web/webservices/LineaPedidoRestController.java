@@ -73,7 +73,7 @@ public class LineaPedidoRestController {
 		lineaPedidoDTO = lpService.updateCantidadProducto(lineaPedidoDTO, cantidadProducto);
 		
 		if(lineaPedidoDTO == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
 			return new ResponseEntity<>(lineaPedidoDTO, HttpStatus.OK);
 		}

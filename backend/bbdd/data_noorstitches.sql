@@ -1,5 +1,6 @@
 INSERT INTO usuarios (nombre, apellidos, email, passwd, foto_perfil, telefono) 
 VALUES 
+('Noor', 'Stitches', 'noorstitches@gmail.com', '123456admin', 'noorstitches.png', '+34123456789'),
 ('Juan', 'Pérez García', 'juan.perez@email.com', '12345abcdefg', 'juan.png', '+34123456789'),
 ('Laura', 'Gómez Sánchez', 'laura.gomez@email.com', '67890hijklmn', 'laura.png', '+34987654321'),
 ('Carlos', 'López Martínez', 'carlos.lopez@email.com', '13579zyxwvu', 'carlos.png', '+34911223344'),

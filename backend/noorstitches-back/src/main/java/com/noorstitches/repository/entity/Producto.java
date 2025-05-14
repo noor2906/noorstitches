@@ -37,9 +37,6 @@ public class Producto {
 	@Column(name = "precio")	
 	private Float precio;
 	
-	@Column(name = "stock")	
-	private int stock;
-	
 	@Column(name = "peso")	
 	private Float peso;
 	

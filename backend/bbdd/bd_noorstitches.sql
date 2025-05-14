@@ -28,15 +28,6 @@ CREATE TABLE subcategorias (
     FOREIGN KEY (id_categoria) REFERENCES categorias(id)
 );
 
-
-/*
-CREATE TABLE marcas (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
-    descripcion VARCHAR(255)
-);
-*/
-
 -- Tabla productos
 CREATE TABLE productos (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -44,7 +35,6 @@ CREATE TABLE productos (
     descripcion TEXT,
     imagen VARCHAR(255) NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
-    stock INT DEFAULT 0,
     peso DECIMAL(6, 2), -- opcional, en gramos
     longitud VARCHAR(255), -- opcional, en metros o cm
     material VARCHAR(255), -- opcional: algodón, acrílico, etc.

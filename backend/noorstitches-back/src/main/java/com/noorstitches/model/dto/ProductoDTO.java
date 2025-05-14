@@ -24,7 +24,6 @@ public class ProductoDTO implements Serializable {
 	private String imagen;
 	private String urlImagen;
 	private Float precio;
-	private int stock;	
 	private Float peso;
 	private String longitud;
 	private String material;	
@@ -56,7 +55,6 @@ public class ProductoDTO implements Serializable {
     	
     	
     	productoDTO.setPrecio(p.getPrecio());
-    	productoDTO.setStock(p.getStock());
     	productoDTO.setPeso(p.getPeso());
     	productoDTO.setLongitud(p.getLongitud());
     	productoDTO.setMaterial(p.getMaterial());
@@ -81,7 +79,6 @@ public class ProductoDTO implements Serializable {
     	p.setDescripcion(pDTO.getDescripcion());
     	p.setImagen(pDTO.getImagen());
     	p.setPrecio(pDTO.getPrecio());
-    	p.setStock(pDTO.getStock());
     	p.setPeso(pDTO.getPeso());
     	p.setLongitud(pDTO.getLongitud());
     	p.setMaterial(pDTO.getMaterial());

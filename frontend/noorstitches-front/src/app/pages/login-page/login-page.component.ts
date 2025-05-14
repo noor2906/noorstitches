@@ -47,10 +47,11 @@ export class LoginPageComponent {
         this.loginStatus.set('success');
         this.alertService.success('Noorstitches', '¡Acceso correcto!', '/home');
 
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('user', JSON.stringify(response));  // Guardamos la respuesta del backend (que contiene la info del usuario)
-        // TODO: para usarlo -> const user = JSON.parse(localStorage.getItem('user') || '{}');
-        //setTimeout(() => this.router.navigate(['/home']), 2000);
+        localStorage.setItem('isLoggedIn', 'true'); //TODO: Averiguar que es esto
+        if (response.id !== undefined && response.id !== null) {
+          localStorage.setItem('idUser', response.id.toString());
+        }
+
       },
       error: (error) => {
         if (error.status === 401) {

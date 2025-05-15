@@ -61,12 +61,13 @@ export class ProductoPageComponent implements OnInit {
    * Incrementamos/Decrementamos la cantidad en el input para que no salgan del rango permitido [1-5]
    * También actualiza la signal `cantidad` para mantener la sincronización.
    */
+  
   incrementarCantidad(input: HTMLInputElement): void {
     const actual = parseInt(input.value, 10);
     if (actual < 5) {
       const nuevaCantidad = actual + 1;
       input.value = String(nuevaCantidad);
-      this.cantidadProducto.set(nuevaCantidad); // <-- ACTUALIZA la signal
+      this.cantidadProducto.set(nuevaCantidad); 
     }
   }
 
@@ -75,7 +76,7 @@ export class ProductoPageComponent implements OnInit {
     if (actual > 1) {
       const nuevaCantidad = actual - 1;
       input.value = String(nuevaCantidad);
-      this.cantidadProducto.set(nuevaCantidad); // <-- ACTUALIZA la signal
+      this.cantidadProducto.set(nuevaCantidad); 
     }
   }
 
@@ -169,7 +170,8 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
       // 2.1 Crear nuevo pedido
       this.carritoService.crearPedido(this.idUser()).subscribe({
         next: (nuevoPedido) => {
-          this.ultimoPedido.set(nuevoPedido);
+          console.log("Nuevo pedido: ", nuevoPedido);
+          
           // 2.2 Crear primera línea con el nuevo pedido
           this.crearLineaDePedido(cantidadInput, idProducto, nuevoPedido.id!);
         },
@@ -177,15 +179,16 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
       });
 
     } else if (ultimo.estado === "pendiente") {
-      // 3. Pedido pendiente -> revisar líneas
+      // 3. Pedido pendiente -> revisar líneas de pedido
       this.pedidoService.findLineasPedidoByPedido(ultimo.id!).subscribe({
         next: (lineas) => {
           this.lineasPedidoByPedido.set(lineas);
 
-          const lineaExistente = lineas.find(lp => lp.producto?.id === idProducto);
-
+          const lineaExistente = this.lineasPedidoByPedido().find(lp => lp.productoDTO?.id == idProducto);
+          
+          //TODO: revisar a partir de aquí
           if (lineaExistente) {
-            const nuevaCantidad = lineaExistente.cantidad! + cantidadInput;
+            const nuevaCantidad = lineaExistente.cantidad! + cantidadInput; // 2 + 5 = 7
 
             if (nuevaCantidad <= 5) {
               // 3.1 Actualizar cantidad si <= 5
@@ -195,7 +198,7 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
               });
             } else {
               // 3.2 Mostrar alerta si pasa de 5
-              alert("No se puede agregar más de 5 unidades de este producto.");
+              alert("No se puede agregar más de 5 unidades de este producto."); //TODO: cambiar por sweet alert!!!!
             }
 
           } else {

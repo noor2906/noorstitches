@@ -1,8 +1,8 @@
 import { Producto } from "./producto.interface";
 
 export interface LineaPedido {
-  id: number | null | undefined;
+  id: number;
   cantidad: number | null | undefined;
   importe: number | null | undefined;
-  producto: Producto | null | undefined;
+  productoDTO: Producto;
 }

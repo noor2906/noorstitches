@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.noorstitches.model.dto.CategoriaDTO;
 import com.noorstitches.model.dto.LineaPedidoDTO;
 import com.noorstitches.model.dto.PedidoDTO;
+import com.noorstitches.model.dto.ProductoDTO;
 import com.noorstitches.service.LineaPedidoService;
 import com.noorstitches.service.PedidoService;
+import com.noorstitches.service.ProductoService;
 
 @RestController
 @RequestMapping("/lineaspedido")
@@ -33,6 +35,9 @@ public class LineaPedidoRestController {
 	
 	@Autowired
 	private PedidoService pedidoService;
+	
+	@Autowired
+	private ProductoService productoService;
 	
 	// Listar las líneas de pedido 
 	@GetMapping("")
@@ -81,8 +86,8 @@ public class LineaPedidoRestController {
 
 	
 	// Guardar línea de pedido en un pedido
-	@PostMapping("/add/{idPedido}")
-	public ResponseEntity<LineaPedidoDTO> add(@RequestBody LineaPedidoDTO lineaPedidoDTO, @PathVariable("idPedido") Long idPedido) {
+	@PostMapping("/add/pedidos/{idPedido}/productos/{idProducto}")
+	public ResponseEntity<LineaPedidoDTO> add(@RequestBody LineaPedidoDTO lineaPedidoDTO, @PathVariable("idPedido") Long idPedido, @PathVariable("idProducto") Long idProducto) {
 
 		log.info(LineaPedidoRestController.class.getSimpleName() + " - add: Salvamos los datos de la línea de pedido: " + lineaPedidoDTO.toString());
 
@@ -91,14 +96,22 @@ public class LineaPedidoRestController {
 		pedidoDTO = pedidoService.findById(pedidoDTO);
 		
 		lineaPedidoDTO.setPedidoDTO(pedidoDTO);
+		
+		ProductoDTO productoDTO = new ProductoDTO();
+		productoDTO.setId(idProducto);
+		productoDTO = productoService.findById(productoDTO);
+		
+		lineaPedidoDTO.setProductoDTO(productoDTO);
+		
 		lineaPedidoDTO = lpService.save(lineaPedidoDTO);
 
 		if(lineaPedidoDTO != null) {
 			return new ResponseEntity<>(lineaPedidoDTO, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}	
+	
 
 	// Actualización de líneas de pedido
 	@PutMapping("/update")

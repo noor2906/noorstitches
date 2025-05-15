@@ -40,10 +40,10 @@ export class LineaPedidoService {
       switchMap((producto) => {
         console.log('Producto obtenido:', producto);
         const lineaPedido = {
-          cantidad: cantidadInput,
-          producto: producto
+          importe: producto.precio!*cantidadInput,
+          cantidad: cantidadInput
         };
-        return this.http.post<LineaPedido>(`${this.apiUrlLineasPedido}/add/${idPedido}`, lineaPedido);
+        return this.http.post<LineaPedido>(`${this.apiUrlLineasPedido}/add/pedidos/${idPedido}/productos/${idProducto}`, lineaPedido);
       })
     );
   }

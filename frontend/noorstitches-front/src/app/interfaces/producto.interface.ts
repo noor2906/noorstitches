@@ -1,7 +1,7 @@
 import { Subcategoria } from "./subcategoria.interface";
 
 export interface Producto {
-  id: number;
+  id: number | null | undefined;
   nombre: string | null | undefined;
   descripcion: string | null | undefined;
   imagen: string | undefined;

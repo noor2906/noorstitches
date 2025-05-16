@@ -163,7 +163,6 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
   // 1. Traer pedidos del usuario
   this.pedidoService.findPedidosByUser(this.idUser()).subscribe((response) => {
     const ultimo = response.pop() || null;
-    this.ultimoPedido.set(ultimo);
 
     // 2. Evaluar estado del último pedido
     if (!ultimo || ultimo.estado === "completado" || ultimo.estado === "cancelado") {
@@ -187,12 +186,12 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
           const lineaExistente = this.lineasPedidoByPedido().find(lp => lp.productoDTO?.id == idProducto);
           
           //TODO: revisar a partir de aquí
-          if (lineaExistente) {
-            const nuevaCantidad = lineaExistente.cantidad! + cantidadInput; // 2 + 5 = 7
+          if (lineaExistente && lineaExistente.cantidad != undefined && lineaExistente.cantidad != null) {
+            const nuevaCantidad = lineaExistente.cantidad + cantidadInput; // 2 + 5 = 7
 
             if (nuevaCantidad <= 5) {
               // 3.1 Actualizar cantidad si <= 5
-              this.lineaPedidoService.updateCantidadProductoLineaPedido(cantidadInput, lineaExistente.id!).subscribe({
+              this.lineaPedidoService.updateCantidadProductoLineaPedido(nuevaCantidad, lineaExistente.id!).subscribe({
                 next: (res) => console.log('Cantidad actualizada', res),
                 error: (err) => console.error('Error al actualizar cantidad', err)
               });

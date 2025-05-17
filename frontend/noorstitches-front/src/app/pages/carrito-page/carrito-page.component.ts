@@ -1,13 +1,14 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { PerdidoService } from '../../services/pedidos.service';
 import { Pedido } from '../../interfaces/pedido.interface';
 import { LineaPedido } from '../../interfaces/lineaPedido.interface';
 import { MatIcon } from '@angular/material/icon';
 import { LineaPedidoService } from '../../services/lineapedido.service';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-carrito-page',
-  imports: [MatIcon],
+  imports: [MatIcon, ReactiveFormsModule],
   templateUrl: './carrito-page.component.html',
   styleUrl: './carrito-page.component.css'
 })
@@ -21,6 +22,8 @@ export class CarritoPageComponent implements OnInit {
   ultimoPedido = signal<Pedido | null>(null);
   listaLineasPedidos = signal<LineaPedido[]>([]);
 
+  @ViewChild('inputCantidad') cantidadInput!: ElementRef<HTMLInputElement>;
+
   
   ngOnInit(): void {
     this.findPedidoByUser();
@@ -32,25 +35,31 @@ export class CarritoPageComponent implements OnInit {
    * También actualiza la signal `cantidad` para mantener la sincronización.
    */
 
-  incrementarCantidad(input: HTMLInputElement): void {
-    const actual = parseInt(input.value, 10);
-    if (actual < 5) {
-      const nuevaCantidad = actual + 1;
-      input.value = String(nuevaCantidad);
-      this.cantidadProducto.set(nuevaCantidad); // <-- ACTUALIZA la signal
+  // Control para el input de cantidad
+  inputCantidad = new FormControl(1, {
+    nonNullable: true,
+    validators: [Validators.min(1), Validators.max(5)]
+  });
+
+ // Métodos para incrementar/decrementar cantidad
+  incrementarCantidad(linea: LineaPedido) {
+    if (linea.cantidad !== null && linea.cantidad !== undefined) {
+      if (linea.cantidad < 5) {
+        const nuevaCantidad = linea.cantidad + 1;
+        this.updateCantidad(linea, nuevaCantidad);
+      }
     }
   }
 
-  decrementarCantidad(input: HTMLInputElement): void {
-    const actual = parseInt(input.value, 10);
-    if (actual > 1) {
-      const nuevaCantidad = actual - 1;
-      input.value = String(nuevaCantidad);
-      this.cantidadProducto.set(nuevaCantidad); // <-- ACTUALIZA la signal
+  decrementarCantidad(linea: LineaPedido) {
+
+    if (linea.cantidad !== null && linea.cantidad !== undefined) {
+      if (linea.cantidad > 1) {
+        const nuevaCantidad = linea.cantidad - 1;
+        this.updateCantidad(linea, nuevaCantidad);
+      }
     }
   }
-
-
   
   findPedidoByUser(){
     this.pedidoService.findPedidosByUser(this.idUser()).subscribe(
@@ -75,11 +84,50 @@ export class CarritoPageComponent implements OnInit {
 
 
   eliminarLineaPedido(idLineaPedido: number) {
-    this.lineaPedidoService.eliminarLineaPedido(idLineaPedido).subscribe(
-      (response) => {
-        console.log(response);
+    this.lineaPedidoService.eliminarLineaPedido(idLineaPedido).subscribe({
+       next: () => {
+          console.log("Linea de pedido borrada");
+                     
+        },
+        error: (err) => console.error('Error al eliminar:', err)
+    })
+
+    window.location.reload(); //TODO: buscar otra solucion
+  }
+
+ updateCantidad(linea: LineaPedido, nuevaCantidad: number) {
+    this.listaLineasPedidos.update(lineas => 
+      lineas.map(l => 
+        l.id === linea.id ? {...l, cantidad: nuevaCantidad} : l
+      )
+    );
+
+    // Actualización en el backend
+    this.lineaPedidoService.updateCantidadProductoLineaPedido(nuevaCantidad, linea.id).subscribe({
+      next: () => {
+        console.log("Cantidad actualizada");
+        // Actualizar el importe total del pedido
+        if (this.ultimoPedido()?.id) {
+          this.pedidoService.findPedidosByUser(this.idUser()).subscribe({
+            next: (pedidos) => {
+              const pedidoActualizado = pedidos.find(p => p.id === this.ultimoPedido()?.id);
+              if (pedidoActualizado) {
+                this.ultimoPedido.set(pedidoActualizado);
+              }
+            }
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al actualizar:', err);
+        // Revertir en caso de error
+        this.listaLineasPedidos.update(lineas => 
+          lineas.map(l => 
+            l.id === linea.id ? {...l, cantidad: linea.cantidad} : l
+          )
+        );
       }
-    )
+    });
   }
 
 

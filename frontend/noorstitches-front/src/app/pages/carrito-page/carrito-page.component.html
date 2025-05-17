@@ -43,7 +43,7 @@
                 <button
                   type="button"
                   class="btn btn-outline-secondary btn-sm"
-                  (click)="decrementarCantidad(cantidadInput)"
+                 (click)="decrementarCantidad(lineaPedido)"
                 >
                   -
                 </button>
@@ -55,11 +55,12 @@
                   max="5"
                   readonly
                   #cantidadInput
+                  [value]="lineaPedido.cantidad" 
                 />
                 <button
                   type="button"
                   class="btn btn-outline-secondary btn-sm"
-                  (click)="incrementarCantidad(cantidadInput)"
+                   (click)="incrementarCantidad(lineaPedido)"
                 >
                   +
                 </button>

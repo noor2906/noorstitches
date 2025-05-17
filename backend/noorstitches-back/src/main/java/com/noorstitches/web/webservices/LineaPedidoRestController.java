@@ -135,7 +135,7 @@ public class LineaPedidoRestController {
 
 	// Borrar una línea de pedido
 	@DeleteMapping("/delete/{idLineaPedido}")
-	public ResponseEntity<String> delete(@PathVariable("idLineaPedido") Long idLineaPedido) {
+	public ResponseEntity delete(@PathVariable("idLineaPedido") Long idLineaPedido) {
 
 		log.info(LineaPedidoRestController.class.getSimpleName() + " - delete: Borramos la línea de pedido: " + idLineaPedido);
 
@@ -143,9 +143,13 @@ public class LineaPedidoRestController {
 		lineaPedidoDTO.setId(idLineaPedido);
 		lineaPedidoDTO = lpService.findById(lineaPedidoDTO);
 
-		lpService.delete(lineaPedidoDTO);
+		int response = lpService.delete(lineaPedidoDTO);
 
-		return new ResponseEntity<>("Línea de pedido borrada satisfactoriamente", HttpStatus.OK);
+		if(response == 1) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 
 	}
 }

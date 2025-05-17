@@ -82,18 +82,28 @@ export class CarritoPageComponent implements OnInit {
     )
   }
 
+eliminarLineaPedido(idLineaPedido: number) {
+    // 1. Eliminación optimista (actualizamos la UI primero)
+    this.listaLineasPedidos.update(lineas => 
+        lineas.filter(l => l.id !== idLineaPedido)
+    );
 
-  eliminarLineaPedido(idLineaPedido: number) {
+    // 2. Llamada al servicio para eliminar en el backend
     this.lineaPedidoService.eliminarLineaPedido(idLineaPedido).subscribe({
-       next: () => {
-          console.log("Linea de pedido borrada");
-                     
+        next: () => {
+            console.log("Línea eliminada correctamente");
         },
-        error: (err) => console.error('Error al eliminar:', err)
-    })
-
-    window.location.reload(); //TODO: buscar otra solucion
-  }
+        error: (err) => {
+            console.error('Error al eliminar:', err);
+            // Opcional: Mostrar mensaje de error al usuario
+            alert('No se pudo eliminar el producto. Por favor intenta nuevamente.');
+            
+            // 3. Si quieres, puedes recargar los datos como último recurso
+            
+            //this.findPedidoByUser();
+        }
+    });
+}
 
  updateCantidad(linea: LineaPedido, nuevaCantidad: number) {
     this.listaLineasPedidos.update(lineas => 

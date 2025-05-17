@@ -1,21 +1,24 @@
 import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { PerdidoService } from '../../services/pedidos.service';
+import { PedidoService } from '../../services/pedidos.service';
 import { Pedido } from '../../interfaces/pedido.interface';
 import { LineaPedido } from '../../interfaces/lineaPedido.interface';
 import { MatIcon } from '@angular/material/icon';
 import { LineaPedidoService } from '../../services/lineapedido.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrito-page',
-  imports: [MatIcon, ReactiveFormsModule],
+  imports: [MatIcon, PrecioEuroPipe],
   templateUrl: './carrito-page.component.html',
   styleUrl: './carrito-page.component.css'
 })
 export class CarritoPageComponent implements OnInit {
 
-  pedidoService = inject(PerdidoService);
+  pedidoService = inject(PedidoService);
   lineaPedidoService = inject(LineaPedidoService);
+  router = inject(Router);
 
   idUser = signal(Number(localStorage.getItem("idUser"))); 
   cantidadProducto = signal<number>(1); // Cantidad inicial
@@ -140,6 +143,10 @@ eliminarLineaPedido(idLineaPedido: number) {
     });
   }
 
+
+  seguirComprando(){
+    this.router.navigate(["/tienda"]);
+  }
 
   //TODO: finalizarCompra(Pedido)
   

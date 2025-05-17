@@ -1,9 +1,0 @@
-.link-active:hover {
-    text-decoration: underline;
-    color: var(--morado-intermedio-2);
-}
-
-.link-activo {
-    text-decoration: underline;
-    color: var(--morado-intermedio-1);
-}

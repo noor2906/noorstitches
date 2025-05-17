@@ -1,69 +1,151 @@
-<div class="container my-5 p-5 separacion-header-home">
-  <div class="row">
-    <!-- Pedido Section -->
-    <div class="col-md-8">
-      <h3 class="mb-4">Tu Carrito</h3>
-
-      @if (listaLineasPedidos().length == 0) {
-      <div class="d-flex justify-content-center align-content-center">
-        <p class="text-black">No hay items en tu carrito :(</p>
+<div class="container py-5 separacion-header-home">
+  <div class="row p-0 m-0 divider-con-borde mb-5">
+    <p class="h3">Tu Carrito</p>
+  </div>
+  <div class="row g-4">
+    <!-- Sección de Productos -->
+    <div class="col-lg-8">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <span></span>
+        <span class="badge bg-morado-intermedio-1 text-blanco rounded-pill"
+          >{{ listaLineasPedidos().length }} productos</span
+        >
       </div>
-      } @for (lineaPedido of listaLineasPedidos(); track lineaPedido.id) {
-      <div class="card mb-2">
-        <div class="row g-0">
-          <div class="col-3">
-            <img
-              [src]="lineaPedido.productoDTO.urlImagen"
-              class="img-fluid rounded-start"
-              [alt]="lineaPedido.productoDTO.nombre"
-            />
-          </div>
-          <div class="col-9">
-            <div class="card-body py-2 px-3">
-              <div class="d-flex justify-content-between align-items-start">
-                <h6 class="card-title mb-1">
-                  {{ lineaPedido.productoDTO.nombre }}
-                </h6>
-                <button
-                  class="btn btn-sm text-danger p-0"
-                  (click)="eliminarLineaPedido(lineaPedido.id)"
-                >
-                  <mat-icon class="text-rojo">delete</mat-icon>
-                </button>
+
+      <!-- Mensaje de carrito vacío -->
+      @if (listaLineasPedidos().length == 0) {
+      <div class="card border-morado-intermedio-1 p-5 text-center">
+        <div class="py-4">
+          <mat-icon
+            style="
+              font-size: 3rem;
+              height: 3rem;
+              width: 3rem;
+              color: var(--morado-intermedio-1);
+            "
+            >shopping_cart_off</mat-icon
+          >
+          <p class="mt-3 mb-0 medium text-morado-oscuro">
+            No hay productos en tu carrito :(
+          </p>
+          <button
+            class="btnSinIcono mt-4 mx-auto d-block"
+            style="width: auto; padding: 8px 24px"
+            (click)="seguirComprando()"
+          >
+            Seguir comprando
+          </button>
+        </div>
+      </div>
+      }
+
+      <!-- Lista de productos -->
+      @for (lineaPedido of listaLineasPedidos(); track lineaPedido.id) {
+      <div class="card mb-3 border-morado-intermedio-1 overflow-hidden">
+        <div class="card-body p-0">
+          <div class="row g-0">
+            <!-- Imagen del producto -->
+            <div
+              class="col-3 col-md-2 bg-morado-claro d-flex align-items-center justify-content-center p-3"
+            >
+              <img
+                [src]="lineaPedido.productoDTO.urlImagen"
+                class="img-fluid rounded"
+                [alt]="lineaPedido.productoDTO.nombre"
+                style="max-height: 100px; object-fit: contain"
+              />
+            </div>
+
+            <!-- Información del producto -->
+            <div class="col-6 col-md-7 p-3">
+              <div class="d-flex flex-column h-100">
+                <div>
+                  <h5 class="card-title mb-1 bold text-morado-oscuro">
+                    {{ lineaPedido.productoDTO.nombre }}
+                  </h5>
+                  <p
+                    class="card-text small text-morado-oscuro mb-2 text-truncate"
+                  >
+                    {{ lineaPedido.productoDTO.descripcion }}
+                  </p>
+                </div>
+
+                <!-- Selector de cantidad -->
+                <div class="mt-auto d-flex align-items-center gap-3">
+                  <div class="input-group input-group-sm" style="width: 110px">
+                    <button
+                      class="btn btnConIcono border-morado-intermedio-1 text-morado-intermedio-1"
+                      style="border-radius: 8px 0 0 8px"
+                      (click)="decrementarCantidad(lineaPedido)"
+                    >
+                      <mat-icon
+                        class="text-morado-intermedio-1"
+                        style="
+                          font-size: 18px;
+                          height: 18px;
+                          width: 18px;
+                          line-height: 18px;
+                        "
+                        >remove</mat-icon
+                      >
+                    </button>
+                    <input
+                      type="text"
+                      class="form-control text-center border-morado-intermedio-1 text-morado-oscuro medium"
+                      [value]="lineaPedido.cantidad"
+                      readonly
+                      style="border-left: 0; border-right: 0"
+                    />
+                    <button
+                      class="btn btnConIcono border-morado-intermedio-1 text-morado-intermedio-1"
+                      style="border-radius: 0 8px 8px 0"
+                      (click)="incrementarCantidad(lineaPedido)"
+                    >
+                      <mat-icon
+                        class="text-morado-intermedio-1"
+                        style="
+                          font-size: 18px;
+                          height: 18px;
+                          width: 18px;
+                          line-height: 18px;
+                        "
+                        >add</mat-icon
+                      >
+                    </button>
+                  </div>
+
+                  <div class="text-end">
+                    <button
+                      class="btn btn-sm btn-link text-danger p-0"
+                      (click)="eliminarLineaPedido(lineaPedido.id)"
+                    >
+                      <mat-icon
+                        class="text-rojo"
+                        style="font-size: 24px; height: 24px; width: 24px"
+                        >delete_outline</mat-icon
+                      >
+                    </button>
+                  </div>
+                </div>
               </div>
-              <p class="card-text small mb-1">
-                {{ lineaPedido.productoDTO.descripcion }}
-              </p>
-              <p class="card-text mb-1">
-                <small class="text-muted"
-                  >Precio: {{ lineaPedido.productoDTO.precio }}</small
-                >
-              </p>
-              <div class="input-group input-group-sm" style="max-width: 120px">
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary btn-sm"
-                 (click)="decrementarCantidad(lineaPedido)"
-                >
-                  -
-                </button>
-                <input
-                  type="number"
-                  class="form-control form-control-sm text-center"
-                  value="1"
-                  min="1"
-                  max="5"
-                  readonly
-                  #cantidadInput
-                  [value]="lineaPedido.cantidad" 
-                />
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary btn-sm"
-                   (click)="incrementarCantidad(lineaPedido)"
-                >
-                  +
-                </button>
+            </div>
+
+            <!-- Precio y acciones -->
+            <div
+              class="col-3 col-md-3 bg-opacity-25 p-3 d-flex flex-column justify-content-between"
+            >
+              <div class="text-end mt-auto">
+                <div class="text-morado-oscuro small">Precio unitario:</div>
+                <div class="medium text-morado-intermedio-1">
+                  {{ lineaPedido.productoDTO.precio ?? 0 | precioEuro }}
+                </div>
+                <div class="text-morado-oscuro small mt-1">Subtotal:</div>
+                <div class="bold text-morado-intermedio-1">
+                  {{
+                    (lineaPedido.productoDTO?.precio ?? 0) *
+                      (lineaPedido?.cantidad ?? 0) | precioEuro
+                  }}
+                </div>
               </div>
             </div>
           </div>
@@ -72,17 +154,49 @@
       }
     </div>
 
-    <!-- Resumen Section -->
-    <div class="col-md-4">
-      <h3 class="mb-4">Resumen del Pedido</h3>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">
-            Total de Productos: {{ listaLineasPedidos().length }}
-          </h5>
-          <hr />
-          <h5 class="card-title">Total: {{ ultimoPedido()?.importe }}</h5>
-          <button class="btn btn-primary w-100 mt-3">Finalizar Pago</button>
+    <!-- Sección de Resumen -->
+    <div class="col-lg-4">
+      <div
+        class="card border-morado-intermedio-1 sticky-md-top"
+        style="top: 20px"
+      >
+        <div class="card-header bg-morado-intermedio-1 text-blanco border-0">
+          <h4 class="bold mb-0">Resumen del Pedido</h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between mb-3">
+            <span class="text-morado-oscuro">Subtotal</span>
+            <span class="medium text-morado-intermedio-1">{{
+              ultimoPedido()?.importe ?? 0 | precioEuro
+            }}</span>
+          </div>
+
+          <div class="d-flex justify-content-between mb-3">
+            <span class="text-morado-oscuro">Envío</span>
+            <span class="medium text-morado-intermedio-1">Gratis</span>
+          </div>
+
+          <div class="d-flex justify-content-between mb-3">
+            <span class="text-morado-oscuro">Impuestos</span>
+            <span class="medium text-morado-intermedio-1">Incluidos</span>
+          </div>
+
+          <hr class="my-4" style="border-color: var(--morado-intermedio-2)" />
+
+          <div class="d-flex justify-content-between mb-4">
+            <span class="bold text-morado-oscuro">Total</span>
+            <span class="extrabold text-morado-intermedio-1 fs-5">{{
+              ultimoPedido()?.importe ?? 0 | precioEuro
+            }}</span>
+          </div>
+
+          <button
+            class="btn btnConIconoReverse w-100 d-flex justify-content-center gap-3 bg-morado-intermedio-1 border-morado-intermedio-1 text-blanco"
+            type="button"
+          >
+            <mat-icon class="text-blanco">paypal</mat-icon>
+            Finalizar Compra
+          </button>
         </div>
       </div>
     </div>

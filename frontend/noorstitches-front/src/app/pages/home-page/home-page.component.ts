@@ -5,10 +5,11 @@ import { MatIcon } from '@angular/material/icon';
 import { ProductoService } from '../../services/producto.service';
 import { Producto } from '../../interfaces/producto.interface';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 
 @Component({
   selector: 'app-home-page',
-  imports: [RouterLink],
+  imports: [RouterLink, PrecioEuroPipe],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })

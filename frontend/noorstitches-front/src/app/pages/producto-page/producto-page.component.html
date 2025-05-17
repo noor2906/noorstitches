@@ -1,86 +1,122 @@
 <div class="container-fluid p-5 separacion-header-home">
+  <div class="row justify-content-center align-items-center">
+    <!-- Imagen del producto -->
+    <div class="col-5 d-flex flex-column justify-content-start gap-4 m-0">
+      <button
+        class="btn btnConIcono d-flex justify-content-center gap-3 border-morado-intermedio-1 text-morado-intermedio-1"
+        type="button"
+        style="width: 15%"
+        (click)="volver()"
+      >
+        <mat-icon class="text-morado-intermedio-1">arrow_back_ios</mat-icon>
+        Volver
+      </button>
 
-  
-
-    <div class="row justify-content-center align-items-center">
-
-        <!-- Imagen del producto -->
-        <div class="col-5 d-flex flex-column justify-content-start gap-4 m-0">
-           
-            <button class="btn btnConIcono d-flex justify-content-center gap-3 border-morado-intermedio-1 text-morado-intermedio-1" type="button" style="width: 15%" (click)="volver()">
-                <mat-icon class="text-morado-intermedio-1">arrow_back_ios</mat-icon>
-                Volver
-            </button>
-            
-            <img
-                [src]="producto()?.urlImagen"
-                alt="{{ producto()?.nombre }}"
-                class="img-fluid rounded-4 shadow-sm w-75 m-0"
-                style="object-fit: contain"
-            />
-        </div>
-
-        <!-- Info del producto -->
-        <div class="col-md-6 px-4">
-        <h2 class="fw-bold">{{ producto()?.nombre }}</h2>
-       
-        <p class="text-muted">{{ producto()?.descripcion }}</p>
-        <span class="badge bg-light text-secondary mb-2">
-            {{ producto()?.subcategoriaDTO?.nombre || 'Sin subcategoría' }}
-        </span>
-        <h3 class="bold text-morado-intermedio-1 my-3">{{ producto()?.precio }} €</h3>
-
-        <!-- Detalles del producto -->
-        <div class="mb-lg-5">
-            <div class="row gy-4">
-                <div class="col-6">
-                    <small class="text-uppercase text-muted">Marca</small>
-                    <div class="fw-medium">
-                    {{ producto()?.marca || "-"  }}
-                    </div>
-                </div>
-                <div class="col-6">
-                    <small class="text-uppercase text-muted">Material</small>
-                    <div class="fw-medium">{{ producto()?.material || "-" }}</div>
-                </div>
-                <div class="col-6">
-                    <small class="text-uppercase text-muted">Composición</small>
-                    <div class="fw-medium">{{ producto()?.composicion || "-" }}</div>
-                </div>
-                <div class="col-6">
-                    <small class="text-uppercase text-muted">Peso</small>
-                    <div class="fw-medium">{{ producto()?.peso || "-"  }} g</div>
-                </div>
-                <div class="col-6">
-                    <small class="text-uppercase text-muted">Longitud</small>
-                    <div class="fw-medium">{{ producto()?.longitud || "-" }}</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Cantidad + Botón -->
-        <div class="d-flex align-items-end gap-5">
-            <!-- TODO: cambiar estilo al btn de cantidad-->
-            <div class="input-group w-25">
-                <button type="button" class="btn btn-outline-secondary" (click)="decrementarCantidad(cantidadInput)">-</button>
-                <input
-                    type="number"
-                    class="form-control text-center"
-                    value="1"
-                    min="1"
-                    max="5"
-                    readonly
-                    #cantidadInput
-                />
-                <button type="button" class="btn btn-outline-secondary" (click)="incrementarCantidad(cantidadInput)">+</button>
-            </div>
-
-            <button class="btn btnConIconoReverse d-flex justify-content-center gap-3 bg-morado-intermedio-1 border-morado-intermedio-1 text-blanco" type="button" (click)="anyadirAlCarrito(producto()?.id!, cantidadInput.value )">
-            <mat-icon class="text-blanco">shopping_cart</mat-icon>
-                Añadir al carrito
-            </button>
-        </div>
-        </div>
+      <img
+        [src]="producto()?.urlImagen"
+        alt="{{ producto()?.nombre }}"
+        class="img-fluid rounded-4 shadow-sm w-75 m-0"
+        style="object-fit: contain"
+      />
     </div>
 
+    <!-- Info del producto -->
+    <div class="col-md-6 px-4">
+      <h2 class="fw-bold">{{ producto()?.nombre }}</h2>
+
+      <p class="text-muted">{{ producto()?.descripcion }}</p>
+      <span class="badge bg-light text-secondary mb-2">
+        {{ producto()?.subcategoriaDTO?.nombre || "Sin subcategoría" }}
+      </span>
+      <h3 class="bold text-morado-intermedio-1 my-3">
+        {{ (producto()?.precio ?? 0) | precioEuro }}
+      </h3>
+
+      <!-- Detalles del producto -->
+      <div class="mb-lg-5">
+        <div class="row gy-4">
+          <div class="col-6">
+            <small class="text-uppercase text-muted">Marca</small>
+            <div class="fw-medium">
+              {{ producto()?.marca || "-" }}
+            </div>
+          </div>
+          <div class="col-6">
+            <small class="text-uppercase text-muted">Material</small>
+            <div class="fw-medium">{{ producto()?.material || "-" }}</div>
+          </div>
+          <div class="col-6">
+            <small class="text-uppercase text-muted">Composición</small>
+            <div class="fw-medium">{{ producto()?.composicion || "-" }}</div>
+          </div>
+          <div class="col-6">
+            <small class="text-uppercase text-muted">Peso</small>
+            <div class="fw-medium">{{ producto()?.peso || "-" }} g</div>
+          </div>
+          <div class="col-6">
+            <small class="text-uppercase text-muted">Longitud</small>
+            <div class="fw-medium">{{ producto()?.longitud || "-" }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cantidad + Botón -->
+      <div class="d-flex gap-5">
+        <div class="input-group input-group-sm w-25">
+          <button
+            class="btn btnConIcono border-morado-intermedio-1 text-morado-intermedio-1 d-flex justify-content-center align-items-center"
+            style="border-radius: 8px 0 0 8px;"
+            (click)="decrementarCantidad(cantidadInput)"
+          >
+            <mat-icon
+              class="text-morado-intermedio-1"
+              style="
+                font-size: 18px;
+                height: 18px;
+                width: 18px;
+                line-height: 18px;
+              "
+              >remove</mat-icon
+            >
+          </button>
+
+          <input
+            type="number"
+            class="form-control text-center border-morado-intermedio-1 text-morado-oscuro medium"
+            value="1"
+            min="1"
+            max="5"
+            readonly
+            #cantidadInput
+          />
+              <button
+            class="btn btnConIcono border-morado-intermedio-1 text-morado-intermedio-1 d-flex justify-content-center align-items-center"
+            style="border-radius: 0 8px 8px 0;"
+            (click)="incrementarCantidad(cantidadInput)"
+          >
+            <mat-icon
+              class="text-morado-intermedio-1"
+              style="
+                font-size: 18px;
+                height: 18px;
+                width: 18px;
+                line-height: 18px;
+              "
+              >add</mat-icon
+            >
+          </button>
+
+        </div>
+
+        <button
+          class="btn btnConIconoReverse d-flex justify-content-center gap-3 bg-morado-intermedio-1 border-morado-intermedio-1 text-blanco"
+          type="button"
+          (click)="anyadirAlCarrito(producto()?.id!, cantidadInput.value)"
+        >
+          <mat-icon class="text-blanco">shopping_cart</mat-icon>
+          Añadir al carrito
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

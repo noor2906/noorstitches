@@ -8,10 +8,11 @@ import { CategoriaConSubcategorias } from '../../interfaces/categoriaconsubcateg
 import { forkJoin, map } from 'rxjs';
 import { Categoria } from '../../interfaces/categoria.interface';
 import { RouterLink } from '@angular/router';
+import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 
 @Component({
   selector: 'app-tienda-page',
-  imports: [RouterLink],
+  imports: [RouterLink, PrecioEuroPipe],
   templateUrl: './tienda-page.component.html',
   styleUrl: './tienda-page.component.css'
 })

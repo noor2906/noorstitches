@@ -1,0 +1,45 @@
+/* Estilos adicionales para complementar los existentes */
+
+/* Animación suave para los botones */
+.btn {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Efecto hover para las tarjetas de productos */
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Personalización de la badge */
+.badge {
+  font-weight: 500;
+  padding: 0.5em 1em;
+}
+
+/* Personalización de inputs */
+.form-control:focus {
+  border-color: var(--morado-intermedio-1);
+  box-shadow: 0 0 0 0.25rem rgba(132, 87, 177, 0.25);
+}
+
+/* Personalización de botones de cantidad */
+.input-group .btn:hover {
+  background-color: var(--morado-intermedio-1);
+  color: var(--blanco);
+}
+
+/* Ajustes para los iconos de Material */
+mat-icon {
+  vertical-align: middle;
+}
+
+.input-group mat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

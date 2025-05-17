@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 import { LineaPedido } from '../interfaces/lineaPedido.interface';
 
 @Injectable({providedIn: 'root'})
-export class PerdidoService {
+export class PedidoService {
   //TODO: cambiar nombre clase
-    
+
   apiUrlPedidos: string = `${environment.apiUrl}/pedidos`;
   apiUrlUsuarios: string = `${environment.apiUrl}/usuarios`;
 
@@ -19,9 +19,9 @@ export class PerdidoService {
   findPedidosByUser(idUsuario: number): Observable<Pedido[]> {
     return this.http.get<Pedido[]>(`${this.apiUrlUsuarios}/${idUsuario}/pedidos`);
   }
-  
+
   findLineasPedidoByPedido(idPedido: number): Observable<LineaPedido[]> {
     return this.http.get<LineaPedido[]>(`${this.apiUrlPedidos}/${idPedido}/lineaspedido`);
   }
-    
+
 }

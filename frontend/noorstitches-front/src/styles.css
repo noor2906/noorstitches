@@ -143,12 +143,46 @@
     border-style: none;
 }
 
+/* Ajuste para el botón de eliminar */
+.btn-link mat-icon {
+  transition: transform 0.2s ease;
+}
+
+.btn-link:hover mat-icon {
+  transform: scale(1.1);
+}
+
+
+/* LINKS -------------------------------- */
+
+.link-active:hover {
+    text-decoration: underline;
+    color: var(--morado-intermedio-2);
+}
+
+.link-activo {
+    text-decoration: underline;
+    color: var(--morado-intermedio-1);
+}
+
 /* PRODUCT-CARD -------------------------------- */
 
 .tarjeta-producto {
   width: 18rem;
   height: 25em;
+  border-radius: 8px;
 }
+
+/* Efecto hover para las tarjetas de productos */
+.tarjeta-producto {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta-producto:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+
 
 .grid-productos {
   display: flex;
@@ -166,3 +200,24 @@
 .separacion-header-home {
     margin-top: 118px !important;
 }
+
+.divider-con-borde {
+  position: relative;
+}
+
+.divider-con-borde::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3.5px; 
+  width: 100%;
+  background-color: var(--morado-intermedio-1);
+  border-radius: 999px; 
+}
+
+input.form-control:focus, select:focus {
+  border-color: var(--morado-intermedio-1) !important; /* por ejemplo, morado */
+  box-shadow: 0 0 0 0.25rem var(--morado-intermedio-2) !important;
+}
+

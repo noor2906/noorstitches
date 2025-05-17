@@ -5,13 +5,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { CarritoService } from '../../services/carrito.service';
 import { Pedido } from '../../interfaces/pedido.interface';
-import { PerdidoService } from '../../services/pedidos.service';
+import { PedidoService } from '../../services/pedidos.service';
 import { LineaPedido } from '../../interfaces/lineaPedido.interface';
 import { LineaPedidoService } from '../../services/lineapedido.service';
+import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 
 @Component({
   selector: 'app-producto-page',
-  imports: [MatIcon],
+  imports: [MatIcon, PrecioEuroPipe],
   templateUrl: './producto-page.component.html',
   styleUrl: './producto-page.component.css',
 })
@@ -20,7 +21,7 @@ export class ProductoPageComponent implements OnInit {
   route = inject(ActivatedRoute);
   router = inject(Router);
   carritoService = inject(CarritoService);
-  pedidoService = inject(PerdidoService);
+  pedidoService = inject(PedidoService);
   lineaPedidoService = inject(LineaPedidoService);
 
   producto = signal<Producto | null>(null);
@@ -80,83 +81,6 @@ export class ProductoPageComponent implements OnInit {
     }
   }
 
-  //lógica para añadir al carrito
-  //TODO: limitar cantidad: traerme la cantidad que tiene la linea de pedido del producto que intento meter
-    // si tiene + de 5 sacar un popup diciendo que está limitado a 5 productos
-//   anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
-  
-//     //sacamos los pedidos del usuario y nos guardamos el último
-//     this.pedidoService.findPedidosByUser(this.idUser()).subscribe((response)=> {
-//       this.ultimoPedido.set(response.pop() || null);
-//     })
-
-//     //COMPROBAMOS EL ESTADO DEL PEDIDO
-//     //  pedido -> null -> nuevo pedido
-//     //  "completado" || "cancelado" -> nuevo pedido
-//     //  "pendiente" -> creamos SOLO la nueva linea de pedido
-
-//     if (this.ultimoPedido() == null || this.ultimoPedido()?.estado == "completado" || this.ultimoPedido()?.estado == "cancelado"){
-//        //Creamos un pedido nuevo de estado "pendiente" -> add de pedido(idUser)
-//        this.carritoService.crearPedido(this.idUser()).subscribe( {
-//         next: (response) => { console.log(response)},
-//         error: (err) => console.error('Error al crear el pedido', err)
-//        });
-
-//        //Crear primera linea de pedido con el producto al que hemos clickado
-//        const cantidadInput = this.cantidadProducto();
-//        this.crearLineaDePedido(cantidadInput, idProducto, this.ultimoPedido()?.id!);
-//     } else if (this.ultimoPedido()?.estado == "pendiente") {
-
-//       alert("el ultimo pedido es pendiente")
-//       //si el producto ya existe en alguna de las lineas de pedido -> aumentar cantidad
-
-//       // nos traemos las líneas de pedido del pedido
-//       this.pedidoService.findLineasPedidoByPedido(this.ultimoPedido()?.id!).subscribe({
-//         next: (response) => {
-//           this.lineasPedidoByPedido.set(response);
-//           console.log(response);
-//         },
-//         error: (err) => console.error('Error al recoger las lineas de pedido del pedido', err)
-//       });
-
-//       //recorremos la lista de lineas de pedido buscando si existe el producto ya dentro
-//       this.lineasPedidoByPedido().forEach(lineaPedido => {
-
-//         //si encontramos una linea cuyo producto sea el mismo que intentamos meter
-//         if (lineaPedido.producto?.id == idProducto){
-//           //si la cantidad de esa línea de pedido es menor que 5
-//           if (lineaPedido.cantidad! < 5) {
-
-//              // Calculamos la nueva cantidad sumando la cantidad actual con la cantidad que el usuario quiere añadir
-//             const nuevaCantidad = lineaPedido.cantidad! + Number(cantidadProducto);
-      
-//             // Si la nueva cantidad no supera el límite de 5
-//             if (nuevaCantidad <= 5) {
-//               //hacemos update de la cantidad mínima hasta 5
-//               //updateCantidad(idLineaPedido)
-//               this.lineaPedidoService.updateCantidadProductoLineaPedido(Number(cantidadProducto), lineaPedido.id!).subscribe({
-//                 next: (response) => {
-//                 console.log(response);
-//                 },
-//                 error: (err) => console.error('Error al recoger las lineas de pedido del pedido', err)
-//               })
-//             } else {
-//               // Si la nueva cantidad supera el límite, mostramos un mensaje de error o una alerta
-//               //TODO: sweet alert con este mensaje quitar el alert!!!!
-//               alert("No se puede agregar más de 5 unidades de este producto.");
-//               console.log('No se puede agregar más de 5 unidades de este producto.');
-//             }
-//           }
-//         } else { //sino -> crear nueva linea de pedido
-//           //Crear linea de pedido nueva
-//           const cantidadInput = this.cantidadProducto();
-//           this.crearLineaDePedido(cantidadInput, idProducto, this.ultimoPedido()?.id!);
-//         }
-//       });
-
-//   }
-// }
-
 anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
   const cantidadInput = Number(cantidadProducto);
 
@@ -185,7 +109,6 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
 
           const lineaExistente = this.lineasPedidoByPedido().find(lp => lp.productoDTO?.id == idProducto);
           
-          //TODO: revisar a partir de aquí
           if (lineaExistente && lineaExistente.cantidad != undefined && lineaExistente.cantidad != null) {
             const nuevaCantidad = lineaExistente.cantidad + cantidadInput; // 2 + 5 = 7
 

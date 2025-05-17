@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.noorstitches.model.dto.LineaPedidoDTO;
 import com.noorstitches.repository.dao.LineaPedidoRepository;
+import com.noorstitches.repository.dao.PedidoRepository;
 import com.noorstitches.repository.entity.LineaPedido;
 
 @Service
@@ -20,6 +21,10 @@ public class LineaPedidoServiceImpl implements LineaPedidoService {
 
 	@Autowired
 	private LineaPedidoRepository lpRepository;
+	
+	@Autowired
+	private PedidoServiceImpl pedidoService;
+	
 
 	@Override
 	public List<LineaPedidoDTO> findAll() {
@@ -52,17 +57,26 @@ public class LineaPedidoServiceImpl implements LineaPedidoService {
 	public LineaPedidoDTO save(LineaPedidoDTO lineaPedidoDTO) {
 		log.info(LineaPedidoServiceImpl.class.getSimpleName() + " - save: Salvamos la línea de pedido: " + lineaPedidoDTO.toString());
 
+		log.info("PEDIDO DE LP:                      " + lineaPedidoDTO.getPedidoDTO());
+		
+		
 		LineaPedido linea = LineaPedidoDTO.convertToEntity(lineaPedidoDTO);
+		
+		recalcularImporteLineaPedido(linea);  
+		
+		log.info("Antes               " + linea);
+		
 		linea = lpRepository.save(linea);
+		
+		log.info("Después               " + linea.getPedido());
 
-		Optional<LineaPedido> l = lpRepository.findById(linea.getId());
-
-		LineaPedidoDTO lineaInsertada = new LineaPedidoDTO();
-
-		if (l.isPresent()) {
-			lineaInsertada = LineaPedidoDTO.convertToDTO(l.get());
-		}
-
+		
+		pedidoService.calcularImportePedido(linea.getPedido());
+				
+	    LineaPedidoDTO lineaInsertada = LineaPedidoDTO.convertToDTO(linea);
+	    
+	    log.info("LineaIsertada pedido:                        )" + lineaInsertada.toString());
+		
 		return lineaInsertada;
 	}
 
@@ -72,12 +86,14 @@ public class LineaPedidoServiceImpl implements LineaPedidoService {
 
 		Optional<LineaPedido> lineapedido = lpRepository.findById(lineaPedidoDTO.getId());
 		lineapedido.get().setCantidad(cantidadProducto);
+		
+		recalcularImporteLineaPedido(lineapedido.get());  
+
 		lpRepository.save(lineapedido.get());
 
+		pedidoService.calcularImportePedido(lineapedido.get().getPedido());
 
-		if (lineapedido.isPresent()) {
-			lineaPedidoDTO = LineaPedidoDTO.convertToDTO(lineapedido.get());
-		}
+		lineaPedidoDTO = LineaPedidoDTO.convertToDTO(lineapedido.get());	
 
 		return lineaPedidoDTO;
 	}
@@ -88,6 +104,8 @@ public class LineaPedidoServiceImpl implements LineaPedidoService {
 
 		if (lpRepository.existsById(lineaPedidoDTO.getId())) {
 			lpRepository.deleteById(lineaPedidoDTO.getId());
+			LineaPedido lp = LineaPedidoDTO.convertToEntity(lineaPedidoDTO);
+			pedidoService.calcularImportePedido(lp.getPedido());
 			return 1;
 		} else {
 			return 0;
@@ -110,5 +128,11 @@ public class LineaPedidoServiceImpl implements LineaPedidoService {
 		}
 		
 		return listaLineasPedidoDTO;
+	}
+	
+	
+	public void recalcularImporteLineaPedido(LineaPedido lineaPedido) {
+		float importe = lineaPedido.getProducto().getPrecio() * lineaPedido.getCantidad();
+		lineaPedido.setImporte(importe);
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.noorstitches.model.enums.EnumEstadoPedido;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -43,8 +44,7 @@ public class Pedido {
 	@Enumerated(EnumType.STRING)
 	private EnumEstadoPedido estado;
 	
-	@OneToMany
-	@JoinColumn(name = "id_pedido")
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	@ToString.Exclude
 	private List<LineaPedido> listaLineasPedido;
 	

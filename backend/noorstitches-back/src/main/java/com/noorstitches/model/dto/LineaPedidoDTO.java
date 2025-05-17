@@ -5,13 +5,20 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.noorstitches.repository.entity.LineaPedido;
+import com.noorstitches.web.webservices.LineaPedidoRestController;
 
 @Data
 public class LineaPedidoDTO implements Serializable {
+	
+	private static final Logger log = LoggerFactory.getLogger(LineaPedidoDTO.class);		
+
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
@@ -27,6 +34,9 @@ public class LineaPedidoDTO implements Serializable {
 
 	// Convierte una entidad a un objeto DTO
 	public static LineaPedidoDTO convertToDTO(LineaPedido lp) {
+		
+		log.info("Pedido que llega entity: " + lp.getPedido());
+
 
 		// Creamos la LineaPedidoDTO y asignamos los valores básicos
 		LineaPedidoDTO lpDTO = new LineaPedidoDTO();
@@ -36,6 +46,8 @@ public class LineaPedidoDTO implements Serializable {
 
 		lpDTO.setProductoDTO(ProductoDTO.convertToDTO(lp.getProducto()));
 		lpDTO.setPedidoDTO(PedidoDTO.convertToDTO(lp.getPedido()));
+		
+		log.info("Pedido que llega DTO: " + lpDTO.getPedidoDTO());
 
 		// Retorna el DTO
 		return lpDTO;

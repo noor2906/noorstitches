@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.noorstitches.model.dto.PedidoDTO;
 import com.noorstitches.model.enums.EnumEstadoPedido;
+import com.noorstitches.repository.dao.LineaPedidoRepository;
 import com.noorstitches.repository.dao.PedidoRepository;
 import com.noorstitches.repository.entity.LineaPedido;
 import com.noorstitches.repository.entity.Pedido;
@@ -23,6 +24,9 @@ public class PedidoServiceImpl implements PedidoService {
 
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private LineaPedidoRepository lineaPedidoRepository;
 
 	@Override
 	public List<PedidoDTO> findAll() {
@@ -109,7 +113,7 @@ public class PedidoServiceImpl implements PedidoService {
 		
 		pedido.get().setFecha(new Date());
 		pedido.get().setEstado(EnumEstadoPedido.completado);
-		pedido = calcularImportePedido(pedido);
+		//pedido.get().setImporte(calcularImportePedido(pedido));
 		
 		pedidoRepository.save(pedido.get());
 
@@ -120,25 +124,24 @@ public class PedidoServiceImpl implements PedidoService {
 		return pedidoDTO;
 	}
 
-	public Optional<Pedido> calcularImportePedido(Optional<Pedido> pedido) {
-				
-		List<LineaPedido> listaLineasPedido = pedido.get().getListaLineasPedido();
+
+	public void calcularImportePedido(Pedido pedido) {
 		
-		int importeTotal = 0;
+		List<LineaPedido> listaLineasPedido = new ArrayList<LineaPedido>();
+		
+		if (pedido.getId() != null) {
+			listaLineasPedido = lineaPedidoRepository.findAllByPedido(pedido.getId());
+		}
+		
+		float importeTotal = 0;
 		
 		for (LineaPedido lineaPedido : listaLineasPedido) {
 			importeTotal += lineaPedido.getImporte();
 		}
 		
-		pedido.get().setImporte(importeTotal);
-		
-		return pedido;
+		pedido.setImporte(importeTotal);
+
+		pedidoRepository.save(pedido);
 	}
-	
-	
-	
-	
-	
-	
 	
 }

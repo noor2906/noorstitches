@@ -104,6 +104,8 @@ public class LineaPedidoRestController {
 		lineaPedidoDTO.setProductoDTO(productoDTO);
 		
 		lineaPedidoDTO = lpService.save(lineaPedidoDTO);
+		
+		log.info("rest lineapedido:            " + lineaPedidoDTO.toString());
 
 		if(lineaPedidoDTO != null) {
 			return new ResponseEntity<>(lineaPedidoDTO, HttpStatus.OK);

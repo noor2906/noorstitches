@@ -47,4 +47,8 @@ export class LineaPedidoService {
       })
     );
   }
+
+  eliminarLineaPedido(idLineaPedido: number) {
+    return this.http.delete<LineaPedido>(`${this.apiUrlLineasPedido}/delete/${idLineaPedido}`);
+  }
 }

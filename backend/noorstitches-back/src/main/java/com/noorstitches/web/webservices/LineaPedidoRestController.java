@@ -141,6 +141,8 @@ public class LineaPedidoRestController {
 
 		LineaPedidoDTO lineaPedidoDTO = new LineaPedidoDTO();
 		lineaPedidoDTO.setId(idLineaPedido);
+		lineaPedidoDTO = lpService.findById(lineaPedidoDTO);
+
 		lpService.delete(lineaPedidoDTO);
 
 		return new ResponseEntity<>("Línea de pedido borrada satisfactoriamente", HttpStatus.OK);

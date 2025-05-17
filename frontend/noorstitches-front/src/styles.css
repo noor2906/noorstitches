@@ -8,6 +8,7 @@
     --morado-claro: #DCCDFB;
     --blanco: #FFFFFF;
     --negro: #000000;
+    --rojo: #FF4D50;
 }
 
 /* ESTILOS GLOBALES --------------------------------------- */
@@ -59,6 +60,10 @@
 
 .text-negro {
     color: var(--negro)
+}
+
+.text-rojo {
+    color: var(--rojo);
 }
 
 /* BACKGROUND COLOR ------------------------------- */

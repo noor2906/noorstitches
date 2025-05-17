@@ -1,6 +1,7 @@
 package com.noorstitches.model.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,9 @@ public class ProductoDTO implements Serializable {
 
 	@ToString.Exclude
 	private SubcategoriaDTO subcategoriaDTO;
+	
+	@ToString.Exclude
+	private List<LineaPedidoDTO> lineasPedidoDTO;
 
 	// Convierte una entidad a un objeto DTO
     public static ProductoDTO convertToDTO(Producto p) {

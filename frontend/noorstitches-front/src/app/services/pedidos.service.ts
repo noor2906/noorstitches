@@ -8,6 +8,7 @@ import { LineaPedido } from '../interfaces/lineaPedido.interface';
 
 @Injectable({providedIn: 'root'})
 export class PerdidoService {
+  //TODO: cambiar nombre clase
     
   apiUrlPedidos: string = `${environment.apiUrl}/pedidos`;
   apiUrlUsuarios: string = `${environment.apiUrl}/usuarios`;

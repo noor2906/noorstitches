@@ -1,81 +1,89 @@
 <div class="container my-5 p-5 separacion-header-home">
-    <div class="row">
-        <!-- Pedido Section -->
-        <div class="col-md-8">
-            <h3 class="mb-4">Tu Carrito</h3>
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="https://via.placeholder.com/150" class="img-fluid rounded-start" alt="Producto 1">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Producto 1</h5>
-                            <p class="card-text">Descripción breve del producto.</p>
-                            <p class="card-text"><small class="text-muted">Precio: $20.00</small></p>
-                            <!-- TODO: cambiar estilo al btn de cantidad-->
-                            <div class="input-group w-25">
-                                <button type="button" class="btn btn-outline-secondary" (click)="decrementarCantidad(cantidadInput)">-</button>
-                                <input
-                                    type="number"
-                                    class="form-control text-center"
-                                    value="1"
-                                    min="1"
-                                    max="5"
-                                    readonly
-                                    #cantidadInput
-                                />
-                                <button type="button" class="btn btn-outline-secondary" (click)="incrementarCantidad(cantidadInput)">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="row">
+    <!-- Pedido Section -->
+    <div class="col-md-8">
+      <h3 class="mb-4">Tu Carrito</h3>
 
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="https://via.placeholder.com/150" class="img-fluid rounded-start" alt="Producto 2">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Producto 2</h5>
-                            <p class="card-text">Descripción breve del producto.</p>
-                            <p class="card-text"><small class="text-muted">Precio: $15.00</small></p>
-                             <!-- TODO: cambiar estilo al btn de cantidad-->
-                              <!--TODO: hay que tener en cuenta que el selector ha de cambiar-->
-                            <div class="input-group w-25">
-                                <button type="button" class="btn btn-outline-secondary" (click)="decrementarCantidad(cantidadInput2)">-</button>
-                                <input
-                                    type="number"
-                                    class="form-control text-center"
-                                    value="1"
-                                    min="1"
-                                    max="5"
-                                    readonly
-                                    #cantidadInput2
-                                />
-                                <button type="button" class="btn btn-outline-secondary" (click)="incrementarCantidad(cantidadInput2)">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      @if (listaLineasPedidos().length == 0) {
+      <div class="d-flex justify-content-center align-content-center">
+        <p class="text-black">No hay items en tu carrito :(</p>
+      </div>
+      } @for (lineaPedido of listaLineasPedidos(); track lineaPedido.id) {
+      <div class="card mb-2">
+        <div class="row g-0">
+          <div class="col-3">
+            <img
+              [src]="lineaPedido.productoDTO.urlImagen"
+              class="img-fluid rounded-start"
+              [alt]="lineaPedido.productoDTO.nombre"
+            />
+          </div>
+          <div class="col-9">
+            <div class="card-body py-2 px-3">
+              <div class="d-flex justify-content-between align-items-start">
+                <h6 class="card-title mb-1">
+                  {{ lineaPedido.productoDTO.nombre }}
+                </h6>
+                <button
+                  class="btn btn-sm text-danger p-0"
+                  (click)="eliminarLineaPedido(lineaPedido.id)"
+                >
+                  <mat-icon class="text-rojo">delete</mat-icon>
+                </button>
+              </div>
+              <p class="card-text small mb-1">
+                {{ lineaPedido.productoDTO.descripcion }}
+              </p>
+              <p class="card-text mb-1">
+                <small class="text-muted"
+                  >Precio: {{ lineaPedido.productoDTO.precio }}</small
+                >
+              </p>
+              <div class="input-group input-group-sm" style="max-width: 120px">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-sm"
+                  (click)="decrementarCantidad(cantidadInput)"
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  class="form-control form-control-sm text-center"
+                  value="1"
+                  min="1"
+                  max="5"
+                  readonly
+                  #cantidadInput
+                />
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-sm"
+                  (click)="incrementarCantidad(cantidadInput)"
+                >
+                  +
+                </button>
+              </div>
             </div>
+          </div>
         </div>
-
-        <!-- Resumen Section -->
-        <div class="col-md-4">
-            <h3 class="mb-4">Resumen del Pedido</h3>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Total de Productos: 2</h5>
-                    <p class="card-text">Subtotal: $35.00</p>
-                    <p class="card-text">Envío: $5.00</p>
-                    <hr>
-                    <h5 class="card-title">Total: $40.00</h5>
-                    <button class="btn btn-primary w-100 mt-3">Proceder al Pago</button>
-                </div>
-            </div>
-        </div>
+      </div>
+      }
     </div>
+
+    <!-- Resumen Section -->
+    <div class="col-md-4">
+      <h3 class="mb-4">Resumen del Pedido</h3>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            Total de Productos: {{ listaLineasPedidos().length }}
+          </h5>
+          <hr />
+          <h5 class="card-title">Total: {{ ultimoPedido()?.importe }}</h5>
+          <button class="btn btn-primary w-100 mt-3">Finalizar Pago</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

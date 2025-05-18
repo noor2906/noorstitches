@@ -27,6 +27,13 @@ public class PayPalService {
 
     @Value("${paypal.api.url}")
     private String paypalApiUrl;
+    
+    @Value("${paypal.return.url}")
+    private String returnUrl;
+
+    @Value("${paypal.cancel.url}")
+    private String cancelUrl;
+
 
     private final ObjectMapper objectMapper;
 
@@ -53,15 +60,29 @@ public class PayPalService {
    
     public String createPayment(String amount, String currency, String description) throws IOException {
         String accessToken = getAccessToken();
-
         OkHttpClient client = new OkHttpClient();
 
         Map<String, Object> payment = new HashMap<>();
         payment.put("intent", "CAPTURE");
+
         Map<String, Object> amountDetails = new HashMap<>();
         amountDetails.put("currency_code", currency);
         amountDetails.put("value", amount);
-        payment.put("purchase_units", new Object[]{Map.of("amount", amountDetails, "description", description)});
+
+        payment.put("purchase_units", new Object[]{
+            Map.of("amount", amountDetails, "description", description)
+        });
+
+        // NUEVO: Añadimos las URLs de redirección
+        Map<String, Object> applicationContext = new HashMap<>();
+        applicationContext.put("return_url", returnUrl);
+        applicationContext.put("cancel_url", cancelUrl);
+        applicationContext.put("brand_name", "Noorstitches");
+        applicationContext.put("landing_page", "LOGIN");
+        applicationContext.put("user_action", "PAY_NOW");
+        applicationContext.put("shipping_preference", "NO_SHIPPING");
+
+        payment.put("application_context", applicationContext);
 
         String jsonRequest = objectMapper.writeValueAsString(payment);
 
@@ -79,9 +100,10 @@ public class PayPalService {
                 throw new RuntimeException("Error al crear el pago en PayPal: " + response);
             }
 
-            return response.body().string(); // Devuelve la respuesta como un JSON
+            return response.body().string();
         }
     }
+
 }
 
 

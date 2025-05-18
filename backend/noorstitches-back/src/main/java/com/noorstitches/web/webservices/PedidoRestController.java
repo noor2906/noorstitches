@@ -1,11 +1,13 @@
 package com.noorstitches.web.webservices;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,10 +19,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.noorstitches.configuration.PayPalResponse;
 import com.noorstitches.model.dto.LineaPedidoDTO;
 import com.noorstitches.model.dto.PedidoDTO;
 import com.noorstitches.model.dto.UsuarioDTO;
 import com.noorstitches.service.LineaPedidoService;
+import com.noorstitches.service.PayPalService;
 import com.noorstitches.service.PedidoService;
 import com.noorstitches.service.UsuarioService;
 
@@ -39,6 +45,8 @@ public class PedidoRestController {
 	@Autowired
 	private UsuarioService usuarioService;
 
+	@Autowired
+	private PayPalService paypalService;
 
 	// Listar los pedidos 
 	@GetMapping("")
@@ -144,21 +152,38 @@ public class PedidoRestController {
 	}
 
 	
-	// Finalizar compra
 	@PutMapping("/finalizarCompra")
-	public ResponseEntity<PedidoDTO> finalizarCompra(@RequestBody PedidoDTO pedidoDTO) {
+	public ResponseEntity<?> finalizarCompra(@RequestBody PedidoDTO pedidoDTO) {
+	    log.info("Finalizando pedido: " + pedidoDTO.getId());
 
-		log.info(PedidoRestController.class.getSimpleName() + "- finalizarCompra: Modificamos el estado y el importe del pedido: " + pedidoDTO.getId());
+	    pedidoDTO = pedidoService.findById(pedidoDTO);
+	    pedidoDTO = pedidoService.finalizarCompra(pedidoDTO);
 
-		pedidoDTO = pedidoService.findById(pedidoDTO);
-		pedidoDTO = pedidoService.finalizarCompra(pedidoDTO);
+	    if (pedidoDTO == null) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	    }
 
-		if (pedidoDTO == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>(pedidoDTO, HttpStatus.OK);
-		}
+	    try {
+	        // Crear el pago en PayPal y obtener la respuesta JSON
+	        String jsonResponse = paypalService.createPayment(
+	            String.valueOf(pedidoDTO.getImporte()),
+	            "EUR",
+	            "Compra en Noorstitches"
+	        );
+
+	        // Parsear JSON a un objeto PayPalResponse
+	        ObjectMapper mapper = new ObjectMapper();
+	        PayPalResponse payPalResponse = mapper.readValue(jsonResponse, PayPalResponse.class);
+
+	        return ResponseEntity.ok(payPalResponse);
+
+	    } catch (IOException e) {
+	        log.error("Error creando el pago en PayPal", e);
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar pago PayPal");
+	    }
 	}
+
+
 	
 	
 }

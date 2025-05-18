@@ -112,7 +112,6 @@ public class PedidoServiceImpl implements PedidoService {
 		Optional<Pedido> pedido = pedidoRepository.findById(pedidoDTO.getId());
 		
 		pedido.get().setFecha(new Date());
-		pedido.get().setEstado(EnumEstadoPedido.completado);
 		//pedido.get().setImporte(calcularImportePedido(pedido));
 		
 		pedidoRepository.save(pedido.get());
@@ -143,5 +142,38 @@ public class PedidoServiceImpl implements PedidoService {
 
 		pedidoRepository.save(pedido);
 	}
+
+	@Override
+	public PedidoDTO actualizarEstado(PedidoDTO pedidoDTO, String estado) {
+
+	    Optional<Pedido> pedidoOpt = pedidoRepository.findById(pedidoDTO.getId());
+
+	    if (!pedidoOpt.isPresent()) {
+	        return null; // o lanzar excepción si prefieres
+	    }
+
+	    Pedido pedido = pedidoOpt.get();
+	    pedido.setFecha(new Date());
+
+	    EnumEstadoPedido nuevoEstado;
+
+	    try {
+	        // Convertimos el string recibido a enum exacto
+	        nuevoEstado = EnumEstadoPedido.valueOf(estado.toLowerCase());
+	    } catch (IllegalArgumentException e) {
+	        // Si estado no es válido, lo ponemos en cancelado por defecto
+	        nuevoEstado = EnumEstadoPedido.cancelado;
+	    }
+
+	    pedido.setEstado(nuevoEstado);
+
+	    pedidoRepository.save(pedido);
+
+	    pedidoDTO = PedidoDTO.convertToDTO(pedido);
+
+	    return pedidoDTO;
+	}
+
+	
 	
 }

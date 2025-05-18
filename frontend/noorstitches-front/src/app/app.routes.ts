@@ -1,6 +1,3 @@
-import { PagoCanceladoPageComponent } from './pages/pago-cancelado-page/pago-cancelado-page.component';
-import { PagoExitosoPageComponent } from './pages/pago-exitoso-page/pago-exitoso-page.component';
-import { ProductoPageComponent } from './pages/producto-page/producto-page.component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -37,11 +34,7 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/preguntas-frecuentes-page/preguntas-frecuentes-page.component').then(m => m.PreguntasFrecuentesPageComponent)
     },
     {
-        path: 'pago-exitoso',
-        loadComponent: () => import('./pages/pago-exitoso-page/pago-exitoso-page.component').then(m => m.PagoExitosoPageComponent)
-    },
-    {
-        path: 'pago-cancelado',
-        loadComponent: () => import('./pages/pago-cancelado-page/pago-cancelado-page.component').then(m => m.PagoCanceladoPageComponent)
+        path: 'gestion-pago',
+        loadComponent: () => import('./pages/gestion-pago-page/gestion-pago-page.component').then(m => m.GestionPagoPageComponent)
     }
 ];

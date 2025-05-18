@@ -3,8 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Pedido } from '../interfaces/pedido.interface';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { LineaPedido } from '../interfaces/lineaPedido.interface';
+import { EnumEstadoPedido } from '../interfaces/enumEstado.interface';
 
 @Injectable({providedIn: 'root'})
 export class PedidoService {
@@ -38,5 +39,10 @@ export class PedidoService {
   findByIdPedido(idPedido: number) {
     return this.http.get<Pedido>(`${this.apiUrlPedidos}/${idPedido}`);
   }
+
+  actualizarEstado(estado: EnumEstadoPedido, pedido: Pedido | null): Observable<Pedido> {
+    return this.http.put<Pedido>(`${this.apiUrlPedidos}/actualizarEstado/${estado}`, pedido?.id);
+  }
+
 
 }

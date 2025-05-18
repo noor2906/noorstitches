@@ -25,6 +25,7 @@ import com.noorstitches.configuration.PayPalResponse;
 import com.noorstitches.model.dto.LineaPedidoDTO;
 import com.noorstitches.model.dto.PedidoDTO;
 import com.noorstitches.model.dto.UsuarioDTO;
+import com.noorstitches.repository.entity.Pedido;
 import com.noorstitches.service.LineaPedidoService;
 import com.noorstitches.service.PayPalService;
 import com.noorstitches.service.PedidoService;
@@ -151,13 +152,12 @@ public class PedidoRestController {
 		return new ResponseEntity<>("Pedido borrado satisfactoriamente", HttpStatus.OK);
 	}
 
-	
 	@PutMapping("/finalizarCompra")
 	public ResponseEntity<?> finalizarCompra(@RequestBody PedidoDTO pedidoDTO) {
 	    log.info("Finalizando pedido: " + pedidoDTO.getId());
 
 	    pedidoDTO = pedidoService.findById(pedidoDTO);
-	    pedidoDTO = pedidoService.finalizarCompra(pedidoDTO);
+//	    pedidoDTO = pedidoService.finalizarCompra(pedidoDTO);
 
 	    if (pedidoDTO == null) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -184,6 +184,28 @@ public class PedidoRestController {
 	}
 
 
-	
+	@PutMapping("/actualizarEstado/{estado}")
+	public ResponseEntity<PedidoDTO> actualizarEstado(@RequestBody Long idPedido, @PathVariable String estado) {
+	    log.info("Actualizar estado de pedido: " + idPedido + ", nuevo estado: " + estado);
+
+	    PedidoDTO pedidoDTO = new PedidoDTO();
+	    pedidoDTO.setId(idPedido);
+	    pedidoDTO = pedidoService.findById(pedidoDTO);
+
+	    if (pedidoDTO == null) {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+
+	    pedidoDTO = pedidoService.actualizarEstado(pedidoDTO, estado);
+
+	    if (pedidoDTO == null) {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    } else {
+	        pedidoDTO = pedidoService.save(pedidoDTO);
+	        return new ResponseEntity<>(pedidoDTO, HttpStatus.OK);
+	    }
+	}
+
+
 	
 }

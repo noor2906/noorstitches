@@ -142,7 +142,6 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
   });
 }
 
-
   crearLineaDePedido(cantidadInput: number, idProducto: number, idPedido: number) {
     this.lineaPedidoService.addLineaPedidoToPedido(cantidadInput, idProducto, idPedido).subscribe({
       next: (response) => {

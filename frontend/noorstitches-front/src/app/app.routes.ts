@@ -25,5 +25,13 @@ export const routes: Routes = [
     {
         path: 'carrito',
         loadComponent: () => import('./pages/carrito-page/carrito-page.component').then(m => m.CarritoPageComponent)
+    },
+    {
+        path: 'contactanos',
+        loadComponent: () => import('./pages/contact-page/contact-page.component').then(m => m.ContactPageComponent)
+    },
+    {
+        path: 'preguntasFrecuentes',
+        loadComponent: () => import('./pages/preguntas-frecuentes-page/preguntas-frecuentes-page.component').then(m => m.PreguntasFrecuentesPageComponent)
     }
 ];

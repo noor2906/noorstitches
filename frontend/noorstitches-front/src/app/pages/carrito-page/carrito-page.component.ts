@@ -92,7 +92,7 @@ eliminarLineaPedido(idLineaPedido: number) {
     // 1. Eliminación optimista (actualizamos la UI primero)
        this.listaLineasPedidos.update(lineas => {
       const actualizadas = lineas.filter(l => l.id !== idLineaPedido);
-      this.carritoService.actualizarLineasPedido(actualizadas); // 👈 actualizamos
+      this.carritoService.actualizarLineasPedido(actualizadas); 
       return actualizadas;
     });
 
@@ -120,7 +120,7 @@ eliminarLineaPedido(idLineaPedido: number) {
       const actualizadas = lineas.map(l => 
         l.id === linea.id ? { ...l, cantidad: nuevaCantidad } : l
       );
-      this.carritoService.actualizarLineasPedido(actualizadas); // 👈 actualizamos
+      this.carritoService.actualizarLineasPedido(actualizadas); 
       return actualizadas;
     });
 
@@ -152,11 +152,9 @@ eliminarLineaPedido(idLineaPedido: number) {
     });
   }
 
-
   seguirComprando(){
     this.router.navigate(["/tienda"]);
   }
-
 
   getTotalProductos(): number {
     return this.listaLineasPedidos().reduce((total, linea) => total + (linea.cantidad || 0), 0);

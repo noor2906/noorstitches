@@ -22,14 +22,6 @@ export class LineaPedidoService {
 
   //add de lineapedido(idPedido)
   crearLineaDePedido(idPedido: number, cantidad: number, producto: Producto): Observable<LineaPedido> {
-
-    //busco el pedido por id
-    this.pedidoService.findByIdPedido(idPedido).subscribe((response)=> {
-      if(response == null){
-        
-      }
-    })
-
     const lineaPedido = {
         importe: 0,
         cantidad: 1,

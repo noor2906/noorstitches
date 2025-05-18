@@ -5,6 +5,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CarritoService } from '../../../services/carrito.service';
 import { PedidoService } from '../../../services/pedidos.service';
 import { AuthService } from '../../../services/auth.service';
+import { AlertsService } from '../../../services/alert.service';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,8 @@ export class HeaderComponent implements OnInit {
   carritoService = inject(CarritoService);
   pedidoService = inject(PedidoService);
   authService = inject(AuthService);
+  alertService = inject(AlertsService);
+
   router = inject(Router);
 
   cantidadProductosCarrito = 0;
@@ -55,9 +58,20 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  logout() {
+  async logout() {
+    const confirmed = await this.alertService.confirm(
+      "Vas a abandonar Noorstitches 😢",
+      `¿Estás segurx de que quieres salir?\nSe cerrará tu sesión y se vaciará tu carrito.`,
+      "Sí",
+      "No",
+      "/"
+    );
+
+    if (!confirmed) return;
+
     this.authService.logout();
-    this.carritoService.actualizarLineasPedido([]); // Vaciar carrito
+    this.carritoService.actualizarLineasPedido([]);
     this.router.navigate(['/']);
   }
+
 }

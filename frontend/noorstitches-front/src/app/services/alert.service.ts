@@ -38,7 +38,8 @@ export class AlertsService {
     title: string,
     text: string,
     confirmButtonText: string = 'Sí',
-    cancelButtonText: string = 'Cancelar'
+    cancelButtonText: string = 'Cancelar',
+    routering: string
   ): Promise<boolean> {
     return Swal.fire({
       icon: 'warning',
@@ -47,7 +48,13 @@ export class AlertsService {
       showCancelButton: true,
       confirmButtonText: confirmButtonText,
       cancelButtonText: cancelButtonText,
-    }).then((result) => result.isConfirmed);
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate([routering]);
+        return true;
+      }
+      return false;
+    });
   }
 
   // información

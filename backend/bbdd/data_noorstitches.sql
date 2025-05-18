@@ -1,11 +1,8 @@
 INSERT INTO usuarios (nombre, apellidos, email, passwd, foto_perfil, telefono) 
 VALUES 
-('Noor', 'Stitches', 'noorstitches@gmail.com', '123456admin', 'noorstitches.png', '+34123456789'),
-('Juan', 'Pérez García', 'juan.perez@email.com', '12345abcdefg', 'juan.png', '+34123456789'),
-('Laura', 'Gómez Sánchez', 'laura.gomez@email.com', '67890hijklmn', 'laura.png', '+34987654321'),
-('Carlos', 'López Martínez', 'carlos.lopez@email.com', '13579zyxwvu', 'carlos.png', '+34911223344'),
-('Marta', 'Ruiz Fernández', 'marta.ruiz@email.com', '98765opqrst', 'marta.png', '+34987651234'),
-('Ana', 'Hernández Díaz', 'ana.hernandez@email.com', '24680abcdefg', 'ana.png', '+34876543210');
+('Admin', 'NoorStitches', 'noorstitches@gmail.com', '123456admin', 'noorstitches.png', '+34123456789'),
+('Juan', 'Pérez García', 'juan.perez@gmail.com', '123456abcdefg', 'juan.png', '+34123456789'),
+('Noor', 'Aloune Sagouma', 'nalosag@gmail.com', '123456abcdefg', 'noor.png', '+34876543210');
 
 INSERT INTO categorias (nombre) VALUES 
 ('LanasAndHilos'),
@@ -81,7 +78,7 @@ VALUES
 ('Organizador de Madera', 'Organizador de madera para guardar tus hilos y herramientas de costura.', 'organizador_madera.webp', 18.00, 500.00, '30 cm x 20 cm', 'Madera', NULL, 'Noorstitches', 1, 0, 13),
 ('Peluche Conejo Rosa', 'Peluche conejito rosa de crochet, ideal para regalar en cualquier ocasión.', 'peluche_conejo_rosa.webp', 15.99, 160.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 1, 4);
 
-
+/*
 INSERT INTO pedidos (id_usuario, fecha, importe)
 VALUES (1, NOW(), 30.0);  -- 4.99 * 2 + 19.95 = 29.93
 
@@ -90,3 +87,4 @@ INSERT INTO lineas_pedido (id_pedido, id_producto, cantidad, importe)
 VALUES 
 (1, 1, 2, 10.0),       -- 2 unidades de "Lana Cotton Soft"
 (1, 2, 1, 20.0);      -- 1 unidad de "Peluche Conejito Rosa"
+*/

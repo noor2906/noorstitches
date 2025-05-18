@@ -8,6 +8,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 import { Router } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
+import { PayPalService } from '../../services/paypal.service';
 
 @Component({
   selector: 'app-carrito-page',
@@ -20,18 +21,23 @@ export class CarritoPageComponent implements OnInit {
   pedidoService = inject(PedidoService);
   lineaPedidoService = inject(LineaPedidoService);
   carritoService = inject(CarritoService);
+  paypalService = inject(PayPalService);
   router = inject(Router);
 
   idUser = signal(Number(localStorage.getItem("idUser"))); 
   cantidadProducto = signal<number>(1); // Cantidad inicial
   ultimoPedido = signal<Pedido | null>(null);
   listaLineasPedidos = signal<LineaPedido[]>([]);
+  compraRealizada: boolean = false;
 
   @ViewChild('inputCantidad') cantidadInput!: ElementRef<HTMLInputElement>;
-
+  
   
   ngOnInit(): void {
     this.findPedidoByUser();
+    if(this.compraRealizada) {
+      this.limpiarCarrito();
+    }
   }
 
 
@@ -88,12 +94,12 @@ export class CarritoPageComponent implements OnInit {
     )
   }
 
-eliminarLineaPedido(idLineaPedido: number) {
-    // 1. Eliminación optimista (actualizamos la UI primero)
-       this.listaLineasPedidos.update(lineas => {
-      const actualizadas = lineas.filter(l => l.id !== idLineaPedido);
-      this.carritoService.actualizarLineasPedido(actualizadas); 
-      return actualizadas;
+    eliminarLineaPedido(idLineaPedido: number) {
+        // 1. Eliminación optimista (actualizamos la UI primero)
+          this.listaLineasPedidos.update(lineas => {
+          const actualizadas = lineas.filter(l => l.id !== idLineaPedido);
+          this.carritoService.actualizarLineasPedido(actualizadas); 
+          return actualizadas;
     });
 
 
@@ -160,6 +166,28 @@ eliminarLineaPedido(idLineaPedido: number) {
     return this.listaLineasPedidos().reduce((total, linea) => total + (linea.cantidad || 0), 0);
   }
 
-  //TODO: finalizarCompra(Pedido)
-  
+ finalizarCompra(pedido: Pedido) {
+  this.paypalService.finalizarCompra(pedido).subscribe({
+    next: (response: any) => {
+      console.log("Respuesta PayPal:", response);
+
+      if (response && response.links) {
+        const approveLink = response.links.find((link: any) => link.rel === 'approve');
+        if (approveLink) {
+          window.location.href = approveLink.href;
+        } 
+      } 
+      this.compraRealizada = true;
+    },
+    error: (err) => {
+      console.log("PAYPAL ERROR: " + err.message);
+    }
+  });
+}
+
+
+limpiarCarrito() {
+  this.ultimoPedido.set(null);
+  this.listaLineasPedidos.set([]);
+}
 }

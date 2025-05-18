@@ -190,13 +190,16 @@
             }}</span>
           </div>
 
-          <button
+         @if (ultimoPedido() !== undefined && ultimoPedido() !== null) {
+           <button
             class="btn btnConIconoReverse w-100 d-flex justify-content-center gap-3 bg-morado-intermedio-1 border-morado-intermedio-1 text-blanco"
             type="button"
+            (click)="finalizarCompra(ultimoPedido()!)"
           >
             <mat-icon class="text-blanco">paypal</mat-icon>
             Finalizar Compra
           </button>
+         }
         </div>
       </div>
     </div>

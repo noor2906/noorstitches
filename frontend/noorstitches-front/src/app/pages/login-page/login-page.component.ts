@@ -30,11 +30,9 @@ export class LoginPageComponent {
   });
 
   login(): void {
-    console.log('Login form value:', this.loginForm.value);
     if (this.loginForm.invalid) {
       // Marca los campos como tocados para mostrar los errores de validación
       this.loginForm.markAllAsTouched();
-      console.log('Form is invalid:', this.loginForm.errors);
       return;
     }
   
@@ -43,11 +41,9 @@ export class LoginPageComponent {
     // Aquí nos suscribimos al observable que devuelve el servicio de login
     this.authService.login(email!, password!).subscribe({
       next: (response) => {
-        console.log('Login successful:', response);
         this.loginStatus.set('success');
         this.alertService.success('Noorstitches', '¡Acceso correcto!', '/home');
 
-        localStorage.setItem('isLoggedIn', 'true'); //TODO: Averiguar que es esto
         if (response.id !== undefined && response.id !== null) {
           localStorage.setItem('idUser', response.id.toString());
         }
@@ -55,7 +51,6 @@ export class LoginPageComponent {
       },
       error: (error) => {
         if (error.status === 401) {
-          console.warn('Credenciales incorrectas');
           this.error = 'Usuario no registrado';
           this.alertService.error(
             'Mi app',

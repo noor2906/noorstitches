@@ -165,6 +165,10 @@
     color: var(--morado-intermedio-1);
 }
 
+a.nav-link:focus{
+  color: var(--morado-intermedio-1) !important;
+}
+
 /* PRODUCT-CARD -------------------------------- */
 
 .tarjeta-producto {

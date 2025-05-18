@@ -7,6 +7,7 @@ import { LineaPedidoService } from '../../services/lineapedido.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 import { Router } from '@angular/router';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-carrito-page',
@@ -18,6 +19,7 @@ export class CarritoPageComponent implements OnInit {
 
   pedidoService = inject(PedidoService);
   lineaPedidoService = inject(LineaPedidoService);
+  carritoService = inject(CarritoService);
   router = inject(Router);
 
   idUser = signal(Number(localStorage.getItem("idUser"))); 
@@ -81,15 +83,20 @@ export class CarritoPageComponent implements OnInit {
     this.pedidoService.findLineasPedidoByPedido(idPedido).subscribe(
       (response) => {
         this.listaLineasPedidos.set(response);
+        this.carritoService.actualizarLineasPedido(response);
       }
     )
   }
 
 eliminarLineaPedido(idLineaPedido: number) {
     // 1. Eliminación optimista (actualizamos la UI primero)
-    this.listaLineasPedidos.update(lineas => 
-        lineas.filter(l => l.id !== idLineaPedido)
-    );
+       this.listaLineasPedidos.update(lineas => {
+      const actualizadas = lineas.filter(l => l.id !== idLineaPedido);
+      this.carritoService.actualizarLineasPedido(actualizadas); // 👈 actualizamos
+      return actualizadas;
+    });
+
+
 
     // 2. Llamada al servicio para eliminar en el backend
     this.lineaPedidoService.eliminarLineaPedido(idLineaPedido).subscribe({
@@ -109,11 +116,13 @@ eliminarLineaPedido(idLineaPedido: number) {
 }
 
  updateCantidad(linea: LineaPedido, nuevaCantidad: number) {
-    this.listaLineasPedidos.update(lineas => 
-      lineas.map(l => 
-        l.id === linea.id ? {...l, cantidad: nuevaCantidad} : l
-      )
-    );
+      this.listaLineasPedidos.update(lineas => {
+      const actualizadas = lineas.map(l => 
+        l.id === linea.id ? { ...l, cantidad: nuevaCantidad } : l
+      );
+      this.carritoService.actualizarLineasPedido(actualizadas); // 👈 actualizamos
+      return actualizadas;
+    });
 
     // Actualización en el backend
     this.lineaPedidoService.updateCantidadProductoLineaPedido(nuevaCantidad, linea.id).subscribe({
@@ -146,6 +155,11 @@ eliminarLineaPedido(idLineaPedido: number) {
 
   seguirComprando(){
     this.router.navigate(["/tienda"]);
+  }
+
+
+  getTotalProductos(): number {
+    return this.listaLineasPedidos().reduce((total, linea) => total + (linea.cantidad || 0), 0);
   }
 
   //TODO: finalizarCompra(Pedido)

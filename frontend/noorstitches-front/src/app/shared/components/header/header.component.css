@@ -1,0 +1,16 @@
+.carrito-container {
+  position: relative;
+}
+
+.badge-carrito {
+  position: absolute;
+  top: -8px;
+  right: -9px;
+  background-color: var(--morado-intermedio-2);
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 1;
+}

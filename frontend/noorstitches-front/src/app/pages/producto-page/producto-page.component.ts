@@ -9,6 +9,7 @@ import { LineaPedido } from '../../interfaces/lineaPedido.interface';
 import { LineaPedidoService } from '../../services/lineapedido.service';
 import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 import { AlertsService } from '../../services/alert.service';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-producto-page',
@@ -23,7 +24,7 @@ export class ProductoPageComponent implements OnInit {
   pedidoService = inject(PedidoService);
   lineaPedidoService = inject(LineaPedidoService);
   alertService = inject(AlertsService);
-
+  carritoService = inject(CarritoService);
 
   producto = signal<Producto | null>(null);
   origen: string = 'tienda'; // valor por defecto
@@ -116,7 +117,13 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
             if (nuevaCantidad <= 5) {
               // 3.1 Actualizar cantidad si <= 5
               this.lineaPedidoService.updateCantidadProductoLineaPedido(nuevaCantidad, lineaExistente.id!).subscribe({
-                next: (res) => console.log('Cantidad actualizada', res),
+                next: (res) => {
+                  console.log('Cantidad actualizada', res);
+                  // Recargar líneas para actualizar el carrito
+                  this.pedidoService.findLineasPedidoByPedido(ultimo.id!).subscribe(lineas => {
+                    this.carritoService.actualizarLineasPedido(lineas);
+                  });
+                },
                 error: (err) => console.error('Error al actualizar cantidad', err)
               });
             } else {
@@ -136,13 +143,17 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
 }
 
 
-  //add de lineapedido(idPedido)
   crearLineaDePedido(cantidadInput: number, idProducto: number, idPedido: number) {
     this.lineaPedidoService.addLineaPedidoToPedido(cantidadInput, idProducto, idPedido).subscribe({
       next: (response) => {
-          console.log(response);
-        },
-        error: (err) => console.error('Error al crear una nueva linea de pedido', err)
-      });
+        console.log(response);
+        // Recargar líneas para actualizar el carrito
+        this.pedidoService.findLineasPedidoByPedido(idPedido).subscribe(lineas => {
+          this.carritoService.actualizarLineasPedido(lineas);
+        });
+      },
+      error: (err) => console.error('Error al crear una nueva linea de pedido', err)
+    });
   }
+
 }

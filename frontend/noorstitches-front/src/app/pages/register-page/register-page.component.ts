@@ -62,10 +62,8 @@ export class RegisterPageComponent {
     this.authService.register(newUser).subscribe({
       next: (response) => {
         console.log('Registro exitoso:', response);
-        localStorage.setItem('isLoggedIn', 'true');
         this.alertService.success('Noorstitches', '¡Registro realizado correctamente!', '/');
         localStorage.setItem('user', JSON.stringify(response));  // Guardamos la respuesta del backend (que contiene la info del usuario)
-        //setTimeout(() => this.router.navigate(['/']), 2000);
       },
       error: (error) => {
         console.error('Error inesperado:', error);      

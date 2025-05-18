@@ -3,12 +3,12 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ProductoService } from '../../services/producto.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { CarritoService } from '../../services/carrito.service';
 import { Pedido } from '../../interfaces/pedido.interface';
 import { PedidoService } from '../../services/pedidos.service';
 import { LineaPedido } from '../../interfaces/lineaPedido.interface';
 import { LineaPedidoService } from '../../services/lineapedido.service';
 import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
+import { AlertsService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-producto-page',
@@ -20,9 +20,10 @@ export class ProductoPageComponent implements OnInit {
   productoService = inject(ProductoService);
   route = inject(ActivatedRoute);
   router = inject(Router);
-  carritoService = inject(CarritoService);
   pedidoService = inject(PedidoService);
   lineaPedidoService = inject(LineaPedidoService);
+  alertService = inject(AlertsService);
+
 
   producto = signal<Producto | null>(null);
   origen: string = 'tienda'; // valor por defecto
@@ -91,7 +92,7 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
     // 2. Evaluar estado del último pedido
     if (!ultimo || ultimo.estado === "completado" || ultimo.estado === "cancelado") {
       // 2.1 Crear nuevo pedido
-      this.carritoService.crearPedido(this.idUser()).subscribe({
+      this.pedidoService.crearPedido(this.idUser()).subscribe({
         next: (nuevoPedido) => {
           console.log("Nuevo pedido: ", nuevoPedido);
           
@@ -120,7 +121,7 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
               });
             } else {
               // 3.2 Mostrar alerta si pasa de 5
-              alert("No se puede agregar más de 5 unidades de este producto."); //TODO: cambiar por sweet alert!!!!
+              this.alertService.error('Noorstitches', '¡Oops! Solo puedes añadir hasta 5 unidades de este producto en tu carrito :)');
             }
 
           } else {

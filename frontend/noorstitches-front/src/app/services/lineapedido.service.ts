@@ -7,6 +7,7 @@ import { Pedido } from '../interfaces/pedido.interface';
 import { LineaPedido } from './../interfaces/lineaPedido.interface';
 import { inject, Injectable, signal } from '@angular/core';
 import { ProductoService } from './producto.service';
+import { PedidoService } from './pedidos.service';
 
 @Injectable({providedIn: 'root'})
 export class LineaPedidoService {
@@ -16,7 +17,28 @@ export class LineaPedidoService {
   http = inject(HttpClient);
   router = inject(Router);
   productoService = inject(ProductoService);
+  pedidoService = inject(PedidoService);
   productoBuscado = signal<Producto | null>(null);
+
+  //add de lineapedido(idPedido)
+  crearLineaDePedido(idPedido: number, cantidad: number, producto: Producto): Observable<LineaPedido> {
+
+    //busco el pedido por id
+    this.pedidoService.findByIdPedido(idPedido).subscribe((response)=> {
+      if(response == null){
+        
+      }
+    })
+
+    const lineaPedido = {
+        importe: 0,
+        cantidad: 1,
+        estado: "pendiente"
+    };
+
+    return this.http.post<LineaPedido>(`${this.apiUrlLineasPedido}/add/${idPedido}`, lineaPedido);
+  }
+
 
 
     updateCantidadProductoLineaPedido(cantidadProducto: number, idLineaPedido: number): Observable<LineaPedido> {

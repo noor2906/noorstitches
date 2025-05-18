@@ -16,12 +16,27 @@ export class PedidoService {
   http = inject(HttpClient);
   router = inject(Router);
 
+   //add de pedido(idUser)
+  crearPedido(idUser: number): Observable<Pedido> {
+    const pedido = {
+        importe: 0,
+        fecha: new Date(),
+        estado: "pendiente"
+    };
+
+    return this.http.post<Pedido>(`${this.apiUrlPedidos}/add/${idUser}`, pedido);
+  }
+
   findPedidosByUser(idUsuario: number): Observable<Pedido[]> {
     return this.http.get<Pedido[]>(`${this.apiUrlUsuarios}/${idUsuario}/pedidos`);
   }
 
   findLineasPedidoByPedido(idPedido: number): Observable<LineaPedido[]> {
     return this.http.get<LineaPedido[]>(`${this.apiUrlPedidos}/${idPedido}/lineaspedido`);
+  }
+
+  findByIdPedido(idPedido: number) {
+    return this.http.get<Pedido>(`${this.apiUrlPedidos}/${idPedido}`);
   }
 
 }

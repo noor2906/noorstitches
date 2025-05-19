@@ -1,47 +1,68 @@
-<div class="container separacion-header-home">
-    <div class="row justify-content-center p-5">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h3>Registro</h3>
+<div class="container-fluid d-flex justify-content-center align-items-center background-image-tulipanes separacion-header-home">
+    <div class="d-flex justify-content-center align-items-center row w-85" style="height: 60%;">
+        <div class="col-1"></div>
+
+        <div class="d-flex flex-column justify-content-center align-items-center gap-3 bg-morado-intermedio-2 text-blanco p-4 col-5 h-100 shadow"
+            style="border-top-left-radius: 8px; border-bottom-left-radius: 1rem;">
+            <h2 class="text-negro bold">Registro</h2>
+            <form [formGroup]="registerForm" (ngSubmit)="registro()" class="w-100 d-flex flex-column justify-content-center align-items-center gap-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label for="name" class="form-label text-blanco">Nombre</label>
+                            <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre"
+                                formControlName="nombre" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="apellidos" class="form-label text-blanco">Apellidos</label>
+                            <input type="text" class="form-control" id="apellidos" placeholder="Ingresa tus apellidos"
+                                formControlName="apellidos" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="email" class="form-label text-blanco">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Ingresa tu email"
+                                formControlName="email" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="telefono" class="form-label text-blanco">Teléfono</label>
+                            <input type="number" class="form-control" id="telefono" placeholder="Ingresa tu teléfono"
+                                maxlength="12" formControlName="telefono" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-2">
+                            <label for="password" class="form-label text-blanco">Contraseña</label>
+                            <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña"
+                                formControlName="password" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="passwordConfirm" class="form-label text-blanco">Repitir contraseña</label>
+                            <input type="password" class="form-control" id="passwordConfirm" placeholder="Repite la contraseña"
+                                formControlName="passwordConfirm" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="fotoPerfil" class="form-label text-blanco">Foto de Perfil</label>
+                            <input type="text" class="form-control" id="fotoPerfil"
+                                placeholder="URL de tu foto de perfil" formControlName="fotoPerfil" required>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <form [formGroup]="registerForm" (ngSubmit)="registro()">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre" formControlName="nombre" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="apellidos" class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" id="apellidos" placeholder="Ingresa tus apellidos" formControlName="apellidos" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Ingresa tu email" formControlName="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" formControlName="password" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="passwordConfirm" class="form-label">Repitir contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Repite la contraseña" formControlName="passwordConfirm" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="number" class="form-control" id="telefono" placeholder="Ingresa tu teléfono" maxlength="12" formControlName="telefono" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="fotoPerfil" class="form-label">Foto de Perfil</label>
-                            <input type="text" class="form-control" id="fotoPerfil" placeholder="Ingresa la URL de tu foto de perfil" formControlName="fotoPerfil" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Registrarse</button>
-                    </form>
+                <button type="submit" class="btn bg-morado-intermedio-1 text-blanco w-50">Registrarse</button>
+                <div class="text-center">
+                    <a href="/" class="text-morado-intermedio-1">¿Ya tienes cuenta? ¡Inicia sesión!</a>
                 </div>
-                <div class="card-footer text-center">
-                    <small>¿Ya tienes una cuenta? <a href="">Inicia sesión</a></small>
-                </div>
+            </form>
+        </div>
+
+        <div class="d-flex flex-column justify-content-center align-items-center gap-4 p-5 bg-blanco col-5 h-100 w-25"
+            style="border-top-right-radius: 8px; border-bottom-right-radius: 1rem;">
+            <h2 class="text-morado-intermedio-2 bold text-wrap">Te damos la bienvenida a nuestra comunidad crochetera <3</h2>
+            <div class="w-75" style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem;">
+                <img src="../../../assets/imgs/tulipanes.webp" alt="tulipanes crochet"
+                    class="img-fluid w-100 h-100 object-fit-cover">
             </div>
         </div>
+
+        <div class="col-1"></div>
     </div>
 </div>

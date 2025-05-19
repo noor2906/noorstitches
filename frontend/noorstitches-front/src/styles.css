@@ -187,7 +187,6 @@ a.nav-link:focus{
   box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.1) !important;
 }
 
-
 .grid-productos {
   display: flex;
   flex-wrap: wrap;
@@ -225,3 +224,11 @@ input.form-control:focus, select:focus {
   box-shadow: 0 0 0 0.25rem var(--morado-intermedio-2) !important;
 }
 
+.background-image-tulipanes {
+  background-image: url("/assets/imgs/tulipanes.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  /* filter: blur(2px); */
+}

@@ -1,0 +1,37 @@
+/* Estilos base para todos los botones */
+.nav-pills .nav-link {
+  border: 1px solid #ebebeb;
+  transition: all 0.3s ease;
+}
+
+/* Estilo para botón activo */
+.nav-pills .nav-link.active {
+  background-color: var(--morado-intermedio-1) !important;
+  color: var(--blanco, #ffffff) !important;
+  border-color: var(--morado-intermedio-1);
+  box-shadow: 0 2px 5px rgba(147, 112, 219, 0.3);
+}
+
+/* Estilo para botones inactivos */
+.nav-pills .nav-link:not(.active) {
+  background-color: transparent;
+  color: var(--morado-oscuro) !important;
+  border-color: var(--morado-intermedio-2);
+}
+
+/* Estilo para hover en botones inactivos */
+.nav-pills .nav-link:not(.active):hover {
+  background-color: var(--morado-intermedio-2);
+  color: var(--morado-oscuro) !important;
+  border-color: var(--morado-intermedio-1);
+}
+
+/* Clase para efecto hover */
+.hover-bg-morado-claro:hover {
+  background-color: var(--morado-intermedio-2) !important;
+}
+
+/* Para asegurar que Bootstrap no anule estos estilos */
+.nav-pills .nav-link:focus {
+  box-shadow: 0 0 0 0.25rem rgba(147, 112, 219, 0.25);
+}

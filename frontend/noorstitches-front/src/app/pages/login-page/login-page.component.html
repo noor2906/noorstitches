@@ -11,7 +11,7 @@
         </div>
 
         <div class="d-flex flex-column justify-content-center align-items-center gap-5 bg-blanco p-5 col-4 h-100 p-5 shadow" style="  border-top-right-radius: 8px; border-bottom-right-radius: 1rem;">
-            <h2 class="text-negro regular" >Login</h2>
+            <h2 class="text-negro bold" >Login</h2>
 
             @if (loginStatus() == 'error') {
                 <div class="alert alert-danger text-center" role="alert">
@@ -34,7 +34,7 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Enter your password" formControlName="password" required>
                 </div>
-                <button type="submit" class="btn bg-morado-intermedio-2 text-blanco w-100">Login</button>
+                <button type="submit" class="btn bg-morado-intermedio-1 text-blanco w-100">Login</button>
                 <div class="text-center mt-3">
                     <a href="/register" class="text-morado-intermedio-1">¿No tienes cuenta? ¡Regístrate!</a>
                 </div>

@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
       <!-- Tarjeta de confirmación -->
-      @if (isCompletado()) {
+      @if (this.penultimoPedido()?.estado === "completado") {
         <div class="card border-morado-intermedio-1 rounded-4 overflow-hidden">
           <!-- Cabecera con éxito -->
           <div class="card-header bg-morado-intermedio-1 text-center py-4">
@@ -26,15 +26,15 @@
             <div class="card bg-morado-claro border-0 rounded-3 p-3 mb-4">
               <div class="d-flex justify-content-between mb-2">
                 <span class="text-morado-oscuro medium">Número de pedido:</span>
-                <span class="text-morado-oscuro bold">{{ ultimoPedido()?.id }}</span>
+                <span class="text-morado-oscuro bold">{{ penultimoPedido()?.id }}</span>
               </div>
               <div class="d-flex justify-content-between mb-2">
                 <span class="text-morado-oscuro medium">Fecha:</span>
-                <span class="text-morado-oscuro">{{ ultimoPedido()?.fecha | date:'dd/MM/yyyy' }}</span>
+                <span class="text-morado-oscuro">{{ penultimoPedido()?.fecha | date:'dd/MM/yyyy' }}</span>
               </div>
               <div class="d-flex justify-content-between">
                 <span class="text-morado-oscuro medium">Total:</span>
-                <span class="text-morado-intermedio-1 bold">{{ this.ultimoPedido()?.importe! | precioEuro }}</span>
+                <span class="text-morado-intermedio-1 bold">{{ this.penultimoPedido()?.importe! | precioEuro }}</span>
               </div>
             </div>
             
@@ -53,7 +53,7 @@
             </div>
           </div>
         </div>
-      } @else if (!isCompletado()) {
+      } @else if (this.penultimoPedido()?.estado === "cancelado") {
         <div class="card border-rojo rounded-4 overflow-hidden">
           <!-- Cabecera con cancelación -->
           <div class="card-header bg-rojo text-center py-4">
@@ -78,11 +78,11 @@
               <div class="card bg-light border-0 rounded-3 p-3 mb-4">
                 <div class="d-flex justify-content-between mb-2">
                   <span class="text-morado-oscuro medium">Número de pedido:</span>
-                  <span class="text-morado-oscuro bold">{{ ultimoPedido()?.id }}</span>
+                  <span class="text-morado-oscuro bold">{{ penultimoPedido()?.id }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
                   <span class="text-morado-oscuro medium">Fecha:</span>
-                  <span class="text-morado-oscuro">{{  ultimoPedido()?.fecha | date:'dd/MM/yyyy' }}</span>
+                  <span class="text-morado-oscuro">{{  penultimoPedido()?.fecha | date:'dd/MM/yyyy' }}</span>
                 </div>
               </div>
             <!-- } -->
@@ -93,7 +93,7 @@
             
             <!-- Botones de acción -->
             <div class="d-flex flex-column flex-md-row gap-3 justify-content-center mt-4">
-              <button class="btnSinIcono" style="width: auto; padding: 10px 20px;" [routerLink]="['/contacto']">
+              <button class="btnSinIcono" style="width: auto; padding: 10px 20px;" [routerLink]="['/contactanos']">
                 Contactar con nosotros
               </button>
               <button class="btnSinIcono" style="width: auto; padding: 10px 20px; background-color: var(--blanco); color: var(--morado-intermedio-1);" [routerLink]="['/tienda']">

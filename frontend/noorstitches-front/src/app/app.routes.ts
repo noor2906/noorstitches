@@ -34,6 +34,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/preguntas-frecuentes-page/preguntas-frecuentes-page.component').then(m => m.PreguntasFrecuentesPageComponent)
     },
     {
+        path: 'redirigiendo',
+        loadComponent: () => import('./pages/redirigiendo-page/redirigiendo-page.component').then(m => m.RedirigiendoPageComponent)
+    },
+    {
         path: 'gestion-pago',
         loadComponent: () => import('./pages/gestion-pago-page/gestion-pago-page.component').then(m => m.GestionPagoPageComponent)
     }

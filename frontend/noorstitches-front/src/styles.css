@@ -92,6 +92,11 @@
     border-radius: 8px;
 }
 
+.border-rojo {
+    border: 2px solid var(--rojo) !important;
+    border-radius: 8px;
+}
+
 /* TITULOS --------------------------------------- */
 
 .h2 {

@@ -1,13 +1,16 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PayPalService } from '../../services/paypal.service';
 import { PedidoService } from '../../services/pedidos.service';
 import { EnumEstadoPedido } from '../../interfaces/enumEstado.interface';
 import { Pedido } from '../../interfaces/pedido.interface';
+import { MatIcon } from '@angular/material/icon';
+import { DatePipe } from '@angular/common';
+import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 
 @Component({
   selector: 'app-gestion-pago-page',
-  imports: [],
+  imports: [MatIcon, RouterLink, DatePipe, PrecioEuroPipe],
   templateUrl: './gestion-pago-page.component.html',
   styleUrl: './gestion-pago-page.component.css'
 })
@@ -19,10 +22,13 @@ export class GestionPagoPageComponent implements OnInit{
   route = inject(ActivatedRoute);
   paypalService = inject(PayPalService);
   pedidoService = inject(PedidoService);
+  router = inject(Router);
 
   estadoPedido = signal<EnumEstadoPedido | null>(null);
   idUser = signal(Number(localStorage.getItem('idUser')));
   ultimoPedido = signal<Pedido | null>(null);
+  isCompletado = signal<boolean>(false);
+
 
   ngOnInit(): void {
     const token = this.route.snapshot.queryParamMap.get('token');
@@ -35,8 +41,10 @@ export class GestionPagoPageComponent implements OnInit{
     setTimeout(() => {
       if (token && payerId) {
         this.estadoPedido.set(EnumEstadoPedido.Completado);
+        this.isCompletado.set(true);
       } else {
         this.estadoPedido.set(EnumEstadoPedido.Cancelado);
+        this.isCompletado.set(false);
       }
 
       const estado = this.estadoPedido();
@@ -55,6 +63,12 @@ export class GestionPagoPageComponent implements OnInit{
         console.log("Faltan datos para actualizar el pedido");
       }
     }, 500); // 0.5 segundos para que se cargue el pedido
+
+     this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {},
+      replaceUrl: true
+    });
   }
 
   findUltimoPedidoByUser() {

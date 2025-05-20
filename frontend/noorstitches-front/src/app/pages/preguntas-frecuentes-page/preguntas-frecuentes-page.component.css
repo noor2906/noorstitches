@@ -35,3 +35,14 @@
 .nav-pills .nav-link:focus {
   box-shadow: 0 0 0 0.25rem rgba(147, 112, 219, 0.25);
 }
+
+.accordion-button:not(.collapsed) {
+  background-color: var(--morado-intermedio-2);
+  box-shadow: inset 0 calc(-1 * var(--morado-intermedio-1)) 0 var(--morado-intermedio-1);
+}
+
+.accordion-button:focus {
+    z-index: 3;
+    outline: 0;
+    box-shadow: var(--morado-intermedio-1);
+}

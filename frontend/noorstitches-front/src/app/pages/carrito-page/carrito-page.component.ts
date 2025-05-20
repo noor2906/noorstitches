@@ -193,6 +193,7 @@ export class CarritoPageComponent implements OnInit {
             window.location.href = approveLink.href;
           }
         }
+        
       },
       error: (err) => {
         console.log('PAYPAL ERROR: ' + err.message);

@@ -69,6 +69,8 @@ export class GestionPagoPageComponent implements OnInit{
       queryParams: {},
       replaceUrl: true
     });
+
+    this.crearPedidoPendiente();
   }
 
   findUltimoPedidoByUser() {
@@ -77,6 +79,15 @@ export class GestionPagoPageComponent implements OnInit{
       .subscribe((response) => {
         const ultimo = response.pop() || null;
         this.ultimoPedido.set(ultimo);
+      });
+  }
+
+  crearPedidoPendiente() {
+    this.pedidoService.crearPedido(this.idUser()).subscribe({
+        next: (nuevoPedido) => {
+          console.log("Nuevo pedido: ", nuevoPedido);
+        },
+        error: (err) => console.error('Error al crear el pedido', err)
       });
   }
 }

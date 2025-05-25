@@ -123,8 +123,10 @@ export class SettingsPageComponent implements OnInit {
 
   obtenerNumPedidosUser(){
     this.pedidoService.findPedidosByUser(this.idUser).subscribe((response) => {
-      if (this.numPedidosUser) {
+      if (response.length != 0) {
         this.numPedidosUser.set(response.length - 1);
+      } else {
+        this.numPedidosUser.set(response.length);
       }
     })
   }

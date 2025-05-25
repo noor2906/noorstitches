@@ -5,46 +5,107 @@
         <div class="d-flex flex-column justify-content-center align-items-center gap-3 bg-morado-intermedio-2 text-blanco p-4 col-5 h-100 shadow"
             style="border-top-left-radius: 8px; border-bottom-left-radius: 1rem;">
             <h2 class="text-blanco bold">Registro</h2>
-            <form [formGroup]="registerForm" (ngSubmit)="registro()" class="w-100 d-flex flex-column justify-content-center align-items-center gap-3">
+            <form [formGroup]="registerForm" (ngSubmit)="registro()" class="w-100 d-flex flex-column justify-content-center align-items-center gap-3 was-validated">
                 <div class="row">
                     <div class="col-md-6">
+
                         <div class="mb-2">
                             <label for="name" class="form-label text-blanco">Nombre</label>
-                            <input type="text" class="form-control" id="name" placeholder="Ingresa tu nombre"
+                            <input type="text" class="form-control is-invalid" id="name" placeholder="Ingresa tu nombre"
                                 formControlName="nombre" required>
+                                
+                            @if (registerForm.get('nombre')?.errors?.['pattern']) {
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                    <p class="text-rojo-oscuro">El nombre debe tener 2 caracteres mínimo</p>
+                                </div>
+                            }   
+
+                            <!-- @if (registerForm.get('nombre')?.hasError('required') && registerForm.get('nombre')?.touched) {
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                    <p class="text-rojo-oscuro">El nombre es obligatorio</p>
+                                </div>
+                            }    -->
+
+
                         </div>
+
                         <div class="mb-2">
                             <label for="apellidos" class="form-label text-blanco">Apellidos</label>
-                            <input type="text" class="form-control" id="apellidos" placeholder="Ingresa tus apellidos"
+                            <input type="text" class="form-control is-invalid" id="apellidos" placeholder="Ingresa tus apellidos"
                                 formControlName="apellidos" required>
+                            @if (registerForm.get('apellidos')?.invalid && registerForm.get('apellidos')?.touched) {
+                                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                    <p class="text-rojo-oscuro">El apellido es obligatorio</p>
+                                </div>
+                            }
                         </div>
+
                         <div class="mb-2">
                             <label for="email" class="form-label text-blanco">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Ingresa tu email"
+                            <input type="email" class="form-control is-invalid" id="email" placeholder="Ingresa tu email"
                                 formControlName="email" required>
+                            @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                    <p class="text-rojo-oscuro">El email es obligatorio</p>
+                                </div>
+                            }
                         </div>
+
                         <div class="mb-2">
                             <label for="telefono" class="form-label text-blanco">Teléfono</label>
-                            <input type="number" class="form-control" id="telefono" placeholder="Ingresa tu teléfono"
+                            <input type="number" class="form-control is-invalid" id="telefono" placeholder="Ingresa tu teléfono"
                                 maxlength="12" formControlName="telefono" required>
+
+                            @if (registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched) {
+                                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                    <p class="text-rojo-oscuro">El telefono es obligatorio</p>
+                                </div>
+                            }
                         </div>
+
                     </div>
+
                     <div class="col-md-6">
+
                         <div class="mb-2">
                             <label for="password" class="form-label text-blanco">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña"
+                            <input type="password" class="form-control is-invalid" id="password" placeholder="Ingresa tu contraseña"
                                 formControlName="password" required>
+                            @if (registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched) {
+                                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                    <p class="text-rojo-oscuro">El email es obligatorio</p>
+                                </div>
+                            }
+
+                            @if (registerForm.get('password')?.errors?.['pattern'] && registerForm.get('password')?.touched) {
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                    <p class="text-rojo-oscuro">La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula y un número.</p>
+                                </div>
+                            }
                         </div>
+
                         <div class="mb-2">
                             <label for="passwordConfirm" class="form-label text-blanco">Repitir contraseña</label>
-                            <input type="password" class="form-control" id="passwordConfirm" placeholder="Repite la contraseña"
+                            <input type="password" class="form-control is-invalid" id="passwordConfirm" placeholder="Repite la contraseña"
                                 formControlName="passwordConfirm" required>
+                            @if (registerForm.get('passwordConfirm')?.invalid && registerForm.get('passwordConfirm')?.touched) {
+                            <div class="text-rojo-oscuro">
+                                Repetir la contraseña es obligatorio.
+                            </div>
+                            }
                         </div>
+
                         <div class="mb-2">
                             <label for="fotoPerfil" class="form-label text-blanco">Foto de Perfil</label>
-                            <input type="text" class="form-control" id="fotoPerfil"
+                            <input type="text" class="form-control is-invalid" id="fotoPerfil"
                                 placeholder="URL de tu foto de perfil" formControlName="fotoPerfil" required>
+                            @if (registerForm.get('passwordConfirm')?.invalid && registerForm.get('passwordConfirm')?.touched) {
+                                <div class="text-rojo-oscuro">
+                                    Repetir la contraseña es obligatorio.
+                                </div>
+                            }
                         </div>
+
                     </div>
                 </div>
                 <button type="submit" class="btn bg-morado-intermedio-1 text-blanco w-50">Registrarse</button>

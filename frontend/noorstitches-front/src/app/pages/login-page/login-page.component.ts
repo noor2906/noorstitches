@@ -52,17 +52,16 @@ export class LoginPageComponent {
       error: (error) => {
         if (error.status === 401) {
           this.error = 'Usuario no registrado';
-          this.alertService.error(
-            'Mi app',
-            'El usuario no existe. Redirigiendo a registro...'
-          );
+          // this.alertService.error(
+          //   'Mi app',
+          //   'El usuario no existe o las credenciales son incorrectas...'
+          // );
 
         } else {
           console.error('Error inesperado:', error);
         }
         // Mostrar mensaje de error, etc.
         this.loginStatus.set('error');
-        setTimeout(() => this.router.navigate(['/register']), 5000);
       },
     });
   }

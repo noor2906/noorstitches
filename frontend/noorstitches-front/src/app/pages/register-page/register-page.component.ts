@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -21,14 +21,17 @@ export class RegisterPageComponent {
   formUtils = FormUtils;
   router = inject(Router);
 
+  registerStatus = signal<'success' | 'error' | null>(null);
+
+
   registerForm = this.fb.group({
-    nombre: ['', Validators.required],
-    apellidos: ['', Validators.required],
+    nombre: ['', [Validators.required,Validators.pattern(FormUtils.nombrePattern)]],
+    apellidos: ['', [Validators.required, Validators.pattern(FormUtils.apellidoPattern)]],
     email: ['', [Validators.required, Validators.pattern(FormUtils.emailPattern)]],
-    password: ['', Validators.required],
-    passwordConfirm: ['', Validators.required],
-    telefono: ['', Validators.required],
-    fotoPerfil: ['', Validators.required],
+    password: ['', [Validators.required, Validators.pattern(FormUtils.passwordPattern)]],
+    passwordConfirm: ['', [Validators.required]],
+    telefono: ['', [Validators.required]],
+    fotoPerfil: ['', [Validators.required, Validators.minLength(9)]],
   });
 
   registro(): void {
@@ -44,7 +47,7 @@ export class RegisterPageComponent {
 
     // Verificar si las contraseñas coinciden
     if (password !== passwordConfirm) {
-      console.error('Las contraseñas no coinciden');
+      this.alertService.error("Contraseñas incorrectas", "Las contraseñas deben coincidir");
       return;
     }
 
@@ -61,11 +64,13 @@ export class RegisterPageComponent {
     // Aquí nos suscribimos al observable que devuelve el servicio de registro
     this.authService.register(newUser).subscribe({
       next: (response) => {
+        this.registerStatus.set('success');
         console.log('Registro exitoso:', response);
         this.alertService.success('Noorstitches', '¡Registro realizado correctamente!', '/');
       },
       error: (error) => {
         console.error('Error inesperado:', error);      
+        this.registerStatus.set('error');
       }
     });
   }

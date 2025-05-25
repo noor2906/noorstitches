@@ -1,0 +1,199 @@
+<div class="container py-5 separacion-header-home">
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="row p-0 m-0 divider-con-borde">
+        <p class="h3 text-morado-intermedio-1 extrabold">Mi Cuenta</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navegación por pestañas -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <ul class="nav nav-pills justify-content-start gap-2" id="settingsTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active rounded-pill px-4 py-2 text-morado-oscuro border-morado-intermedio-1" 
+                  id="perfil-tab" 
+                  data-bs-toggle="pill" 
+                  data-bs-target="#perfil" 
+                  type="button" 
+                  role="tab" 
+                  aria-controls="perfil" 
+                  aria-selected="true">
+            <mat-icon class="me-2" style="font-size: 18px; height: 18px; width: 18px;">person</mat-icon>
+            Mi Perfil
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link rounded-pill px-4 py-2 text-morado-oscuro border-morado-intermedio-1" 
+                  id="pedidos-tab" 
+                  data-bs-toggle="pill" 
+                  data-bs-target="#pedidos" 
+                  type="button" 
+                  role="tab" 
+                  aria-controls="pedidos" 
+                  aria-selected="false">
+            <mat-icon class="me-2" style="font-size: 18px; height: 18px; width: 18px;">shopping_bag</mat-icon>
+            Mis Pedidos
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Contenido de las pestañas -->
+  <div class="tab-content" id="settingsTabsContent">
+    <!-- Pestaña Mi Perfil -->
+    <div class="tab-pane fade show active" id="perfil" role="tabpanel" aria-labelledby="perfil-tab">
+      <div class="row g-4">
+        <!-- Información personal -->
+        <div class="col-lg-8">
+          <div class="card border-morado-intermedio-1 rounded-4">
+            <div class="card-header bg-morado-intermedio-1 text-blanco rounded-top-3">
+              <h5 class="mb-0 bold">Información Personal</h5>
+            </div>
+            <div class="card-body p-4">
+              <form  [formGroup]="userForm" (ngSubmit)="guardarCambios()">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input type="text" class="form-control border-morado-intermedio-1" id="nombre" placeholder="Nombre"  formControlName="nombre" required>
+                      <label for="nombre" class="text-morado-oscuro">Nombre</label>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input type="text" class="form-control border-morado-intermedio-1" id="apellidos" placeholder="Apellidos" formControlName="apellidos" required>
+                      <label for="apellidos" class="text-morado-oscuro">Apellidos</label>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input type="email" class="form-control border-morado-intermedio-1" id="email" placeholder="Email" formControlName="email" required>
+                      <label for="email" class="text-morado-oscuro">Email</label>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input type="tel" class="form-control border-morado-intermedio-1" id="telefono" placeholder="Teléfono" formControlName="telefono" required>
+                      <label for="telefono" class="text-morado-oscuro">Teléfono</label>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input type="password" class="form-control border-morado-intermedio-1" id="passwd" placeholder="Contraseña" formControlName="password" required>
+                      <label for="passwd" class="text-morado-oscuro">Contraseña</label>
+                    </div>
+                  </div>
+
+                   <div class="col-md-6">
+                    <div class="form-floating">
+                      <input type="password" class="form-control border-morado-intermedio-1" id="repetirPasswd" placeholder="Repetir contraseña" formControlName="passwordConfirm" required>
+                      <label for="repetirPasswd" class="text-morado-oscuro">Repetir contraseña</label>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="text-end mt-4">
+                  <button type="submit" class="btnSinIcono py-2 px-4" style="width: auto;">
+                    Guardar cambios
+                  </button>
+                </div>
+              </form>
+            </div>
+        </div>
+
+        <!-- Dirección de envío
+          <div class="card border-morado-intermedio-1 rounded-4 mt-4">
+            <div class="card-header bg-morado-intermedio-1 text-blanco rounded-top-3">
+              <h5 class="mb-0 bold">Dirección de Envío</h5>
+            </div>
+            <div class="card-body p-4">
+              <form>
+                <div class="row g-3">
+                  <div class="col-12">
+                    <div class="form-floating">
+                      <input type="text" class="form-control border-morado-intermedio-1" id="direccion" placeholder="Dirección" value="Calle Mayor, 123">
+                      <label for="direccion" class="text-morado-oscuro">Dirección</label>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <div class="form-floating">
+                      <input type="text" class="form-control border-morado-intermedio-1" id="codigoPostal" placeholder="Código postal" value="28001">
+                      <label for="codigoPostal" class="text-morado-oscuro">Código postal</label>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <div class="form-floating">
+                      <input type="text" class="form-control border-morado-intermedio-1" id="ciudad" placeholder="Ciudad" value="Madrid">
+                      <label for="ciudad" class="text-morado-oscuro">Ciudad</label>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <div class="form-floating">
+                      <input type="text" class="form-control border-morado-intermedio-1" id="provincia" placeholder="Provincia" value="Madrid">
+                      <label for="provincia" class="text-morado-oscuro">Provincia</label>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="text-end mt-4">
+                  <button type="submit" class="btnSinIcono py-2 px-4" style="width: auto;">
+                    Actualizar dirección
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div> -->
+        </div>
+        
+        <!-- Panel lateral -->
+        <div class="col-lg-4">
+          <!-- Avatar y datos básicos -->
+          <!-- <div class="card border-morado-intermedio-1 rounded-4 mb-4">
+            <div class="card-body p-4 text-center">
+              <div class="bg-morado-claro rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" 
+                   style="width: 100px; height: 100px;">
+                <mat-icon style="font-size: 50px; height: 50px; width: 50px; color: var(--morado-intermedio-1);">
+                  person
+                </mat-icon>
+              </div>
+              <h5 class="text-morado-oscuro bold mb-1">{{userLogueado()?.nombre}} {{userLogueado()?.apellidos}}</h5>
+              <button class="btnSinIcono py-2 px-3" style="width: auto; font-size: 14px;">
+                Cambiar foto
+              </button>
+            </div>
+          </div> -->
+          
+          <!-- Estadísticas -->
+          <div class="card border-morado-intermedio-1 rounded-4">
+            <div class="card-header bg-morado-claro">
+              <h6 class="mb-0 text-morado-oscuro bold">Resumen de actividad</h6>
+            </div>
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between mb-3">
+                <span class="text-morado-oscuro">Pedidos realizados:</span>
+                <span class="text-morado-intermedio-1 bold">{{numPedidosUser()}}</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-morado-oscuro">Productos favoritos:</span>
+                <span class="text-morado-intermedio-1 bold">8</span> <!--TODO: cambiar esto cuando se hagan los favs-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Pestaña Mis Pedidos -->
+   
+
+  </div>
+</div>

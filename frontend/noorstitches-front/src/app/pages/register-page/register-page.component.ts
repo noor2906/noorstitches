@@ -63,7 +63,6 @@ export class RegisterPageComponent {
       next: (response) => {
         console.log('Registro exitoso:', response);
         this.alertService.success('Noorstitches', '¡Registro realizado correctamente!', '/');
-        localStorage.setItem('user', JSON.stringify(response));  // Guardamos la respuesta del backend (que contiene la info del usuario)
       },
       error: (error) => {
         console.error('Error inesperado:', error);      

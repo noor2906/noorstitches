@@ -60,4 +60,9 @@ export class AuthService {
   getUserLogueado(): Usuario | null {
     return this.userLogueadoSubject.value;
   }
+
+  //Para actualizar los datos del usuario logueado
+  guardarCambios(user: Usuario): Observable<Usuario> {
+    return this.http.put<Usuario>(`${this.apiUrl}/update`, user);
+  }
 }

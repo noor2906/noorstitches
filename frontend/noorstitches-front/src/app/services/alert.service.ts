@@ -10,14 +10,14 @@ export class AlertsService {
   router = inject(Router);
 
   // mensaje de éxito
-  success(title: string, text: string, routering: string): void {
+  success(title: string, text: string, routering: string | null = null): void {
     Swal.fire({
       icon: 'success',
       title: title,
       text: text,
       confirmButtonText: 'Aceptar',
     }).then((result) => {
-      if (result.isConfirmed) {
+      if (result.isConfirmed && routering) {
         this.router.navigate([routering]);
       }
     });

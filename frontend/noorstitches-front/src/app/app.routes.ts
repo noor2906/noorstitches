@@ -40,5 +40,9 @@ export const routes: Routes = [
     {
         path: 'gestion-pago',
         loadComponent: () => import('./pages/gestion-pago-page/gestion-pago-page.component').then(m => m.GestionPagoPageComponent)
+    },
+      {
+        path: 'settings',
+        loadComponent: () => import('./pages/settings-page/settings-page.component').then(m => m.SettingsPageComponent)
     }
 ];

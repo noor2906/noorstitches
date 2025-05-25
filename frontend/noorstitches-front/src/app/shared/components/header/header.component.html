@@ -35,13 +35,18 @@
         </button>
         <span class="badge-carrito"> {{ cantidadProductosCarrito }}</span>
       </div>
+      
+      <div class="carrito-container position-relative">
+        <button type="button" class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer" routerLink="/settings">
+          <mat-icon class="text-morado-intermedio-1">settings</mat-icon>
+        </button>
+      </div>
 
       <div class="carrito-container position-relative">
         <button type="button" class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer" (click)="logout()">
           <mat-icon class="text-morado-intermedio-1">logout</mat-icon>
         </button>
       </div>
-
     </div>
   </div>
 </header>

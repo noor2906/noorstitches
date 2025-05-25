@@ -10,7 +10,7 @@ CREATE TABLE usuarios (
     email VARCHAR(255) UNIQUE NOT NULL,
     passwd VARCHAR(255) NOT NULL, 
     foto_perfil VARCHAR(255) NOT NULL DEFAULT 'user.png', 
-    telefono VARCHAR(15) -- VARCHAR(15) para incluir prefijos internacionales en el futuro
+    telefono VARCHAR(15) NOT NULL -- VARCHAR(15) para incluir prefijos internacionales en el futuro
 );
 
 -- Tabla de categorías
@@ -23,7 +23,7 @@ CREATE TABLE categorias (
 CREATE TABLE subcategorias (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
-    imagen VARCHAR(255),
+    imagen VARCHAR(255) NOT NULL,
     id_categoria BIGINT NOT NULL,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id)
 );
@@ -49,10 +49,10 @@ CREATE TABLE productos (
 -- Tabla pedidos
 CREATE TABLE pedidos (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario BIGINT,
-    fecha DATETIME,
-    importe DECIMAL(10, 2)  NOT NULL, 
-    estado ENUM('pendiente', 'completado', 'cancelado') DEFAULT 'pendiente',
+    id_usuario BIGINT NOT NULL,
+    fecha DATETIME NOT NULL,
+    importe DECIMAL(10, 2) NOT NULL, 
+    estado ENUM('pendiente', 'completado', 'cancelado') DEFAULT 'pendiente' NOT NULL,
     -- num_seguimiento VARCHAR(255),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
@@ -60,8 +60,8 @@ CREATE TABLE pedidos (
 -- Tabla lineas de pedido: cuantos articulos metes, la cantidad
 CREATE TABLE lineas_pedido (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    id_pedido BIGINT,
-    id_producto BIGINT,
+    id_pedido BIGINT NOT NULL,
+    id_producto BIGINT NOT NULL,
     cantidad INT NOT NULL,
     importe FLOAT NOT NULL,
     FOREIGN KEY (id_pedido) REFERENCES pedidos(id),
@@ -71,9 +71,9 @@ CREATE TABLE lineas_pedido (
 -- Tabla productos guardados (Lista de deseos)
 CREATE TABLE producto_guardado (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario BIGINT,
-    id_producto BIGINT,
-    fecha_guardado DATETIME,
+    id_usuario BIGINT NOT NULL,
+    id_producto BIGINT NOT NULL,
+    fechaGuardado DATE NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
     FOREIGN KEY (id_producto) REFERENCES productos(id)
 );

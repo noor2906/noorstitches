@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EnumEstadoPedido } from '../../interfaces/enumEstado.interface';
 import { Pedido } from '../../interfaces/pedido.interface';
 import { PedidoService } from '../../services/pedidos.service';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-redirigiendo-page',
@@ -15,6 +16,7 @@ export class RedirigiendoPageComponent {
 
   route = inject(ActivatedRoute);
   pedidoService = inject(PedidoService);
+  carritoService = inject(CarritoService);
   router = inject(Router);
 
   estadoPedido = signal<EnumEstadoPedido | null>(null);
@@ -59,6 +61,7 @@ export class RedirigiendoPageComponent {
         replaceUrl: true
       });
   
+      this.limpiarCarrito();
       this.crearPedidoPendiente();
 
       setTimeout(() => {
@@ -66,16 +69,15 @@ export class RedirigiendoPageComponent {
       }, 5000);
     }
 
-      findUltimoPedidoByUser() {
-        this.pedidoService
-        .findPedidosByUser(this.idUser())
-        .subscribe((response) => {
-          const ultimo = response.pop() || null;
-          this.ultimoPedido.set(ultimo);
-        });
-      }
+    findUltimoPedidoByUser() {
+      this.pedidoService
+      .findPedidosByUser(this.idUser())
+      .subscribe((response) => {
+        const ultimo = response.pop() || null;
+        this.ultimoPedido.set(ultimo);
+      });
+    }
 
-  
     crearPedidoPendiente() {
       this.pedidoService.crearPedido(this.idUser()).subscribe({
         next: (nuevoPedido) => {
@@ -83,5 +85,11 @@ export class RedirigiendoPageComponent {
         },
         error: (err) => console.error('Error al crear el pedido', err)
       });
+    }
+
+    limpiarCarrito() {
+      // Limpiar señales del carrito en el frontend
+      this.ultimoPedido.set(null);
+      this.carritoService.actualizarLineasPedido([]);
     }
 }

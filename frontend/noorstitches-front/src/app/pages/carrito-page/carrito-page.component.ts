@@ -107,6 +107,17 @@ export class CarritoPageComponent implements OnInit {
     this.listaLineasPedidos.update((lineas) => {
       const actualizadas = lineas.filter((l) => l.id !== idLineaPedido);
       this.carritoService.actualizarLineasPedido(actualizadas);
+
+      // Actualizar el importe total del pedido después de eliminar la línea
+       if (actualizadas.length === 0) {
+        this.carritoService.limpiarCarrito();
+        const pedido = this.ultimoPedido();
+        
+        if (pedido) {
+          this.ultimoPedido.set({ ...pedido, importe: 0 });
+        }
+      }
+
       return actualizadas;
     });
 
@@ -202,15 +213,10 @@ export class CarritoPageComponent implements OnInit {
   }
 
   limpiarCarrito() {
-    // Limpiar señales del carrito en el frontend
     this.ultimoPedido.set(null);
     this.listaLineasPedidos.set([]);
 
-    // También puedes notificar al servicio del carrito si lo usas globalmente
     this.carritoService.actualizarLineasPedido([]);
-
-    // (Opcional) Si usas almacenamiento local para persistir el carrito, límpialo:
-    // localStorage.removeItem('carrito');
 
     console.log('Carrito limpiado después de la compra.');
   }

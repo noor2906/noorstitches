@@ -33,4 +33,8 @@ export class CarritoService {
   });
 }
 
+  limpiarCarrito() {
+    this.actualizarLineasPedido([]);
+  }
+
 }

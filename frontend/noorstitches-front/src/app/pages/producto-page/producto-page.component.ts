@@ -84,62 +84,76 @@ export class ProductoPageComponent implements OnInit {
   }
 
 anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
-  const cantidadInput = Number(cantidadProducto);
 
-  // 1. Traer pedidos del usuario
-  this.pedidoService.findPedidosByUser(this.idUser()).subscribe((response) => {
-    const ultimo = response.pop() || null;
-
-    // 2. Evaluar estado del último pedido
-    if (!ultimo || ultimo.estado === "completado" || ultimo.estado === "cancelado") {
-      // 2.1 Crear nuevo pedido
-      this.pedidoService.crearPedido(this.idUser()).subscribe({
-        next: (nuevoPedido) => {
-          console.log("Nuevo pedido: ", nuevoPedido);
-          
-          // 2.2 Crear primera línea con el nuevo pedido
-          this.crearLineaDePedido(cantidadInput, idProducto, nuevoPedido.id!);
-        },
-        error: (err) => console.error('Error al crear el pedido', err)
-      });
-
-    } else if (ultimo.estado === "pendiente") {
-      // 3. Pedido pendiente -> revisar líneas de pedido
-      this.pedidoService.findLineasPedidoByPedido(ultimo.id!).subscribe({
-        next: (lineas) => {
-          this.lineasPedidoByPedido.set(lineas);
-
-          const lineaExistente = this.lineasPedidoByPedido().find(lp => lp.productoDTO?.id == idProducto);
-          
-          if (lineaExistente && lineaExistente.cantidad != undefined && lineaExistente.cantidad != null) {
-            const nuevaCantidad = lineaExistente.cantidad + cantidadInput; // 2 + 5 = 7
-
-            if (nuevaCantidad <= 5) {
-              // 3.1 Actualizar cantidad si <= 5
-              this.lineaPedidoService.updateCantidadProductoLineaPedido(nuevaCantidad, lineaExistente.id!).subscribe({
-                next: (res) => {
-                  console.log('Cantidad actualizada', res);
-                  // Recargar líneas para actualizar el carrito
-                  this.pedidoService.findLineasPedidoByPedido(ultimo.id!).subscribe(lineas => {
-                    this.carritoService.actualizarLineasPedido(lineas);
-                  });
-                },
-                error: (err) => console.error('Error al actualizar cantidad', err)
-              });
+  if (!this.idUser()){ 
+    this.alertService.confirm(
+        "Debes iniciar sesión",
+        `¿Para poder añadir al carrito debes iniciar sesión. ¿Redirigir al login?`,
+        "Sí",
+        "No",
+        ""
+    );
+  } else {
+    
+    const cantidadInput = Number(cantidadProducto);
+  
+    // 1. Traer pedidos del usuario
+    this.pedidoService.findPedidosByUser(this.idUser()).subscribe((response) => {
+      const ultimo = response.pop() || null;
+  
+      // 2. Evaluar estado del último pedido
+      if (!ultimo || ultimo.estado === "completado" || ultimo.estado === "cancelado") {
+        // 2.1 Crear nuevo pedido
+        this.pedidoService.crearPedido(this.idUser()).subscribe({
+          next: (nuevoPedido) => {
+            console.log("Nuevo pedido: ", nuevoPedido);
+            
+            // 2.2 Crear primera línea con el nuevo pedido
+            this.crearLineaDePedido(cantidadInput, idProducto, nuevoPedido.id!);
+          },
+          error: (err) => console.error('Error al crear el pedido', err)
+        });
+  
+      } else if (ultimo.estado === "pendiente") {
+        // 3. Pedido pendiente -> revisar líneas de pedido
+        this.pedidoService.findLineasPedidoByPedido(ultimo.id!).subscribe({
+          next: (lineas) => {
+            this.lineasPedidoByPedido.set(lineas);
+  
+            const lineaExistente = this.lineasPedidoByPedido().find(lp => lp.productoDTO?.id == idProducto);
+            
+            if (lineaExistente && lineaExistente.cantidad != undefined && lineaExistente.cantidad != null) {
+              const nuevaCantidad = lineaExistente.cantidad + cantidadInput; // 2 + 5 = 7
+  
+              if (nuevaCantidad <= 5) {
+                // 3.1 Actualizar cantidad si <= 5
+                this.lineaPedidoService.updateCantidadProductoLineaPedido(nuevaCantidad, lineaExistente.id!).subscribe({
+                  next: (res) => {
+                    console.log('Cantidad actualizada', res);
+                    // Recargar líneas para actualizar el carrito
+                    this.pedidoService.findLineasPedidoByPedido(ultimo.id!).subscribe(lineas => {
+                      this.carritoService.actualizarLineasPedido(lineas);
+                    });
+                  },
+                  error: (err) => console.error('Error al actualizar cantidad', err)
+                });
+              } else {
+                // 3.2 Mostrar alerta si pasa de 5
+                this.alertService.error('Noorstitches', '¡Oops! Solo puedes añadir hasta 5 unidades de este producto en tu carrito :)');
+              }
+  
             } else {
-              // 3.2 Mostrar alerta si pasa de 5
-              this.alertService.error('Noorstitches', '¡Oops! Solo puedes añadir hasta 5 unidades de este producto en tu carrito :)');
+              // 4. Producto no estaba en líneas -> crear nueva
+              this.crearLineaDePedido(cantidadInput, idProducto, ultimo.id!);
             }
+          },
+          error: (err) => console.error('Error al obtener líneas de pedido', err)
+        });
+      }
+    });
+  }
 
-          } else {
-            // 4. Producto no estaba en líneas -> crear nueva
-            this.crearLineaDePedido(cantidadInput, idProducto, ultimo.id!);
-          }
-        },
-        error: (err) => console.error('Error al obtener líneas de pedido', err)
-      });
-    }
-  });
+
 }
 
   crearLineaDePedido(cantidadInput: number, idProducto: number, idPedido: number) {

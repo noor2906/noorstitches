@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { Usuario } from '../../interfaces/user.interface';
 import { AuthService } from '../../services/auth.service';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { FormUtils } from '../../utils/form.utils';
 import { AlertsService } from '../../services/alert.service';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -38,15 +38,23 @@ export class SettingsPageComponent implements OnInit {
     Object.entries(EnumEstadoPedido).filter(([key, value]) => value !== 'pendiente')
   );
 
-  userForm = this.fb.group({
-    nombre: ['', Validators.required],
-    apellidos: ['', Validators.required],
-    email: ['', [Validators.required, Validators.pattern(FormUtils.emailPattern)]],
-    password: ['', Validators.required],
-    passwordConfirm: ['', Validators.required],
-    telefono: ['', Validators.required],
-    fotoPerfil: ['', Validators.required],
+ userForm = this.fb.group({
+      nombre: ['', [Validators.required, Validators.pattern(FormUtils.nombrePattern)]],
+      apellidos: ['', [Validators.required, Validators.pattern(FormUtils.apellidoPattern)]],
+      email: ['', [Validators.required, Validators.pattern(FormUtils.emailPattern)]],
+      password: ['', [Validators.required, Validators.pattern(FormUtils.passwordPattern)]],
+      passwordConfirm: ['', [Validators.required]],
+      telefono: ['', [Validators.required, Validators.pattern(FormUtils.telefonoPattern)]],
+      fotoPerfil: ['', [Validators.required, Validators.minLength(5)]],
+  }, {
+      validators: this.passwordMatchValidator // Validador personalizado
   });
+
+  private passwordMatchValidator(form: AbstractControl): ValidationErrors | null {
+      const password = form.get('password')?.value;
+      const confirm = form.get('passwordConfirm')?.value;
+      return password === confirm ? null : { mismatch: true };
+  }
 
 
   ngOnInit(): void {
@@ -123,8 +131,10 @@ export class SettingsPageComponent implements OnInit {
 
   obtenerNumPedidosUser(){
     this.pedidoService.findPedidosByUser(this.idUser).subscribe((response) => {
-      if (this.numPedidosUser) {
+      if (response.length != 0) {
         this.numPedidosUser.set(response.length - 1);
+      } else {
+        this.numPedidosUser.set(response.length);
       }
     })
   }

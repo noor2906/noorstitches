@@ -14,3 +14,13 @@
   font-weight: bold;
   line-height: 1;
 }
+
+button[routerLink] {
+  text-decoration: none;
+  color: inherit;
+}
+
+button[routerLink]:hover {
+  text-decoration: none;
+  color: inherit;
+}

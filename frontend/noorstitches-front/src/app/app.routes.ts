@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuardGuard } from './guards/auth-guard.guard';
 
 export const routes: Routes = [
     {
@@ -23,6 +24,7 @@ export const routes: Routes = [
     },
     {
         path: 'carrito',
+        canActivate: [authGuardGuard],
         loadComponent: () => import('./pages/carrito-page/carrito-page.component').then(m => m.CarritoPageComponent)
     },
     {
@@ -35,14 +37,17 @@ export const routes: Routes = [
     },
     {
         path: 'redirigiendo',
+        canActivate: [authGuardGuard],
         loadComponent: () => import('./pages/redirigiendo-page/redirigiendo-page.component').then(m => m.RedirigiendoPageComponent)
     },
     {
         path: 'gestion-pago',
+        canActivate: [authGuardGuard],
         loadComponent: () => import('./pages/gestion-pago-page/gestion-pago-page.component').then(m => m.GestionPagoPageComponent)
     },
     {
         path: 'settings',
+        canActivate: [authGuardGuard],
         loadComponent: () => import('./pages/settings-page/settings-page.component').then(m => m.SettingsPageComponent)
     },
     {

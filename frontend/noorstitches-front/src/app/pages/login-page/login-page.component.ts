@@ -26,7 +26,7 @@ export class LoginPageComponent {
   // Definimos el formulario de login con sus validaciones
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.pattern(FormUtils.emailPattern)]],
-    password: ['', Validators.required],
+    password: ['', [Validators.required, Validators.pattern(FormUtils.passwordPattern)]],
   });
 
   login(): void {
@@ -52,17 +52,11 @@ export class LoginPageComponent {
       error: (error) => {
         if (error.status === 401) {
           this.error = 'Usuario no registrado';
-          this.alertService.error(
-            'Mi app',
-            'El usuario no existe. Redirigiendo a registro...'
-          );
-
         } else {
           console.error('Error inesperado:', error);
         }
         // Mostrar mensaje de error, etc.
         this.loginStatus.set('error');
-        setTimeout(() => this.router.navigate(['/register']), 5000);
       },
     });
   }

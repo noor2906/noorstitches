@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
           this.authService.setUserLogueado(null);
         },
       });
-    }
+    } 
 
     // Suscripción para actualizar la señal del usuario cuando cambia
     this.authService.userLogueado$.subscribe((user) => {
@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit {
   async logout() {
     const confirmed = await this.alertService.confirm(
       "Vas a abandonar Noorstitches 😢",
-      `¿Estás segurx de que quieres salir?\nSe cerrará tu sesión y se vaciará tu carrito.`,
+      `¿Estás segurx de que quieres salir?`,
       "Sí",
       "No",
       "/"

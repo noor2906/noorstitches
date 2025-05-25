@@ -19,15 +19,15 @@
     </div>
   
     <!-- Iconos a la derecha -->
-    <!-- Iconos a la derecha -->
-    <div class="d-flex align-items-center gap-3">
-      
-      <div class="d-flex justify-content-center align-items-center gap-2">
-        <p class="text-black fw-bold mb-1">{{ userLogueado()?.nombre }}</p>
-        <button type="button" class="btn btn-link p-0 m-0" style="background: transparent; border: none; cursor: pointer;">
-          <mat-icon class="text-morado-intermedio-1">person</mat-icon>
-        </button>
-      </div>
+     @if (this.userLogueado()){
+        <div class="d-flex align-items-center gap-3">
+        
+        <div class="d-flex justify-content-center align-items-center gap-2">
+          <p class="text-black fw-bold mb-1">{{ userLogueado()?.nombre }}</p>
+          <button type="button" class="btn btn-link p-0 m-0" style="background: transparent; border: none; cursor: pointer;">
+            <mat-icon class="text-morado-intermedio-1">person</mat-icon>
+          </button>
+        </div>
 
       <div class="carrito-container position-relative">
         <button type="button" class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer" routerLink="/favoritos">
@@ -48,11 +48,20 @@
         </button>
       </div>
 
-      <div class="carrito-container position-relative">
-        <button type="button" class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer" (click)="logout()">
-          <mat-icon class="text-morado-intermedio-1">logout</mat-icon>
-        </button>
+        <div class="carrito-container position-relative">
+          <button type="button" class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer" (click)="logout()">
+            <mat-icon class="text-morado-intermedio-1">logout</mat-icon>
+          </button>
+        </div>
       </div>
-    </div>
+     } @else {
+        <div class="carrito-container position-relative">
+          <button type="button" class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer d-flex align-items-center gap-2" routerLink="">
+            <mat-icon class="text-morado-intermedio-1">person</mat-icon>
+            <p class="mb-0 medium">Inicia sesión/Regístrate</p>
+          </button>
+        </div>
+     }
+    
   </div>
 </header>

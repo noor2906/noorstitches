@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
           this.authService.setUserLogueado(null);
         },
       });
-    }
+    } 
 
     // Suscripción para actualizar la señal del usuario cuando cambia
     this.authService.userLogueado$.subscribe((user) => {

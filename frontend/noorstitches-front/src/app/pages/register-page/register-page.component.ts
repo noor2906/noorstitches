@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormUtils } from '../../utils/form.utils';
@@ -23,16 +23,25 @@ export class RegisterPageComponent {
 
   registerStatus = signal<'success' | 'error' | null>(null);
 
-
   registerForm = this.fb.group({
-    nombre: ['', [Validators.required,Validators.pattern(FormUtils.nombrePattern)]],
-    apellidos: ['', [Validators.required, Validators.pattern(FormUtils.apellidoPattern)]],
-    email: ['', [Validators.required, Validators.pattern(FormUtils.emailPattern)]],
-    password: ['', [Validators.required, Validators.pattern(FormUtils.passwordPattern)]],
-    passwordConfirm: ['', [Validators.required]],
-    telefono: ['', [Validators.required]],
-    fotoPerfil: ['', [Validators.required, Validators.minLength(9)]],
+      nombre: ['', [Validators.required, Validators.pattern(FormUtils.nombrePattern)]],
+      apellidos: ['', [Validators.required, Validators.pattern(FormUtils.apellidoPattern)]],
+      email: ['', [Validators.required, Validators.pattern(FormUtils.emailPattern)]],
+      password: ['', [Validators.required, Validators.pattern(FormUtils.passwordPattern)]],
+      passwordConfirm: ['', [Validators.required]],
+      telefono: ['', [Validators.required, Validators.pattern(FormUtils.telefonoPattern)]],
+      fotoPerfil: ['', [Validators.required, Validators.minLength(5)]],
+  }, {
+      validators: this.passwordMatchValidator // Validador personalizado
   });
+
+  // Agregar esta función de validación
+  private passwordMatchValidator(form: AbstractControl): ValidationErrors | null {
+      const password = form.get('password')?.value;
+      const confirm = form.get('passwordConfirm')?.value;
+      return password === confirm ? null : { mismatch: true };
+  }
+
 
   registro(): void {
     console.log('Register form value:', this.registerForm.value);

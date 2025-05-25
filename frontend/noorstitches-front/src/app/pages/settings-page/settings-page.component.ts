@@ -10,6 +10,7 @@ import { PedidoService } from '../../services/pedidos.service';
 import { Pedido } from '../../interfaces/pedido.interface';
 import { LineaPedido } from '../../interfaces/lineaPedido.interface';
 import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
+import { EnumEstadoPedido } from '../../interfaces/enumEstado.interface';
 
 @Component({
   selector: 'app-settings-page',
@@ -28,9 +29,14 @@ export class SettingsPageComponent implements OnInit {
   userLogueado = signal<Usuario | null>(null);
   numPedidosUser = signal<number | null>(null);
   pedidosUser = signal<Pedido[] | null>([]);
+  pedidosUserFiltrados = signal<Pedido[] | null>([]);
   listaLineasPedidos = signal<LineaPedido[]>([]);
   lineasPorPedido = signal(new Map<number, LineaPedido[]>());
 
+  // Todos los estados menos el "pendiente" porque es el que se usa para el carrito
+  estadosPedidos = signal(
+    Object.entries(EnumEstadoPedido).filter(([key, value]) => value !== 'pendiente')
+  );
 
   userForm = this.fb.group({
     nombre: ['', Validators.required],
@@ -124,11 +130,13 @@ export class SettingsPageComponent implements OnInit {
   }
 
   //Mis pedidos --------------------------------------------
-  
+
   findAllPedidosByUser(){
     this.pedidoService.findPedidosByUser(this.idUser).subscribe((response) => {
       const pedidosFiltrados = response.filter((pedido: any) => pedido.estado !== 'pendiente');
       this.pedidosUser.set(pedidosFiltrados);
+
+      this.filtrarPorEstado({ target: { value: 'todos' } } as unknown as Event);
 
       pedidosFiltrados.forEach((pedido) => {
       this.pedidoService.findLineasPedidoByPedido(pedido.id!).subscribe((lineas) => {
@@ -141,6 +149,19 @@ export class SettingsPageComponent implements OnInit {
 
     })
   }
+
+  filtrarPorEstado(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const value = selectElement?.value;
+
+     if (value === 'todos' || !value) {
+      this.pedidosUserFiltrados.set(this.pedidosUser() ?? []);
+    } else {
+      const pedidosFiltrados = this.pedidosUser()!.filter(pedido => pedido.estado === value) ?? [];
+      this.pedidosUserFiltrados.set(pedidosFiltrados);
+    }
+  }
+
 
 }
 

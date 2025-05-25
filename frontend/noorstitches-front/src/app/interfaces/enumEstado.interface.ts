@@ -1,5 +1,5 @@
 export enum EnumEstadoPedido {
-    Pendiente = 'Pendiente',
-    Completado = 'Completado',
-    Cancelado = 'Cancelado'
+    Pendiente = 'pendiente',
+    Completado = 'completado',
+    Cancelado = 'cancelado'
 }

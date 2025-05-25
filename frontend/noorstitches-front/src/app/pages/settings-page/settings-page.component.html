@@ -196,18 +196,20 @@
      <div class="tab-pane fade" id="pedidos" role="tabpanel" aria-labelledby="pedidos-tab">
       <div class="row">
         <div class="col-12">
+
           <!-- Filtros de pedidos -->
           <div class="mb-4">
             <div class="card-body p-3">
               <div class="row g-3 align-items-center">
                 <div class="col-md-4">
-                  <select class="form-select border-morado-intermedio-1">
-                    <option selected>Todos los pedidos</option>
-                    <option value="pendiente">Pendientes</option>
-                    <option value="enviado">Enviados</option>
-                    <option value="entregado">Entregados</option>
-                    <option value="cancelado">Cancelados</option>
+
+                  <select class="form-select border-morado-intermedio-1" (change)="filtrarPorEstado($event)">
+                    <option value="todos" selected>Todos los pedidos</option>
+                    @for (estado of estadosPedidos(); track estado) {
+                        <option [value]="estado[1]">{{ estado[0] }}</option>
+                    }
                   </select>
+
                 </div>
                 <!-- <div class="col-md-4">
                   <input type="date" class="form-control border-morado-intermedio-1" placeholder="Fecha desde">
@@ -222,7 +224,7 @@
           <!-- Lista de pedidos -->
           <div class="row g-4">
 
-           @for (pedido of pedidosUser(); track pedido.id) {
+           @for (pedido of pedidosUserFiltrados(); track pedido.id) {
              <div class="col-12">
               <div class="card border-morado-intermedio-1 rounded-4">
                 <div class="card-body p-4">

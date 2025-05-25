@@ -1,8 +1,8 @@
 INSERT INTO usuarios (nombre, apellidos, email, passwd, foto_perfil, telefono) 
 VALUES 
-('Admin', 'NoorStitches', 'noorstitches@gmail.com', '123456admin', 'noorstitches.png', '+34123456789'),
-('Juan', 'Pérez García', 'juan.perez@gmail.com', '123456abcdefg', 'juan.png', '+34123456789'),
-('Noor', 'Aloune Sagouma', 'nalosag@gmail.com', '123456abcdefg', 'noor.png', '+34876543210');
+('Admin', 'NoorStitches', 'noorstitches@gmail.com', 'Admin1234', 'noorstitches.png', '+34123456789'),
+('Juan', 'Pérez García', 'juan.perez@gmail.com', 'Test1234', 'juan.png', '+34123456789'),
+('Noor', 'Aloune Sagouma', 'nalosag@gmail.com', 'Test1234', 'noor.png', '+34876543210');
 
 INSERT INTO categorias (nombre) VALUES 
 ('LanasAndHilos'),

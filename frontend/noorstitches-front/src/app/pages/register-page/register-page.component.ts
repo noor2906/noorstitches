@@ -30,7 +30,7 @@ export class RegisterPageComponent {
       password: ['', [Validators.required, Validators.pattern(FormUtils.passwordPattern)]],
       passwordConfirm: ['', [Validators.required]],
       telefono: ['', [Validators.required, Validators.pattern(FormUtils.telefonoPattern)]],
-      fotoPerfil: ['', [Validators.required, Validators.minLength(5)]],
+      // fotoPerfil: ['', [Validators.required, Validators.minLength(5)]],
   }, {
       validators: this.passwordMatchValidator // Validador personalizado
   });
@@ -51,7 +51,7 @@ export class RegisterPageComponent {
       return;
     }
 
-    const { nombre, apellidos, email, password, passwordConfirm, telefono, fotoPerfil } = this.registerForm.value;
+    const { nombre, apellidos, email, password, passwordConfirm, telefono } = this.registerForm.value;
 
     // Verificar si las contraseñas coinciden
     if (password !== passwordConfirm) {
@@ -66,7 +66,7 @@ export class RegisterPageComponent {
       email: email ?? '',
       password: password ?? '',
       telefono: telefono ?? '',
-      fotoPerfil: fotoPerfil ?? ''
+      fotoPerfil: "user.jpg"
     };
 
     // Aquí nos suscribimos al observable que devuelve el servicio de registro

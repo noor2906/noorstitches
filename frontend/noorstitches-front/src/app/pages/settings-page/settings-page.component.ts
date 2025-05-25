@@ -5,12 +5,15 @@ import { AuthService } from '../../services/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormUtils } from '../../utils/form.utils';
 import { AlertsService } from '../../services/alert.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { PedidoService } from '../../services/pedidos.service';
+import { Pedido } from '../../interfaces/pedido.interface';
+import { LineaPedido } from '../../interfaces/lineaPedido.interface';
+import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 
 @Component({
   selector: 'app-settings-page',
-  imports: [CommonModule, ReactiveFormsModule, MatIcon],
+  imports: [CommonModule, ReactiveFormsModule, MatIcon, DatePipe, PrecioEuroPipe],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.css'
 })
@@ -24,6 +27,10 @@ export class SettingsPageComponent implements OnInit {
   idUser = Number(localStorage.getItem('idUser'));
   userLogueado = signal<Usuario | null>(null);
   numPedidosUser = signal<number | null>(null);
+  pedidosUser = signal<Pedido[] | null>([]);
+  listaLineasPedidos = signal<LineaPedido[]>([]);
+  lineasPorPedido = signal(new Map<number, LineaPedido[]>());
+
 
   userForm = this.fb.group({
     nombre: ['', Validators.required],
@@ -63,6 +70,7 @@ export class SettingsPageComponent implements OnInit {
     }
 
     this.obtenerNumPedidosUser();
+    this.findAllPedidosByUser();
   }
 
   //Mi perfil --------------------------------------------
@@ -110,14 +118,29 @@ export class SettingsPageComponent implements OnInit {
   obtenerNumPedidosUser(){
     this.pedidoService.findPedidosByUser(this.idUser).subscribe((response) => {
       if (this.numPedidosUser) {
-        this.numPedidosUser.set(response.length);
+        this.numPedidosUser.set(response.length - 1);
       }
     })
   }
 
   //Mis pedidos --------------------------------------------
   
+  findAllPedidosByUser(){
+    this.pedidoService.findPedidosByUser(this.idUser).subscribe((response) => {
+      const pedidosFiltrados = response.filter((pedido: any) => pedido.estado !== 'pendiente');
+      this.pedidosUser.set(pedidosFiltrados);
+
+      pedidosFiltrados.forEach((pedido) => {
+      this.pedidoService.findLineasPedidoByPedido(pedido.id!).subscribe((lineas) => {
+          // Clona el Map actual y le agrega las nuevas líneas
+          const mapActual = new Map(this.lineasPorPedido());
+          mapActual.set(pedido.id!, lineas);
+          this.lineasPorPedido.set(mapActual);
+        });
+      });
+
+    })
+  }
+
 }
-
-
 

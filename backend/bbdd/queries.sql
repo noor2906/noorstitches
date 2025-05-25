@@ -16,6 +16,7 @@ select * from subcategorias;
 insert into subcategorias(nombre, imagen, id_categoria) value ("prueba", "pruabe.jpg", 2);
 
 select * from pedidos;
+select * from pedidos where id_usuario = 2;
 select * from lineas_pedido;
 select * from lineas_pedido where id_pedido = 1;
 

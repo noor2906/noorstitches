@@ -9,6 +9,7 @@
     --blanco: #FFFFFF;
     --negro: #000000;
     --rojo: #FF4D50;
+    --verde: #0BD500;
 }
 
 /* ESTILOS GLOBALES --------------------------------------- */
@@ -83,6 +84,14 @@
 
 .bg-morado-intermedio-2 {
     background-color: var(--morado-intermedio-2);
+}
+
+.bg-rojo {
+    background-color: var(--rojo);
+}
+
+.bg-verde {
+    background-color: var(--verde);
 }
 
 /* BORDES --------------------------------------- */

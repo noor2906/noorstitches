@@ -35,7 +35,6 @@ export class RegisterPageComponent {
       validators: this.passwordMatchValidator // Validador personalizado
   });
 
-  // Agregar esta función de validación
   private passwordMatchValidator(form: AbstractControl): ValidationErrors | null {
       const password = form.get('password')?.value;
       const confirm = form.get('passwordConfirm')?.value;

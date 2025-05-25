@@ -55,53 +55,151 @@
             <div class="card-body p-4">
               <form  [formGroup]="userForm" (ngSubmit)="guardarCambios()">
                 <div class="row g-3">
-                  <div class="col-md-6">
-                    <div class="form-floating">
-                      <input type="text" class="form-control border-morado-intermedio-1" id="nombre" placeholder="Nombre"  formControlName="nombre" required>
-                      <label for="nombre" class="text-morado-oscuro">Nombre</label>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-6">
-                    <div class="form-floating">
-                      <input type="text" class="form-control border-morado-intermedio-1" id="apellidos" placeholder="Apellidos" formControlName="apellidos" required>
-                      <label for="apellidos" class="text-morado-oscuro">Apellidos</label>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-6">
-                    <div class="form-floating">
-                      <input type="email" class="form-control border-morado-intermedio-1" id="email" placeholder="Email" formControlName="email" required>
-                      <label for="email" class="text-morado-oscuro">Email</label>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-6">
-                    <div class="form-floating">
-                      <input type="tel" class="form-control border-morado-intermedio-1" id="telefono" placeholder="Teléfono" formControlName="telefono" required>
-                      <label for="telefono" class="text-morado-oscuro">Teléfono</label>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-6">
-                    <div class="form-floating">
-                      <input type="password" class="form-control border-morado-intermedio-1" id="passwd" placeholder="Contraseña" formControlName="password" required>
-                      <label for="passwd" class="text-morado-oscuro">Contraseña</label>
-                    </div>
-                  </div>
 
-                   <div class="col-md-6">
-                    <div class="form-floating">
-                      <input type="password" class="form-control border-morado-intermedio-1" id="repetirPasswd" placeholder="Repetir contraseña" formControlName="passwordConfirm" required>
-                      <label for="repetirPasswd" class="text-morado-oscuro">Repetir contraseña</label>
-                    </div>
+                 <!-- Nombre -->
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" 
+                    class="form-control" 
+                    [class.is-invalid]="userForm.get('nombre')?.invalid && (userForm.get('nombre')?.touched || userForm.get('nombre')?.dirty)"
+                    id="name" 
+                    placeholder="Ingresa tu nombre"
+                    formControlName="nombre">
+                    <label for="name" class="form-label text-blanco">Nombre</label>
+                    @if (userForm.get('nombre')?.errors?.['required'] && (userForm.get('nombre')?.touched || userForm.get('nombre')?.dirty)) {
+                        <div class="invalid-feedback">
+                            El nombre es obligatorio
+                        </div>
+                    }
+                    @if (userForm.get('nombre')?.errors?.['pattern']) {
+                        <div class="invalid-feedback">
+                            Debe tener al menos 2 letras y solo caracteres válidos
+                        </div>
+                    }
                   </div>
                 </div>
-                
+
+                <!-- Apellidos -->
+                 <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" 
+                    class="form-control" 
+                    [class.is-invalid]="userForm.get('apellidos')?.invalid && (userForm.get('apellidos')?.touched || userForm.get('apellidos')?.dirty)"
+                    id="apellidos" 
+                    placeholder="Ingresa tus apellidos"
+                    formControlName="apellidos">
+                    <label for="apellidos" class="form-label text-blanco">Apellidos</label>
+                    @if (userForm.get('apellidos')?.errors?.['required'] && (userForm.get('apellidos')?.touched || userForm.get('apellidos')?.dirty)) {
+                        <div class="invalid-feedback">
+                            Los apellidos son obligatorios
+                        </div>
+                    }
+                    @if (userForm.get('apellidos')?.errors?.['pattern']) {
+                        <div class="invalid-feedback">
+                            Formato inválido (mínimo 2 letras por apellido)
+                        </div>
+                    }
+                  </div>
+                </div>
+
+                <!-- Email -->
+                  <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="email" 
+                    class="form-control" 
+                    [class.is-invalid]="userForm.get('email')?.invalid && (userForm.get('email')?.touched || userForm.get('email')?.dirty)"
+                    id="email" 
+                    placeholder="Ingresa tu email"
+                    formControlName="email">
+                    <label for="email" class="form-label text-blanco">Email</label>
+                    @if (userForm.get('email')?.errors?.['required'] && (userForm.get('email')?.touched || userForm.get('email')?.dirty)) {
+                        <div class="invalid-feedback">
+                            El email es obligatorio
+                        </div>
+                    }
+                    @if (userForm.get('email')?.errors?.['pattern']) {
+                        <div class="invalid-feedback">
+                            Formato de email inválido
+                        </div>
+                    }
+                    </div>
+                </div>
+
+                <!-- Teléfono -->
+                  <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" 
+                    class="form-control" 
+                    [class.is-invalid]="userForm.get('telefono')?.invalid && (userForm.get('telefono')?.touched || userForm.get('telefono')?.dirty)"
+                    id="telefono" 
+                    placeholder="Ej: 612345678"
+                    formControlName="telefono">
+                    <label for="telefono" class="form-label text-blanco">Teléfono</label>
+                    @if (userForm.get('telefono')?.errors?.['required'] && (userForm.get('telefono')?.touched || userForm.get('telefono')?.dirty)) {
+                        <div class="invalid-feedback">
+                            El teléfono es obligatorio
+                        </div>
+                    }
+                    @if (userForm.get('telefono')?.errors?.['pattern']) {
+                        <div class="invalid-feedback">
+                            Debe tener entre 9 y 15 dígitos
+                        </div>
+                    }
+                    </div>
+                </div>
+
+          
+              <!-- Contraseña -->
+                  <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="password" 
+                    class="form-control" 
+                    [class.is-invalid]="userForm.get('password')?.invalid && (userForm.get('password')?.touched || userForm.get('password')?.dirty)"
+                    id="password" 
+                    placeholder="Ingresa tu contraseña"
+                    formControlName="password">
+                    <label for="password" class="form-label text-blanco">Contraseña</label>
+                    @if (userForm.get('password')?.errors?.['required'] && (userForm.get('password')?.touched || userForm.get('password')?.dirty)) {
+                        <div class="invalid-feedback">
+                            La contraseña es obligatoria
+                        </div>
+                    }
+                    @if (userForm.get('password')?.errors?.['pattern']) {
+                        <div class="invalid-feedback">
+                            Mínimo 8 caracteres, una mayúscula, una minúscula y un número
+                        </div>
+                    }
+                    </div>
+                </div>
+
+                <!-- Confirmar Contraseña -->
+                  <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="password" 
+                    class="form-control" 
+                    [class.is-invalid]="(userForm.get('passwordConfirm')?.invalid && (userForm.get('passwordConfirm')?.touched || userForm.get('passwordConfirm')?.dirty)) || (userForm.hasError('mismatch') && userForm.get('passwordConfirm')?.dirty)"
+                    id="passwordConfirm" 
+                    placeholder="Repite la contraseña"
+                    formControlName="passwordConfirm">
+                    <label for="passwordConfirm" class="form-label text-blanco">Repetir contraseña</label>
+                    @if (userForm.get('passwordConfirm')?.errors?.['required'] && (userForm.get('passwordConfirm')?.touched || userForm.get('passwordConfirm')?.dirty)) {
+                        <div class="invalid-feedback">
+                            Debes repetir la contraseña
+                        </div>
+                    }
+                    @if (userForm.hasError('mismatch') && userForm.get('passwordConfirm')?.dirty) {
+                        <div class="invalid-feedback">
+                            Las contraseñas no coinciden
+                        </div>
+                    }
+                    </div>
+                </div>
+        
                 <div class="text-end mt-4">
                   <button type="submit" class="btnSinIcono py-2 px-4" style="width: auto;">
                     Guardar cambios
                   </button>
+                </div>
                 </div>
               </form>
             </div>

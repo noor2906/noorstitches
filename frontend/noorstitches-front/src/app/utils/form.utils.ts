@@ -12,5 +12,5 @@ export class FormUtils {
   static apellidoPattern = "^[A-Za-zÁÉÍÓÚáéíóúÑñ]{2,}(\\s[A-Za-zÁÉÍÓÚáéíóúÑñ]{2,})?$";
 
   // Teléfono: 9 a 12 dígitos numéricos
-  static telefonoPattern = '^[0-9]{9,12}$';
+  static telefonoPattern = '^[0-9]{9,15}$';
 }

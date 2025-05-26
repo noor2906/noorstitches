@@ -78,13 +78,37 @@ VALUES
 ('Organizador de Madera', 'Organizador de madera para guardar tus hilos y herramientas de costura.', 'organizador_madera.webp', 18.00, 500.00, '30 cm x 20 cm', 'Madera', NULL, 'Noorstitches', 1, 0, 13),
 ('Peluche Conejo Rosa', 'Peluche conejito rosa de crochet, ideal para regalar en cualquier ocasión.', 'peluche_conejo_rosa.webp', 15.99, 160.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 1, 4);
 
-/*
-INSERT INTO pedidos (id_usuario, fecha, importe)
-VALUES (1, NOW(), 30.0);  -- 4.99 * 2 + 19.95 = 29.93
+-- Datos para la tabla producto_guardado
+INSERT INTO productos_guardados (id_usuario, id_producto, fecha_guardado) VALUES
+(1, 3, '2025-04-10'),
+(1, 7, '2025-04-11'),
+(1, 12, '2025-04-11'),
+(1, 18, '2025-04-12'),
+(1, 21, '2025-04-12'),
+(1, 25, '2025-04-13'),
+(1, 30, '2025-04-13'),
+(1, 31, '2025-04-14'),
 
--- Insertar líneas de pedido
-INSERT INTO lineas_pedido (id_pedido, id_producto, cantidad, importe)
-VALUES 
-(1, 1, 2, 10.0),       -- 2 unidades de "Lana Cotton Soft"
-(1, 2, 1, 20.0);      -- 1 unidad de "Peluche Conejito Rosa"
-*/
+(2, 2, '2025-04-09'),
+(2, 6, '2025-04-10'),
+(2, 11, '2025-04-11'),
+(2, 14, '2025-04-11'),
+(2, 17, '2025-04-12'),
+(2, 20, '2025-04-13'),
+(2, 27, '2025-04-14'),
+(2, 32, '2025-04-15'),
+(2, 33, '2025-04-15'),
+
+(3, 1, '2025-04-08'),
+(3, 4, '2025-04-09'),
+(3, 5, '2025-04-09'),
+(3, 8, '2025-04-10'),
+(3, 9, '2025-04-10'),
+(3, 10, '2025-04-10'),
+(3, 13, '2025-04-11'),
+(3, 15, '2025-04-12'),
+(3, 16, '2025-04-13'),
+(3, 19, '2025-04-14'),
+(3, 22, '2025-04-14'),
+(3, 23, '2025-04-14'),
+(3, 24, '2025-04-15');

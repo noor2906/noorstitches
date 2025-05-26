@@ -17,10 +17,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
-@Table(name = "producto_guardado")
+@Table(name = "productos_guardados")
 public class ProductoGuardado {
 	
     @Id
@@ -35,8 +36,7 @@ public class ProductoGuardado {
     @JoinColumn(name = "id_producto")
     private Producto producto;
     
-
-	@Column(name = "fechaGuardado")
+	@Column(name = "fecha_guardado")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private Date fechaGuardado;
 

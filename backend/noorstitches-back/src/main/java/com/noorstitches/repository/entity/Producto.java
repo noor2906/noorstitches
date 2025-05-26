@@ -1,9 +1,11 @@
 package com.noorstitches.repository.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.noorstitches.model.dto.LineaPedidoDTO;
 
 import jakarta.persistence.CascadeType;
@@ -74,6 +76,10 @@ public class Producto {
 	@ToString.Exclude
 	private List<LineaPedido> lineasPedido;
 
+    // lista de relaciones de usuarios que guardaron este producto
+    @JsonIgnore
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductoGuardado> usuariosGuardados = new ArrayList<>();
 
 	@Override
 	public boolean equals(Object obj) {

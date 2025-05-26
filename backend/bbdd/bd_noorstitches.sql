@@ -69,11 +69,11 @@ CREATE TABLE lineas_pedido (
 );
 
 -- Tabla productos guardados (Lista de deseos)
-CREATE TABLE producto_guardado (
+CREATE TABLE productos_guardados (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     id_usuario BIGINT NOT NULL,
     id_producto BIGINT NOT NULL,
-    fechaGuardado DATE NOT NULL,
+    fecha_guardado DATETIME NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
     FOREIGN KEY (id_producto) REFERENCES productos(id)
 );

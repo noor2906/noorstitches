@@ -20,4 +20,13 @@ select * from pedidos where id_usuario = 2;
 select * from lineas_pedido;
 select * from lineas_pedido where id_pedido = 2;
 
+select * from productos_guardados;
+
+SELECT p.*
+FROM productos p
+JOIN productos_guardados pg
+  ON pg.id_producto = p.id
+WHERE pg.id_usuario = 1;
+
+
 select * from productos where es_destacado = 1;

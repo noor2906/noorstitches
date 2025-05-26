@@ -38,6 +38,7 @@ public class ProductoDTO implements Serializable {
 	
 	@ToString.Exclude
 	private List<LineaPedidoDTO> lineasPedidoDTO;
+	
 
 	// Convierte una entidad a un objeto DTO
     public static ProductoDTO convertToDTO(Producto p) {
@@ -68,7 +69,7 @@ public class ProductoDTO implements Serializable {
     	productoDTO.setEsDestacado(p.isEsDestacado());
     	
     	productoDTO.setSubcategoriaDTO(SubcategoriaDTO.convertToDTO(p.getSubcategoria()));
-    	    	
+    	    	    	
         // Retorna el DTO
         return productoDTO;
     }

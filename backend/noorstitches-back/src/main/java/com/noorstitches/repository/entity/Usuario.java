@@ -1,8 +1,12 @@
 package com.noorstitches.repository.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,6 +51,10 @@ public class Usuario {
 	@ToString.Exclude
 	private List<Pedido> listaPedidos;
 
+	@JsonIgnore
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductoGuardado> productosGuardados = new ArrayList<>();
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

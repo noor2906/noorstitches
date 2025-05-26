@@ -11,6 +11,7 @@ import { Pedido } from '../../interfaces/pedido.interface';
 import { LineaPedido } from '../../interfaces/lineaPedido.interface';
 import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 import { EnumEstadoPedido } from '../../interfaces/enumEstado.interface';
+import { ProductosFavoritosService } from '../../services/productosFavoritos.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -24,6 +25,8 @@ export class SettingsPageComponent implements OnInit {
   alertService = inject(AlertsService);
   authService = inject(AuthService);
   pedidoService = inject(PedidoService);
+  productoFavoritoService = inject(ProductosFavoritosService);
+  
 
   idUser = Number(localStorage.getItem('idUser'));
   userLogueado = signal<Usuario | null>(null);
@@ -32,6 +35,7 @@ export class SettingsPageComponent implements OnInit {
   pedidosUserFiltrados = signal<Pedido[] | null>([]);
   listaLineasPedidos = signal<LineaPedido[]>([]);
   lineasPorPedido = signal(new Map<number, LineaPedido[]>());
+  numProductosFavoritos = signal<number>(0); // Número de productos favoritos del usuario
 
   // Todos los estados menos el "pendiente" porque es el que se usa para el carrito
   estadosPedidos = signal(
@@ -85,6 +89,7 @@ export class SettingsPageComponent implements OnInit {
 
     this.obtenerNumPedidosUser();
     this.findAllPedidosByUser();
+    this.numProductosFavoritosByUser();
   }
 
   //Mi perfil --------------------------------------------
@@ -172,6 +177,20 @@ export class SettingsPageComponent implements OnInit {
     }
   }
 
-
+  numProductosFavoritosByUser() {
+    this.productoFavoritoService.findAllFavoritosByUser(this.idUser).subscribe(
+      (response) => {
+        if (response && response.length > 0) {
+          this.numProductosFavoritos.set(response.length);
+          console.log(`Productos favoritos encontrados: ${this.numProductosFavoritos()}`);
+        } else {
+          this.numProductosFavoritos.set(0);
+          console.log("No hay productos favoritos");
+        }
+      },
+      (error: any) => {
+        console.error("Error al cargar los productos favoritos: " + error);
+      }
+    );
+  }
 }
-

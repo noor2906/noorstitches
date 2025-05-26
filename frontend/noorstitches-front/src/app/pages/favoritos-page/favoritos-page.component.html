@@ -37,87 +37,46 @@
 
   <!-- Grid de productos favoritos -->
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-    <!-- Producto 1 -->
-    <div class="col">
-      <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden product-card position-relative">
-        <button class="btn btn-sm position-absolute top-0 end-0 m-2 z-3 bg-white rounded-circle shadow-sm" style="width: 35px; height: 35px; padding: 0;" title="Eliminar de favoritos">
-          <span class="material-icons text-rojo" style="font-size: 18px;">favorite</span>
-        </button>
-
-        <a class="text-decoration-none" href="#">
-          <div class="bg-morado-claro position-relative" style="aspect-ratio: 4/3; overflow: hidden;">
-            <img src="/images/amigurumi-oso.jpg" alt="Oso amigurumi" class="img-fluid w-100 h-100 object-fit-cover">
-            <span class="badge bg-success position-absolute bottom-0 start-0 m-2 rounded-pill">En stock</span>
-          </div>
-          <div class="card-body p-3">
-            <h6 class="card-title text-morado-oscuro bold mb-2 text-break">Oso de crochet</h6>
-            <p class="card-text text-morado-oscuro small mb-2" style="height: 40px; overflow: hidden;">
-              Un adorable oso hecho a mano con lana suave.
-            </p>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <span class="h6 text-morado-intermedio-1 extrabold mb-0">15,00 €</span>
-              <span class="badge bg-morado-intermedio-2 text-morado-oscuro rounded-pill small">Amigurumi</span>
-            </div>
-            <div class="d-flex justify-content-between align-items-center">
-              <small class="text-muted">
-                <span class="material-icons me-1" style="font-size: 14px;">schedule</span>
-                Agregado 01/05/2025
-              </small>
-            </div>
-          </div>
-        </a>
-
-        <div class="card-footer bg-transparent border-0 p-3 pt-0">
-          <button class="btnSinIcono w-100 py-2">
-            <span class="material-icons me-2" style="font-size: 18px;">add_shopping_cart</span>
-            Añadir al carrito
-          </button>
-        </div>
+    @if (listaProductosFavoritos().length === 0) {
+      <div class="col-12 text-center">
+        <p class="text-muted">No tienes productos favoritos aún.</p>
       </div>
-    </div>
-
-    <!-- Producto 2 -->
-    <div class="col">
-      <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden product-card position-relative">
-        <button class="btn btn-sm position-absolute top-0 end-0 m-2 z-3 bg-white rounded-circle shadow-sm" style="width: 35px; height: 35px; padding: 0;" title="Eliminar de favoritos">
-          <span class="material-icons text-rojo" style="font-size: 18px;">favorite</span>
-        </button>
-
-        <a class="text-decoration-none" href="#">
-          <div class="bg-morado-claro position-relative" style="aspect-ratio: 4/3; overflow: hidden;">
-            <img src="/images/bolso-crochet.jpg" alt="Bolso de crochet" class="img-fluid w-100 h-100 object-fit-cover">
-            <span class="badge bg-danger position-absolute bottom-0 start-0 m-2 rounded-pill">Agotado</span>
-          </div>
-          <div class="card-body p-3">
-            <h6 class="card-title text-morado-oscuro bold mb-2 text-break">Bolso boho</h6>
-            <p class="card-text text-morado-oscuro small mb-2" style="height: 40px; overflow: hidden;">
-              Bolso estilo bohemio ideal para el verano.
-            </p>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <span class="h6 text-morado-intermedio-1 extrabold mb-0">22,00 €</span>
-              <span class="badge bg-morado-intermedio-2 text-morado-oscuro rounded-pill small">Accesorios</span>
+    } @else {
+    @for (producto of listaProductosFavoritos(); track producto.id) {
+        <a class="tarjeta-producto text-decoration-none" [routerLink]="['/productos', producto.id]" [state]="{ origen: 'favoritos' }">
+            <div class="w-100" style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem;">
+                @if (producto.urlImagen != null) {
+                    <img src={{producto.urlImagen}} alt={{producto.nombre}} class="img-fluid w-100 h-100 object-fit-cover p-3 rounded-5">
+                } @else {
+                    <img src="http://localhost:8888/imgs/productos/por_defecto.webp" alt={{producto.nombre}} class="img-fluid w-100 h-100 object-fit-cover p-3 rounded-5">
+                }
             </div>
-            <div class="d-flex justify-content-between align-items-center">
-              <small class="text-muted">
-                <span class="material-icons me-1" style="font-size: 14px;">schedule</span>
-                Agregado 15/04/2025
-              </small>
+            <div class="d-flex flex-column gap-2 mt-2 px-3">
+                <h4 class="text-black medium text-break mt-3">{{ producto.nombre }}</h4>
+                <div class="d-flex justify-content-between align-items-center m-0 p-0"> 
+                    <p class="text-black bold fs-4">{{(producto.precio ?? 0) | precioEuro}}</p>
+                    @if (listaIdProductosFavoritos().includes(producto.id!)) {
+                        <button type="button" 
+                                class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer" 
+                                (click)="$event.preventDefault(); $event.stopPropagation(); favorito(producto.id!)">
+                            <mat-icon class="text-morado-intermedio-1">favorite</mat-icon>
+                        </button>
+                    } @else {
+                        <button type="button" 
+                                class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer" 
+                                (click)="$event.preventDefault(); $event.stopPropagation(); favorito(producto.id!)">
+                            <span class="material-symbols-outlined text-morado-intermedio-1">favorite</span>
+                        </button>
+                    }
+                </div>
             </div>
-          </div>
-        </a>
-
-        <div class="card-footer bg-transparent border-0 p-3 pt-0">
-          <button class="btn btn-outline-secondary w-100 py-2" disabled>
-            <span class="material-icons me-2" style="font-size: 18px;">notifications</span>
-            Notificar disponibilidad
-          </button>
-        </div>
-      </div>
-    </div>
+        </a> 
+    }
+  }
   </div>
 
   <!-- Acciones adicionales -->
-  <div class="row mt-5">
+  <!-- <div class="row mt-5">
     <div class="col-12">
       <div class="card border-morado-intermedio-1 rounded-4 p-4">
         <div class="card-body text-center">
@@ -142,5 +101,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

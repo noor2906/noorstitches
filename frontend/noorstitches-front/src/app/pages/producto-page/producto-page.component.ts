@@ -57,7 +57,18 @@ export class ProductoPageComponent implements OnInit {
   }
 
   volver() {
-    this.router.navigate([this.origen === 'home' ? '/home' : '/tienda']);
+    switch (this.origen) {
+      case 'home':
+        this.router.navigate(['/home']);
+        break;
+      case 'favoritos':
+        this.router.navigate(['/favoritos']);
+        break;
+      case 'tienda':
+      default: // Valor por defecto si no coincide con ningún caso
+        this.router.navigate(['/tienda']);
+        break;
+    }
   }
 
   /**

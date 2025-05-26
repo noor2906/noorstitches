@@ -9,10 +9,13 @@ import { forkJoin, map } from 'rxjs';
 import { Categoria } from '../../interfaces/categoria.interface';
 import { RouterLink } from '@angular/router';
 import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
+import { MatIcon } from '@angular/material/icon';
+import { ProductosFavoritosService } from '../../services/productosFavoritos.service';
+import { AlertsService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-tienda-page',
-  imports: [RouterLink, PrecioEuroPipe],
+  imports: [RouterLink, PrecioEuroPipe, MatIcon],
   templateUrl: './tienda-page.component.html',
   styleUrl: './tienda-page.component.css'
 })
@@ -21,12 +24,16 @@ export class TiendaPageComponent implements OnInit{
   productoService = inject(ProductoService);
   categoriaService = inject(CategoriaService);
   subcategoriaService = inject(SubcategoriaService);
-
+  productoFavoritoService = inject(ProductosFavoritosService);
+  alertService = inject(AlertsService);
 
   productosTienda = signal<Producto[]>([]);  // Productos completos
   productosABuscar = signal<Producto[]>([]); // Productos filtrados
   categoriasConSubcategorias = signal<CategoriaConSubcategorias[]>([]);
   categorias = signal<Categoria[]>([]);
+  isFavorito = signal<boolean>(false); // Estado del botón de favorito
+  idUser = Number(localStorage.getItem('idUser'));
+  listaIdProductosFavoritos = signal<number[]>([]); // id de los productos favoritos del usuario
 
   subcategoriaNombresNuevosMap: { 
     [key: string]: string; 
@@ -42,6 +49,7 @@ export class TiendaPageComponent implements OnInit{
     this.getProductosTienda();
     this.cargarCategorias();
     this.cargarCategoriasConSubcategorias();
+    this.cargarFavoritosByUser();
   }
 
   // Función para cargar los productos desde el servicio
@@ -123,4 +131,67 @@ export class TiendaPageComponent implements OnInit{
 
     this.productosABuscar.set(filtered);
   }
+
+  cargarFavoritosByUser() {
+    this.productoFavoritoService.findAllFavoritosByUser(this.idUser).subscribe(
+      (response) => {
+        if (response.length > 0) {
+          response.forEach(producto => {
+            this.listaIdProductosFavoritos.set([...this.listaIdProductosFavoritos(), producto.id!]);
+          }
+          );
+
+          console.log("Productos favoritos encontrados: " + response);
+        } else {
+          console.log("No hay productos favoritos");
+        }
+      },
+      (error) => {
+        console.error("Error al cargar los productos favoritos: " + error);
+      }
+    );
+  }
+
+  favorito(idProducto: number) {
+
+     if (!this.idUser){ 
+      this.alertService.confirm(
+          "Debes iniciar sesión",
+          `¿Para poder añadir el producto a favoritos debes iniciar sesión. ¿Redirigir al login?`,
+          "Sí",
+          "No",
+          ""
+      );
+    } else {
+
+    const esFavorito = this.listaIdProductosFavoritos().includes(idProducto);
+    
+    if (esFavorito) {
+        this.eliminarDeFavoritos(idProducto);
+    } else {
+        this.anadirAFavoritos(idProducto);
+    }
+  }
+  }
+
+  anadirAFavoritos(idProducto: number) {
+      this.listaIdProductosFavoritos.update(ids => [...ids, idProducto]); // Optimistic UI
+      this.productoFavoritoService.addFavorito(this.idUser, idProducto).subscribe({
+          error: (err) => {
+              this.listaIdProductosFavoritos.update(ids => ids.filter(id => id !== idProducto)); // Revertir si hay error
+              console.error('Error añadiendo favorito:', err);
+          }
+      });
+  }
+
+  eliminarDeFavoritos(idProducto: number) {
+      this.listaIdProductosFavoritos.update(ids => ids.filter(id => id !== idProducto)); // Optimistic UI
+      this.productoFavoritoService.deleteFavorito(this.idUser, idProducto).subscribe({
+          error: (err) => {
+              this.listaIdProductosFavoritos.update(ids => [...ids, idProducto]); // Revertir si hay error
+              console.error('Error eliminando favorito:', err);
+          }
+      });
+  }
+
 }

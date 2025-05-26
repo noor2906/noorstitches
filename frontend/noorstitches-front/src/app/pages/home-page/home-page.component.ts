@@ -36,6 +36,8 @@ export class HomePageComponent implements OnInit {
 
     //Recogemos el id de la ruta
     const id = Number(this.route.snapshot.params['id']);
+
+    this.cargarFavoritosByUser();
   }
 
   getCategorias() {

@@ -46,13 +46,12 @@ public class Usuario {
 	@Column(name = "telefono")	
 	private String telefono;
 	
-	@OneToMany
-	@JoinColumn(name = "id_usuario")
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	@ToString.Exclude
 	private List<Pedido> listaPedidos;
 
 	@JsonIgnore
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<ProductoGuardado> productosGuardados = new ArrayList<>();
 	
 	@Override

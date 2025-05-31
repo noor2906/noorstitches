@@ -1,18 +1,52 @@
-<footer class="bg-morado-intermedio-2 mt-auto text-white py-4">
-    <div class="container text-center">
-        <p class="mb-1">&copy; 2025 Noor Stitches. All rights reserved.</p>
-        <ul class="list-inline">
-            <li class="list-inline-item">
-                <a href="#" class="text-white text-decoration-none">Privacy Policy</a>
-            </li>
-            <li class="list-inline-item">|</li>
-            <li class="list-inline-item">
-                <a href="#" class="text-white text-decoration-none">Terms of Service</a>
-            </li>
-            <li class="list-inline-item">|</li>
-            <li class="list-inline-item">
-                <a href="#" class="text-white text-decoration-none">Contact Us</a>
-            </li>
+<footer class="bg-morado-intermedio-2 text-white pt-4 w-100">
+  <div class="container">
+    <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center text-center text-md-start gap-4">
+
+      <!-- Logo y nombre -->
+      <div class="d-flex flex-column align-items-center align-items-md-start">
+        <div class="bg-white text-dark rounded-circle d-flex justify-content-center align-items-center mb-2" style="width: 80px; height: 80px;">
+          <img src="../../../assets/imgs/logo-noorstitches.webp" alt="Logo Noor Stitches" class="img-fluid" style="max-width: 60px; max-height: 60px;">
+        </div>
+        <h5 class="mb-0">Noor Stitches</h5>
+      </div>
+
+      <!-- Enlaces -->
+      <div>
+        <ul class="list-unstyled d-flex flex-wrap justify-content-center justify-content-md-center mb-0 gap-3">
+          <li><a [routerLink]="['/home']" class="text-white text-decoration-none">Inicio</a></li>
+          <li>|</li>
+          <li><a [routerLink]="['/tienda']" class="text-white text-decoration-none">Tienda</a></li>
+          <li>|</li>
+          <li><a [routerLink]="['/contactanos']" class="text-white text-decoration-none">Contactáctanos</a></li>
+          <li>|</li>
+          <li><a [routerLink]="['/preguntasFrecuentes']" class="text-white text-decoration-none">F&Q</a></li>
         </ul>
+      </div>
+
+      <!-- Contacto y pago -->
+      <div class="d-flex flex-column align-items-center align-items-md-start gap-3">
+        <div class="d-flex flex-column">
+          <p class="mb-1">¿Preguntas? Escríbenos:</p>
+          <p class="mb-1">noorstitches&#64;gmail.com</p>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <p class="mb-0">Aceptamos únicamente:</p>
+          <a href="https://www.paypal.com" target="_blank" rel="noopener noreferrer">
+            <img src="../../../assets/svg/PayPal.svg" alt="PayPal" style="height: 32px; vertical-align: middle;">
+          </a>
+        </div>
+      </div>
     </div>
+
+    <!-- Línea inferior -->
+    <hr class="border-white mt-3">
+    <div class="text-center">
+      <small>&copy; 2025 Noor Stitches. Todos los derechos reservados.</small>
+      <div class="mt-2">
+        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
 </footer>

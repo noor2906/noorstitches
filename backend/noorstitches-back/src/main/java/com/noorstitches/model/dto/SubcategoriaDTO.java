@@ -14,6 +14,8 @@ public class SubcategoriaDTO {
 	private Long id;
 	private String nombre;
 	private String imagen;
+	private String urlImagen;
+
 	
 	@ToString.Exclude 
 	private List<ProductoDTO> listaProductosDTO;
@@ -32,6 +34,12 @@ public class SubcategoriaDTO {
         sDTO.setImagen(s.getImagen());
         sDTO.setCategoriaDTO(CategoriaDTO.convertToDTO(s.getCategoria()));
 
+     // Solo generar la URL si hay nombre de imagen
+        if(s.getImagen() != null && !s.getImagen().isEmpty()){
+            sDTO.setUrlImagen("http://localhost:8888/imgs/subcategorias/"+ s.getImagen());
+        }else {
+            sDTO.setUrlImagen("http://localhost:8888/imgs/subcategorias/subcategoria_por_defecto.webp");
+        }
 
 		// Retorna el DTO
         return sDTO;

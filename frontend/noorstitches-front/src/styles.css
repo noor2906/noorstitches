@@ -197,11 +197,16 @@ a.nav-link:focus{
 }
 
 /* Efecto hover para las tarjetas de productos */
-.tarjeta-producto {
+.tarjeta-producto, .tarjeta-subcategoria {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.tarjeta-producto:hover {
+.tarjeta-subcategoria {
+    max-height: 386px;
+    max-width: 300px; 
+}
+
+.tarjeta-producto:hover, .tarjeta-subcategoria:hover {
   transform: translateY(-2px);
   box-shadow: 0 .5rem 1rem var(--morado-claro) !important;
 }

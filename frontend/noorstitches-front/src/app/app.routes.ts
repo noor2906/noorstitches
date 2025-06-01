@@ -57,5 +57,9 @@ export const routes: Routes = [
         path: 'favoritos',
         canActivate: [authGuardGuard],
         loadComponent: () => import('./pages/favoritos-page/favoritos-page.component').then(m => m.FavoritosPageComponent)
+    },
+    {
+        path: 'subcategorias/categoria/:id',
+        loadComponent: () => import('./pages/subcategorias-page/subcategorias-page.component').then(m => m.SubcategoriasPageComponent)
     }
 ];

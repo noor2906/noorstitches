@@ -4,7 +4,7 @@ import { Categoria } from '../../interfaces/categoria.interface';
 import { MatIcon } from '@angular/material/icon';
 import { ProductoService } from '../../services/producto.service';
 import { Producto } from '../../interfaces/producto.interface';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 import { AlertsService } from '../../services/alert.service';
 import { ProductosFavoritosService } from '../../services/productosFavoritos.service';
@@ -19,7 +19,7 @@ export class HomePageComponent implements OnInit {
 
   categoriaService = inject(CategoriaService);
   productoService = inject(ProductoService);
-  route = inject(ActivatedRoute);
+  router = inject(Router);
   productoFavoritoService = inject(ProductosFavoritosService);
   alertService = inject(AlertsService);
 
@@ -29,7 +29,7 @@ export class HomePageComponent implements OnInit {
   isFavorito = signal<boolean>(false);
   idUser = Number(localStorage.getItem('idUser'));
   listaIdProductosFavoritos = signal<number[]>([]);
-
+  
   ngOnInit() {
     this.getCategorias();
     this.getProductosDestacados();
@@ -49,6 +49,10 @@ export class HomePageComponent implements OnInit {
         console.error("Error al recibir las categorías" + error);
       }
     );
+  }
+
+  navigatToSubcategory(idCategoria: number) {
+    this.router.navigate(['subcategorias/categoria/', idCategoria]);
   }
 
   getProductosDestacados(){

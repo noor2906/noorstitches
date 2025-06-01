@@ -13,7 +13,7 @@ INSERT INTO categorias (nombre) VALUES
 -- Para Lanas & Hilos
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
 ('Lanas', 'lanas.webp', 1),     -- 1
-('Hilos', 'acrilico.webp', 1), -- 2
+('Hilos', 'hilos.webp', 1), -- 2
 ('Lanas&hilos_otros', 'otros.webp', 1); -- 3
 
 -- Para Handmade
@@ -27,20 +27,20 @@ INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES
 -- Para Mercería
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
 ('Anillos', 'anillos.webp', 3), -- 9
-('Llaveros', 'llaveros.webp', 3),  -- 10
+('Llaveros_metal', 'llaveros_metal.webp', 3),  -- 10
 ('Marcadores', 'marcadores.webp', 3),  -- 11
 ('Tijeras', 'tijeras.webp', 3),  -- 12
 ('Merceria_otros', 'otros.webp', 3);  -- 13
 
 -- Para Kits
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
-('Kit crochet', 'kit_ganchillo.webp', 4), -- 14
-('Kit herramientas', 'kit_principiante.webp', 4), -- 15
+('Kit_crochet', 'kit_crochet.webp', 4), -- 14
+('Kit_herramientas', 'kit_herramientas.webp', 4), -- 15
 ('Kits_otros', 'otros.webp', 4); -- 16
 
 -- Productos metidos después
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
-('Llaveros', 'llaveros_handmade.webp', 2);     -- 17
+('Llaveros', 'llaveros.webp', 2);     -- 17
 
 INSERT INTO productos (nombre, descripcion, imagen, precio, peso, longitud, material, composicion, marca, activo, es_destacado, id_subcategoria) 
 VALUES 

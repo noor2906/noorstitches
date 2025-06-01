@@ -49,7 +49,10 @@ export class TiendaPageComponent implements OnInit{
     this.getProductosTienda();
     this.cargarCategorias();
     this.cargarCategoriasConSubcategorias();
-    this.cargarFavoritosByUser();
+
+     if (this.idUser) {
+      this.cargarFavoritosByUser();
+    }
   }
 
   // Función para cargar los productos desde el servicio
@@ -58,8 +61,6 @@ export class TiendaPageComponent implements OnInit{
       (response) => {
         this.productosTienda.set(response);
         this.productosABuscar.set(response); // Al principio, mostramos todos los productos
-
-        console.log(this.productosTienda());
       },
       (error) => {
         console.error("Error al cargar los productos: " + error)
@@ -80,8 +81,6 @@ export class TiendaPageComponent implements OnInit{
     this.categoriaService.getCategorias().subscribe(
       (response) => {
         this.categorias.set(response);
-
-        console.log("Categorias: " + response);
       })
   }
 

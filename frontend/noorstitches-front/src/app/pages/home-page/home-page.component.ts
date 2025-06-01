@@ -34,10 +34,9 @@ export class HomePageComponent implements OnInit {
     this.getCategorias();
     this.getProductosDestacados();
 
-    //Recogemos el id de la ruta
-    const id = Number(this.route.snapshot.params['id']);
-
-    this.cargarFavoritosByUser();
+    if (this.idUser) {
+      this.cargarFavoritosByUser();
+    }
   }
 
   getCategorias() {

@@ -22,17 +22,23 @@
 
             <!-- Filtros -->
             <div class="col-md-4">
-                <select class="form-select" aria-label="Default select example" (change)="filtrarPorSubcategoria($event)">
-                    <option selected value="">Filtrar por categoria</option>
-                    @for (categoria of categoriasConSubcategorias(); track categoria.id) { 
-                        <optgroup [label]="categoria.nombre">
-                            @for (sub of categoria.subcategorias; track sub.id) {
-                                <option [value]="sub.id">{{ sub.nombre }}</option>
-                            }
-                        </optgroup>
+                <select 
+                    class="form-select" 
+                    [value]="subcategoriaPage()" 
+                    (change)="filtrarPorSubcategoria($event)">
+                    
+                    <option value="">Filtrar por categoría</option>
+
+                    @for (categoria of categoriasConSubcategorias(); track categoria.id) {
+                    <optgroup [label]="categoria.nombre">
+                        @for (sub of categoria.subcategorias; track sub.id) {
+                        <option [value]="sub.id">{{ sub.nombre }}</option>
+                        }
+                    </optgroup>
                     }
                 </select>
             </div>
+
 
         </div>
 

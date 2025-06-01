@@ -7,7 +7,7 @@ import { CategoriaService } from '../../services/categoria.service';
 import { CategoriaConSubcategorias } from '../../interfaces/categoriaconsubcategorias.interface';
 import { forkJoin, map } from 'rxjs';
 import { Categoria } from '../../interfaces/categoria.interface';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 import { MatIcon } from '@angular/material/icon';
 import { ProductosFavoritosService } from '../../services/productosFavoritos.service';
@@ -26,6 +26,8 @@ export class TiendaPageComponent implements OnInit{
   subcategoriaService = inject(SubcategoriaService);
   productoFavoritoService = inject(ProductosFavoritosService);
   alertService = inject(AlertsService);
+  route = inject(ActivatedRoute);
+
 
   productosTienda = signal<Producto[]>([]);  // Productos completos
   productosABuscar = signal<Producto[]>([]); // Productos filtrados
@@ -34,6 +36,7 @@ export class TiendaPageComponent implements OnInit{
   isFavorito = signal<boolean>(false); // Estado del botón de favorito
   idUser = Number(localStorage.getItem('idUser'));
   listaIdProductosFavoritos = signal<number[]>([]); // id de los productos favoritos del usuario
+  subcategoriaPage = signal<number>(0); // Subcategoría seleccionada
 
   subcategoriaNombresNuevosMap: { 
     [key: string]: string; 
@@ -46,12 +49,32 @@ export class TiendaPageComponent implements OnInit{
 
 
   ngOnInit() {
-    this.getProductosTienda();
     this.cargarCategorias();
     this.cargarCategoriasConSubcategorias();
 
-     if (this.idUser) {
+    if (this.idUser) {
       this.cargarFavoritosByUser();
+    }
+
+   
+    const subcategoriaSeleccionada = localStorage.getItem('subcategoriaSeleccionada');
+
+    if (subcategoriaSeleccionada) {
+      const subcategoriaId = Number(subcategoriaSeleccionada);
+      this.subcategoriaPage.set(subcategoriaId); // guardar la subcategoría activa
+
+      this.productoService.getProductos().subscribe((productos) => {
+        this.productosTienda.set(productos);
+        const filtrados = productos.filter(p => p.subcategoriaDTO.id === subcategoriaId);
+        this.productosABuscar.set(filtrados);
+      });
+
+      // Limpiar localStorage
+      localStorage.removeItem('subcategoriaSeleccionada');
+      localStorage.removeItem('categoriaSeleccionada');
+
+    } else {
+      this.getProductosTienda();
     }
   }
 
@@ -115,21 +138,22 @@ export class TiendaPageComponent implements OnInit{
 
 
   filtrarPorSubcategoria(event: Event) {
-
     const selectElement = event.target as HTMLSelectElement;
-    const value = selectElement?.value;
+    const selectedValue = Number(selectElement.value);
 
-    if (!value) {
+    if (!selectedValue) {
+      this.subcategoriaPage.set(0);
       this.productosABuscar.set(this.productosTienda());
       return;
     }
 
-    const filtered = this.productosTienda().filter(
-      producto => producto.subcategoriaDTO.id === +value //+value -> convierte a number: '3' → 3
+    this.subcategoriaPage.set(selectedValue);
+    const filtrados = this.productosTienda().filter(
+      p => p.subcategoriaDTO.id === selectedValue
     );
-
-    this.productosABuscar.set(filtered);
+    this.productosABuscar.set(filtrados);
   }
+
 
   cargarFavoritosByUser() {
     this.productoFavoritoService.findAllFavoritosByUser(this.idUser).subscribe(

@@ -48,9 +48,7 @@ public class ProductoGuardadoServiceImpl implements ProductoGuardadoService {
 		ProductoGuardado pg = new ProductoGuardado();
 		
 		pg.setUsuario(UsuarioDTO.convertToEntity(usuarioDTO));
-		pg.setProducto(ProductoDTO.convertToEntity(productoDTO));
-		pg.setFechaGuardado(new Date());
-		
+		pg.setProducto(ProductoDTO.convertToEntity(productoDTO));		
 		pg = productoGuardadoRepository.save(pg);
 		
 		ProductoGuardadoDTO pgDTO = ProductoGuardadoDTO.convertToDTO(pg);

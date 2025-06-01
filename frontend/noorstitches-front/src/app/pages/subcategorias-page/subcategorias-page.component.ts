@@ -63,13 +63,9 @@ export class SubcategoriasPageComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  irATienda(idCategoria: number | undefined, idSubcategoria: number) {
-    if (!idCategoria) return;
-
-    // Guardamos en localStorage
-    localStorage.setItem('subcategoriaSeleccionada', idSubcategoria.toString());
-
-    this.router.navigate(['/tienda']);
+  irATienda(idSubcategoria: number) {
+    if (!idSubcategoria) return;
+    this.router.navigate(['tienda', idSubcategoria]);
   }
 
 }

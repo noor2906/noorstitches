@@ -61,5 +61,9 @@ export const routes: Routes = [
     {
         path: 'subcategorias/categoria/:id',
         loadComponent: () => import('./pages/subcategorias-page/subcategorias-page.component').then(m => m.SubcategoriasPageComponent)
-    }
+    },
+     {
+        path: 'tienda/:idSubcategoria',
+        loadComponent: () => import('./pages/tienda-page/tienda-page.component').then(m => m.TiendaPageComponent)
+    },
 ];

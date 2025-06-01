@@ -28,7 +28,6 @@ export class TiendaPageComponent implements OnInit{
   alertService = inject(AlertsService);
   route = inject(ActivatedRoute);
 
-
   productosTienda = signal<Producto[]>([]);  // Productos completos
   productosABuscar = signal<Producto[]>([]); // Productos filtrados
   categoriasConSubcategorias = signal<CategoriaConSubcategorias[]>([]);
@@ -37,6 +36,8 @@ export class TiendaPageComponent implements OnInit{
   idUser = Number(localStorage.getItem('idUser'));
   listaIdProductosFavoritos = signal<number[]>([]); // id de los productos favoritos del usuario
   subcategoriaPage = signal<number>(0); // Subcategoría seleccionada
+  
+  idSubcategoria: number  = 0;
 
   subcategoriaNombresNuevosMap: { 
     [key: string]: string; 
@@ -56,22 +57,16 @@ export class TiendaPageComponent implements OnInit{
       this.cargarFavoritosByUser();
     }
 
-   
-    const subcategoriaSeleccionada = localStorage.getItem('subcategoriaSeleccionada');
+    this.idSubcategoria = Number(this.route.snapshot.paramMap.get('idSubcategoria'));
 
-    if (subcategoriaSeleccionada) {
-      const subcategoriaId = Number(subcategoriaSeleccionada);
-      this.subcategoriaPage.set(subcategoriaId); // guardar la subcategoría activa
-
+    if (this.idSubcategoria) {
+      this.subcategoriaPage.set(this.idSubcategoria); // guardar la subcategoría activa
+      
       this.productoService.getProductos().subscribe((productos) => {
         this.productosTienda.set(productos);
-        const filtrados = productos.filter(p => p.subcategoriaDTO.id === subcategoriaId);
+        const filtrados = productos.filter(p => p.subcategoriaDTO.id === this.idSubcategoria);
         this.productosABuscar.set(filtrados);
       });
-
-      // Limpiar localStorage
-      localStorage.removeItem('subcategoriaSeleccionada');
-      localStorage.removeItem('categoriaSeleccionada');
 
     } else {
       this.getProductosTienda();
@@ -138,22 +133,20 @@ export class TiendaPageComponent implements OnInit{
 
 
   filtrarPorSubcategoria(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    const selectedValue = Number(selectElement.value);
-
-    if (!selectedValue) {
-      this.subcategoriaPage.set(0);
+    const value = (event.target as HTMLSelectElement).value;
+    const idSub = value ? Number(value) : null;
+    
+    this.subcategoriaPage.set(idSub || 0);
+    
+    if (!idSub) {
       this.productosABuscar.set(this.productosTienda());
       return;
     }
 
-    this.subcategoriaPage.set(selectedValue);
-    const filtrados = this.productosTienda().filter(
-      p => p.subcategoriaDTO.id === selectedValue
+    this.productosABuscar.set(
+      this.productosTienda().filter(p => p.subcategoriaDTO.id === idSub)
     );
-    this.productosABuscar.set(filtrados);
   }
-
 
   cargarFavoritosByUser() {
     this.productoFavoritoService.findAllFavoritosByUser(this.idUser).subscribe(

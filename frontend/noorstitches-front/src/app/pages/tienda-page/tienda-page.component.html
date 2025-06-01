@@ -22,24 +22,22 @@
 
             <!-- Filtros -->
             <div class="col-md-4">
-                <select 
-                    class="form-select" 
-                    [value]="subcategoriaPage()" 
-                    (change)="filtrarPorSubcategoria($event)">
-                    
-                    <option value="">Filtrar por categoría</option>
+              <select 
+                class="form-select" 
+                [value]="idSubcategoria"
+                (change)="filtrarPorSubcategoria($event)">
+                
+                <option value="">Filtrar por categoría</option>
 
-                    @for (categoria of categoriasConSubcategorias(); track categoria.id) {
+                @for (categoria of categoriasConSubcategorias(); track categoria.id) {
                     <optgroup [label]="categoria.nombre">
-                        @for (sub of categoria.subcategorias; track sub.id) {
+                    @for (sub of categoria.subcategorias; track sub.id) {
                         <option [value]="sub.id">{{ sub.nombre }}</option>
-                        }
-                    </optgroup>
                     }
-                </select>
+                    </optgroup>
+                }
+            </select>
             </div>
-
-
         </div>
 
         <div class="grid-productos m-0 w-100">

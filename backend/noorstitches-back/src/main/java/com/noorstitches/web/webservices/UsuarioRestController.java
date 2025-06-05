@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,9 @@ public class UsuarioRestController {
 	
 	@Autowired
 	private PedidoService pedidoService;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	// Listar los usuarios 
 	 @GetMapping("")
@@ -143,11 +147,9 @@ public class UsuarioRestController {
 	     String email = usuarioDTO.getEmail();
 	     String password = usuarioDTO.getPassword();
 
-	     // Lógica para autenticar (ejemplo simplificado)
 	     UsuarioDTO usuarioBuscadoDTO = usuarioService.findByEmail(email);
-	     
-	     //Comprobar la contraseña que me llega
-	     if (usuarioBuscadoDTO != null && usuarioBuscadoDTO.getPassword().equals(password)) {
+
+	     if (usuarioBuscadoDTO != null && passwordEncoder.matches(password, usuarioBuscadoDTO.getPassword())) {
 	         return new ResponseEntity<>(usuarioBuscadoDTO, HttpStatus.OK);
 	     } else {
 	         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

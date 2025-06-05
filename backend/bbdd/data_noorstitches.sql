@@ -1,10 +1,9 @@
 INSERT INTO usuarios 
 (nombre, apellidos, email, passwd, foto_perfil, telefono, calle, ciudad, provincia, codigo_postal, pais) 
 VALUES 
-('Admin', 'NoorStitches', 'noorstitches@gmail.com', 'Admin1234', 'noorstitches.png', '+34123456789', 'Calle Mayor 1', 'Madrid', 'Madrid', '28013', 'España'),
-('Juan', 'Pérez García', 'juan.perez@gmail.com', 'Test1234', 'juan.png', '+34123456789', 'Avda. de Andalucía 15', 'Sevilla', 'Sevilla', '41005', 'España'),
-('Noor', 'Aloune Sagouma', 'nalosag@gmail.com', 'Test1234', 'noor.png', '+34876543210', 'C/ de la Paz 23', 'Valencia', 'Valencia', '46001', 'España');
-
+('Admin', 'NoorStitches', 'noorstitches@gmail.com', '$2a$10$7UD34othNJhiHXE5kLdHkeHPZveFRICQJmMslddxSbF.ZVlzUD2ya', 'noorstitches.png', '+34123456789', 'Calle Mayor 1', 'Madrid', 'Madrid', '28013', 'España'),
+('Juan', 'Pérez García', 'juan.perez@gmail.com', '$2a$10$PehWmK3mkBAYAnMC.fd2DuzR0h9scGomLMV3FDa4OY6BP5aVZwc6a', 'juan.png', '+34123456789', 'Avda. de Andalucía 15', 'Sevilla', 'Sevilla', '41005', 'España'),
+('Noor', 'Aloune Sagouma', 'nalosag@gmail.com', '$2a$10$PehWmK3mkBAYAnMC.fd2DuzR0h9scGomLMV3FDa4OY6BP5aVZwc6a', 'noor.png', '+34876543210', 'C/ de la Paz 23', 'Valencia', 'Valencia', '46001', 'España');
 
 INSERT INTO categorias (nombre) VALUES 
 ('LanasAndHilos'),

@@ -141,6 +141,7 @@ export class SettingsPageComponent implements OnInit {
     this.authService.guardarCambios(userActualizado).subscribe({
       next: (response) => {
         console.log('Registro exitoso:', response);
+        this.authService.setUserLogueado(userActualizado);
         this.alertService.success('Noorstitches', '¡Cambios actualizados correctamente!', null);
       },
       error: (error) => {

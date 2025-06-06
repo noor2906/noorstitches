@@ -81,7 +81,9 @@ export class FavoritosPageComponent implements OnInit {
   }
 
   eliminarDeFavoritos(idProducto: number) {
-      this.listaIdProductosFavoritos.update(ids => ids.filter(id => id !== idProducto)); // Optimistic UI
+      this.listaIdProductosFavoritos.update(ids => ids.filter(id => id !== idProducto));
+      this.listaProductosFavoritos.update(productos => productos.filter(p => p.id !== idProducto));
+
       this.productoFavoritoService.deleteFavorito(this.idUser, idProducto).subscribe({
           error: (err) => {
               this.listaIdProductosFavoritos.update(ids => [...ids, idProducto]); // Revertir si hay error

@@ -6,4 +6,9 @@ export interface Usuario {
   password: string | undefined;
   fotoPerfil: string | null | undefined;
   telefono: string | null | undefined;
+  direccion: string | null | undefined;
+  ciudad: string | null | undefined;
+  provincia: string | null | undefined;
+  codigoPostal: string | null | undefined;
+  pais: string | null | undefined;
 }

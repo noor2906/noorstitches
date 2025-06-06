@@ -13,9 +13,10 @@ import { MatIcon } from '@angular/material/icon';
 import { LineaPedidoService } from '../../services/lineapedido.service';
 import { FormControl, Validators } from '@angular/forms';
 import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
 import { PayPalService } from '../../services/paypal.service';
+import { AlertsService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-carrito-page',
@@ -29,6 +30,9 @@ export class CarritoPageComponent implements OnInit {
   carritoService = inject(CarritoService);
   paypalService = inject(PayPalService);
   router = inject(Router);
+  route = inject(ActivatedRoute);
+  alertService = inject(AlertsService);
+  
 
   idUser = signal(Number(localStorage.getItem('idUser')));
   cantidadProducto = signal<number>(1); // Cantidad inicial
@@ -38,6 +42,20 @@ export class CarritoPageComponent implements OnInit {
   @ViewChild('inputCantidad') cantidadInput!: ElementRef<HTMLInputElement>;
 
   ngOnInit(): void {
+
+    this.route.queryParams.subscribe(params => {
+      if (params['token']) {
+        this.alertService.error("Ups, algo pasó con el pago :(", "El pagó se ha cancelado o no se ha podido completar correctamente. Por favor, inténtalo de nuevo.");
+      }
+
+      // Borrar el token de la URL sin recargar la página
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {},
+          replaceUrl: true,
+        });
+    });
+    
     this.findUltimoPedidoByUser();
 
     const compraHecha = localStorage.getItem('compra_realizada');
@@ -67,6 +85,8 @@ export class CarritoPageComponent implements OnInit {
       if (linea.cantidad < 5) {
         const nuevaCantidad = linea.cantidad + 1;
         this.updateCantidad(linea, nuevaCantidad);
+      } else {
+        this.alertService.error('Noorstitches', '¡Oops! Solo puedes añadir hasta 5 unidades de este producto en tu carrito :)');
       }
     }
   }
@@ -125,6 +145,19 @@ export class CarritoPageComponent implements OnInit {
     this.lineaPedidoService.eliminarLineaPedido(idLineaPedido).subscribe({
       next: () => {
         console.log('Línea eliminada correctamente');
+        // ✅ Traer pedido actualizado
+    if (this.ultimoPedido()?.id) {
+      this.pedidoService.findPedidosByUser(this.idUser()).subscribe({
+        next: (pedidos) => {
+          const pedidoActualizado = pedidos.find(
+            (p) => p.id === this.ultimoPedido()?.id
+          );
+          if (pedidoActualizado) {
+            this.ultimoPedido.set(pedidoActualizado);
+          }
+        },
+      });
+    }
       },
       error: (err) => {
         console.error('Error al eliminar:', err);

@@ -1,0 +1,76 @@
+<div class="container py-5 separacion-header-home">
+  <button
+    class="btn btnConIcono d-flex justify-content-center gap-3 border-morado-intermedio-1 text-morado-intermedio-1 mb-5"
+    type="button"
+    style="width: 10%"
+    (click)="volver()"
+  >
+    <mat-icon class="text-morado-intermedio-1">arrow_back_ios</mat-icon>
+    Volver
+  </button>
+  <!-- Encabezado -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="row p-0 m-0 divider-con-borde">
+        <p class="h3 text-morado-intermedio-1 extrabold">
+          Categoría: {{ categoriaConSubcategorias()?.nombre }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid centrado de subcategorías 3 en 3 -->
+  <div class="row g-4 justify-content-center">
+    @for (subcategoria of categoriaConSubcategorias()?.subcategorias; track
+    subcategoria.id) {
+    <div class="col-12 col-md-6 col-lg-4" style="max-width: 300px">
+      <div
+        class="card border-0 shadow-sm rounded-4 overflow-hidden tarjeta-subcategoria h-100"
+      >
+        <a
+          (click)="irATienda(subcategoria.id)"
+          class="text-decoration-none h-100"
+        >
+          <div
+            class="bg-morado-claro position-relative d-flex align-items-center justify-content-center"
+            style="min-height: 140px"
+          >
+            @if (subcategoria.urlImagen) {
+            <img
+              [src]="subcategoria.urlImagen"
+              [alt]="subcategoria.nombre"
+              class="img-fluid w-100 h-100 object-fit-cover"
+            />
+            }
+          </div>
+        </a>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- Mensaje cuando no hay resultados -->
+  @if (!categoriaConSubcategorias()) {
+  <div class="row">
+    <div class="col-12">
+      <div class="card border-morado-intermedio-1 p-5 text-center">
+        <div class="py-4">
+          <mat-icon
+            style="
+              font-size: 4rem;
+              height: 4rem;
+              width: 4rem;
+              color: var(--morado-intermedio-1);
+            "
+          >
+            search_off
+          </mat-icon>
+          <h4 class="mt-3 mb-3 text-morado-oscuro bold">
+            No se encontraron subcategorías
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

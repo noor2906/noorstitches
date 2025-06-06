@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.noorstitches.model.dto.UsuarioDTO;
@@ -20,6 +21,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public List<UsuarioDTO> findAll() {
@@ -57,6 +61,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 		//Pasamos a entidad el usuarioDTO
 		Usuario usuario = UsuarioDTO.convertToEntity(usuarioDTO);
+		
+		// Si la contraseña no está vacía, la encriptamos
+        if (usuario.getPassword() != null && !usuario.getPassword().isEmpty()) {
+            String encodedPassword = passwordEncoder.encode(usuario.getPassword());
+            usuario.setPassword(encodedPassword);
+        }
 		
 		//Guardamos el usuario
 		usuario = usuarioRepository.save(usuario);

@@ -36,9 +36,9 @@ public class ProductoGuardado {
     @JoinColumn(name = "id_producto")
     private Producto producto;
     
-	@Column(name = "fecha_guardado")
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	private Date fechaGuardado;
+	//@Column(name = "fecha_guardado")
+	//@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	//private Date fechaGuardado;
 
 
 	@Override

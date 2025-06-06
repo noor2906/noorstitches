@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.noorstitches.repository.entity.Pedido;
 import com.noorstitches.repository.entity.Usuario;
 
+import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.ToString;
 
@@ -21,7 +22,12 @@ public class UsuarioDTO implements Serializable {
 	private String password;
 	private String email;
 	private String fotoPerfil;
-	private String telefono;
+	private String telefono;	
+	private String direccion;	
+	private String ciudad;
+	private String provincia;
+	private String codigoPostal;
+	private String pais;
 	
 	@ToString.Exclude
 	private List<Pedido> listaPedidos;
@@ -45,6 +51,11 @@ public class UsuarioDTO implements Serializable {
         usuarioDTO.setEmail(usuario.getEmail());
         usuarioDTO.setFotoPerfil(usuario.getFotoPerfil());
         usuarioDTO.setTelefono(usuario.getTelefono());
+        usuarioDTO.setDireccion(usuario.getDireccion());
+        usuarioDTO.setCiudad(usuario.getCiudad());
+        usuarioDTO.setProvincia(usuario.getProvincia());
+        usuarioDTO.setCodigoPostal(usuario.getCodigoPostal());
+        usuarioDTO.setPais(usuario.getPais());
 
         // Retorna el DTO
         return usuarioDTO;
@@ -66,6 +77,11 @@ public class UsuarioDTO implements Serializable {
         usuario.setEmail(usuarioDTO.getEmail());
         usuario.setFotoPerfil(usuarioDTO.getFotoPerfil());
         usuario.setTelefono(usuarioDTO.getTelefono());
+        usuario.setDireccion(usuarioDTO.getDireccion());
+        usuario.setCiudad(usuarioDTO.getCiudad());
+        usuario.setProvincia(usuarioDTO.getProvincia());
+        usuario.setCodigoPostal(usuarioDTO.getCodigoPostal());
+        usuario.setPais(usuarioDTO.getPais());
 
         // Retorna la entidad
         return usuario;

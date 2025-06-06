@@ -31,6 +31,11 @@ export class RegisterPageComponent {
       passwordConfirm: ['', [Validators.required]],
       telefono: ['', [Validators.required, Validators.pattern(FormUtils.telefonoPattern)]],
       // fotoPerfil: ['', [Validators.required, Validators.minLength(5)]],
+      direccion: ['', [Validators.required, Validators.pattern(FormUtils.direccionPattern)]],
+      ciudad: ['', [Validators.required, Validators.pattern(FormUtils.ciudadPattern)]],
+      provincia: ['', [Validators.required, Validators.pattern(FormUtils.provinciaPattern)]],
+      codigoPostal: ['', [Validators.required, Validators.pattern(FormUtils.codigoPostalPattern)]],
+      pais: ['', [Validators.required, Validators.pattern(FormUtils.paisPattern)]]
   }, {
       validators: this.passwordMatchValidator // Validador personalizado
   });
@@ -51,7 +56,7 @@ export class RegisterPageComponent {
       return;
     }
 
-    const { nombre, apellidos, email, password, passwordConfirm, telefono } = this.registerForm.value;
+    const { nombre, apellidos, email, password, passwordConfirm, telefono, direccion, ciudad, provincia, codigoPostal, pais } = this.registerForm.value;
 
     // Verificar si las contraseñas coinciden
     if (password !== passwordConfirm) {
@@ -66,7 +71,12 @@ export class RegisterPageComponent {
       email: email ?? '',
       password: password ?? '',
       telefono: telefono ?? '',
-      fotoPerfil: "user.jpg"
+      fotoPerfil: "user.jpg",
+      direccion: direccion ?? '',
+      ciudad: ciudad ?? '',
+      provincia: provincia ?? '',
+      codigoPostal: codigoPostal ?? '',
+      pais: pais ?? '',
     };
 
     // Aquí nos suscribimos al observable que devuelve el servicio de registro
@@ -77,8 +87,13 @@ export class RegisterPageComponent {
         this.alertService.success('Noorstitches', '¡Registro realizado correctamente!', '/');
       },
       error: (error) => {
-        console.error('Error inesperado:', error);      
+        if (error.status === 409) {
+          this.registerForm.get('email')?.setErrors({ emailDuplicado: true });
+        } else {
+          console.error('Error inesperado:', error);      
+        }
         this.registerStatus.set('error');
+
       }
     });
   }

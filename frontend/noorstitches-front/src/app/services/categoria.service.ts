@@ -22,4 +22,8 @@ export class CategoriaService {
         return this.http.get<Subcategoria[]>(`${this.apiUrl}/${idCategoria}/subcategorias`);
     }
 
+    getCategoriaById(idCategoria: number) {
+        return this.http.get<Categoria>(`${this.apiUrl}/${idCategoria}`);
+    }
+
 }

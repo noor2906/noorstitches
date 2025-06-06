@@ -82,8 +82,11 @@ export class ProductoPageComponent implements OnInit {
       const nuevaCantidad = actual + 1;
       input.value = String(nuevaCantidad);
       this.cantidadProducto.set(nuevaCantidad); 
+    } else {
+      this.alertService.error('Noorstitches', '¡Oops! Solo puedes añadir hasta 5 unidades de este producto en tu carrito :)');
     }
   }
+
 
   decrementarCantidad(input: HTMLInputElement): void {
     const actual = parseInt(input.value, 10);
@@ -145,6 +148,8 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
                     this.pedidoService.findLineasPedidoByPedido(ultimo.id!).subscribe(lineas => {
                       this.carritoService.actualizarLineasPedido(lineas);
                     });
+
+                    this.alertService.success("Añadido al carrito", "El producto se ha añadido correctamente :)");
                   },
                   error: (err) => console.error('Error al actualizar cantidad', err)
                 });
@@ -175,6 +180,9 @@ anyadirAlCarrito(idProducto: number, cantidadProducto: string) {
         this.pedidoService.findLineasPedidoByPedido(idPedido).subscribe(lineas => {
           this.carritoService.actualizarLineasPedido(lineas);
         });
+        
+        this.alertService.success("Añadido al carrito", "El producto se ha añadido correctamente :)");
+
       },
       error: (err) => console.error('Error al crear una nueva linea de pedido', err)
     });

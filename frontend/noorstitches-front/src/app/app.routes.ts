@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
 import { authGuardGuard } from './guards/auth-guard.guard';
+import { noAuthGuard } from './guards/no-auth.guard';
 
 export const routes: Routes = [
     {
-        path: '',
+        path: '', 
+        canActivate: [noAuthGuard],  // protege el login para no entrar si ya estás logueada
         loadComponent: () => import('./pages/login-page/login-page.component').then(m => m.LoginPageComponent)
     },
     {
@@ -12,6 +14,7 @@ export const routes: Routes = [
     },
     {
         path: 'register',
+        canActivate: [noAuthGuard],  // protege el registro para no entrar si ya estás logueada
         loadComponent: () => import('./pages/register-page/register-page.component').then(m => m.RegisterPageComponent)
     },
     {
@@ -52,6 +55,15 @@ export const routes: Routes = [
     },
     {
         path: 'favoritos',
+        canActivate: [authGuardGuard],
         loadComponent: () => import('./pages/favoritos-page/favoritos-page.component').then(m => m.FavoritosPageComponent)
-    }
+    },
+    {
+        path: 'subcategorias/categoria/:id',
+        loadComponent: () => import('./pages/subcategorias-page/subcategorias-page.component').then(m => m.SubcategoriasPageComponent)
+    },
+     {
+        path: 'tienda/:idSubcategoria',
+        loadComponent: () => import('./pages/tienda-page/tienda-page.component').then(m => m.TiendaPageComponent)
+    },
 ];

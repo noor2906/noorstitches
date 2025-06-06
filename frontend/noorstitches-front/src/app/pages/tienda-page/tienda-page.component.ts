@@ -7,7 +7,7 @@ import { CategoriaService } from '../../services/categoria.service';
 import { CategoriaConSubcategorias } from '../../interfaces/categoriaconsubcategorias.interface';
 import { forkJoin, map } from 'rxjs';
 import { Categoria } from '../../interfaces/categoria.interface';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PrecioEuroPipe } from '../../shared/pipes/precio-euro.pipe';
 import { MatIcon } from '@angular/material/icon';
 import { ProductosFavoritosService } from '../../services/productosFavoritos.service';
@@ -26,6 +26,7 @@ export class TiendaPageComponent implements OnInit{
   subcategoriaService = inject(SubcategoriaService);
   productoFavoritoService = inject(ProductosFavoritosService);
   alertService = inject(AlertsService);
+  route = inject(ActivatedRoute);
 
   productosTienda = signal<Producto[]>([]);  // Productos completos
   productosABuscar = signal<Producto[]>([]); // Productos filtrados
@@ -34,6 +35,10 @@ export class TiendaPageComponent implements OnInit{
   isFavorito = signal<boolean>(false); // Estado del botón de favorito
   idUser = Number(localStorage.getItem('idUser'));
   listaIdProductosFavoritos = signal<number[]>([]); // id de los productos favoritos del usuario
+  subcategoriaPage = signal<number>(0); // Subcategoría seleccionada
+  textoBusqueda = signal<string>(''); // Texto de búsqueda
+
+  idSubcategoria: number  = 0;
 
   subcategoriaNombresNuevosMap: { 
     [key: string]: string; 
@@ -42,14 +47,34 @@ export class TiendaPageComponent implements OnInit{
     'Handmade_otros': 'Otros (handmade)',
     'Merceria_otros': 'Otros (mercería)',
     'Kits_otros': 'Otros (kits)',
+    'Kit_crochet': 'Kits de crochet',
+    'Kit_herramientas': 'Kits de herramientas',
+    'Llaveros_metal': 'Llaveros de metal',
   };
 
 
   ngOnInit() {
-    this.getProductosTienda();
     this.cargarCategorias();
     this.cargarCategoriasConSubcategorias();
-    this.cargarFavoritosByUser();
+
+    if (this.idUser) {
+      this.cargarFavoritosByUser();
+    }
+
+    this.idSubcategoria = Number(this.route.snapshot.paramMap.get('idSubcategoria'));
+
+    if (this.idSubcategoria) {
+      this.subcategoriaPage.set(this.idSubcategoria); // guardar la subcategoría activa
+      
+      this.productoService.getProductos().subscribe((productos) => {
+        this.productosTienda.set(productos);
+        const filtrados = productos.filter(p => p.subcategoriaDTO.id === this.idSubcategoria);
+        this.productosABuscar.set(filtrados);
+      });
+
+    } else {
+      this.getProductosTienda();
+    }
   }
 
   // Función para cargar los productos desde el servicio
@@ -58,8 +83,6 @@ export class TiendaPageComponent implements OnInit{
       (response) => {
         this.productosTienda.set(response);
         this.productosABuscar.set(response); // Al principio, mostramos todos los productos
-
-        console.log(this.productosTienda());
       },
       (error) => {
         console.error("Error al cargar los productos: " + error)
@@ -69,6 +92,8 @@ export class TiendaPageComponent implements OnInit{
 
   // Función para filtrar productos al buscar
   onSearch(query: string) {
+    this.textoBusqueda.set(query); 
+
     const filtered = this.productosTienda().filter(product =>
       product.nombre?.toLowerCase().includes(query.toLowerCase())
     );
@@ -80,8 +105,6 @@ export class TiendaPageComponent implements OnInit{
     this.categoriaService.getCategorias().subscribe(
       (response) => {
         this.categorias.set(response);
-
-        console.log("Categorias: " + response);
       })
   }
 
@@ -115,22 +138,22 @@ export class TiendaPageComponent implements OnInit{
   }
 
 
-  filtrarPorSubcategoria(event: Event) {
+ filtrarPorSubcategoria(event: Event) {
+  const value = (event.target as HTMLSelectElement).value;
+  const idSub = value ? Number(value) : 0; // Si no hay valor, 0 (todas las categorías)
 
-    const selectElement = event.target as HTMLSelectElement;
-    const value = selectElement?.value;
+  this.idSubcategoria = idSub;       // actualizar la variable para que el binding funcione
+  this.subcategoriaPage.set(idSub);  // actualizar la señal (si la usas en otros sitios)
 
-    if (!value) {
-      this.productosABuscar.set(this.productosTienda());
-      return;
-    }
-
-    const filtered = this.productosTienda().filter(
-      producto => producto.subcategoriaDTO.id === +value //+value -> convierte a number: '3' → 3
+  if (idSub === 0) {
+    this.productosABuscar.set(this.productosTienda());
+  } else {
+    this.productosABuscar.set(
+      this.productosTienda().filter(p => p.subcategoriaDTO.id === idSub)
     );
-
-    this.productosABuscar.set(filtered);
   }
+}
+
 
   cargarFavoritosByUser() {
     this.productoFavoritoService.findAllFavoritosByUser(this.idUser).subscribe(
@@ -192,6 +215,18 @@ export class TiendaPageComponent implements OnInit{
               console.error('Error eliminando favorito:', err);
           }
       });
+  }
+
+ get hayBusqueda(): boolean {
+    return this.textoBusqueda().trim().length > 0;
+  }
+
+  get hayFiltroCategoria(): boolean {
+    return this.idSubcategoria != 0;
+  }
+
+  get sinResultados(): boolean {
+    return this.productosABuscar().length === 0;
   }
 
 }

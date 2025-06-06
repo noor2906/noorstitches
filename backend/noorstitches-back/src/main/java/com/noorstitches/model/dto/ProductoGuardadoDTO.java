@@ -22,8 +22,8 @@ public class ProductoGuardadoDTO implements Serializable {
 	
 	private ProductoDTO productoDTO;
 	
-	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-	private Date fechaGuardado;
+	//@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	//private Date fechaGuardado;
 
 	
 	 public static ProductoGuardadoDTO convertToDTO(ProductoGuardado productoGuardado) {
@@ -34,7 +34,7 @@ public class ProductoGuardadoDTO implements Serializable {
 		 pgDTO.setId(productoGuardado.getId());
 		 pgDTO.setUsuarioDTO(userDTO);
 		 pgDTO.setProductoDTO(ProductoDTO.convertToDTO(productoGuardado.getProducto()));
-		 pgDTO.setFechaGuardado(productoGuardado.getFechaGuardado());
+		 //pgDTO.setFechaGuardado(productoGuardado.getFechaGuardado());
 		 
 		 return pgDTO;   
 	}
@@ -47,7 +47,7 @@ public class ProductoGuardadoDTO implements Serializable {
 		 pg.setId(productoGuardadoDTO.getId());
 		 pg.setUsuario(user);
 		 pg.setProducto(ProductoDTO.convertToEntity(productoGuardadoDTO.getProductoDTO()));
-		 pg.setFechaGuardado(productoGuardadoDTO.getFechaGuardado());
+		 //pg.setFechaGuardado(productoGuardadoDTO.getFechaGuardado());
 		 
 		 return pg;   
 	}

@@ -1,8 +1,9 @@
-INSERT INTO usuarios (nombre, apellidos, email, passwd, foto_perfil, telefono) 
+INSERT INTO usuarios 
+(nombre, apellidos, email, passwd, foto_perfil, telefono, direccion, ciudad, provincia, codigo_postal, pais) 
 VALUES 
-('Admin', 'NoorStitches', 'noorstitches@gmail.com', 'Admin1234', 'noorstitches.png', '+34123456789'),
-('Juan', 'Pérez García', 'juan.perez@gmail.com', 'Test1234', 'juan.png', '+34123456789'),
-('Noor', 'Aloune Sagouma', 'nalosag@gmail.com', 'Test1234', 'noor.png', '+34876543210');
+('Admin', 'NoorStitches', 'noorstitches@gmail.com', '$2a$10$7UD34othNJhiHXE5kLdHkeHPZveFRICQJmMslddxSbF.ZVlzUD2ya', 'noorstitches.png', '+34123456789', 'Calle Mayor 1', 'Madrid', 'Madrid', '28013', 'España'),
+('Juan', 'Pérez García', 'juan.perez@gmail.com', '$2a$10$PehWmK3mkBAYAnMC.fd2DuzR0h9scGomLMV3FDa4OY6BP5aVZwc6a', 'juan.png', '+34123456789', 'Avda. de Andalucía 15', 'Sevilla', 'Sevilla', '41005', 'España'),
+('Noor', 'Aloune Sagouma', 'nalosag@gmail.com', '$2a$10$PehWmK3mkBAYAnMC.fd2DuzR0h9scGomLMV3FDa4OY6BP5aVZwc6a', 'noor.png', '+34876543210', 'C/ de la Paz 23', 'Valencia', 'Valencia', '46001', 'España');
 
 INSERT INTO categorias (nombre) VALUES 
 ('LanasAndHilos'),
@@ -13,7 +14,7 @@ INSERT INTO categorias (nombre) VALUES
 -- Para Lanas & Hilos
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
 ('Lanas', 'lanas.webp', 1),     -- 1
-('Hilos', 'acrilico.webp', 1), -- 2
+('Hilos', 'hilos.webp', 1), -- 2
 ('Lanas&hilos_otros', 'otros.webp', 1); -- 3
 
 -- Para Handmade
@@ -27,20 +28,20 @@ INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES
 -- Para Mercería
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
 ('Anillos', 'anillos.webp', 3), -- 9
-('Llaveros', 'llaveros.webp', 3),  -- 10
+('Llaveros_metal', 'llaveros_metal.webp', 3),  -- 10
 ('Marcadores', 'marcadores.webp', 3),  -- 11
 ('Tijeras', 'tijeras.webp', 3),  -- 12
 ('Merceria_otros', 'otros.webp', 3);  -- 13
 
 -- Para Kits
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
-('Kit crochet', 'kit_ganchillo.webp', 4), -- 14
-('Kit herramientas', 'kit_principiante.webp', 4), -- 15
+('Kit_crochet', 'kit_crochet.webp', 4), -- 14
+('Kit_herramientas', 'kit_herramientas.webp', 4), -- 15
 ('Kits_otros', 'otros.webp', 4); -- 16
 
 -- Productos metidos después
 INSERT INTO subcategorias (nombre, imagen, id_categoria) VALUES 
-('Llaveros', 'llaveros_handmade.webp', 2);     -- 17
+('Llaveros', 'llaveros.webp', 2);     -- 17
 
 INSERT INTO productos (nombre, descripcion, imagen, precio, peso, longitud, material, composicion, marca, activo, es_destacado, id_subcategoria) 
 VALUES 
@@ -79,36 +80,36 @@ VALUES
 ('Peluche Conejo Rosa', 'Peluche conejito rosa de crochet, ideal para regalar en cualquier ocasión.', 'peluche_conejo_rosa.webp', 15.99, 160.00, NULL, 'Algodón', '100% algodón', 'Noorstitches', 1, 1, 4);
 
 -- Datos para la tabla producto_guardado
-INSERT INTO productos_guardados (id_usuario, id_producto, fecha_guardado) VALUES
-(1, 3, '2025-04-10'),
-(1, 7, '2025-04-11'),
-(1, 12, '2025-04-11'),
-(1, 18, '2025-04-12'),
-(1, 21, '2025-04-12'),
-(1, 25, '2025-04-13'),
-(1, 30, '2025-04-13'),
-(1, 31, '2025-04-14'),
+INSERT INTO productos_guardados (id_usuario, id_producto) VALUES
+(1, 3),
+(1, 7),
+(1, 12),
+(1, 18),
+(1, 21),
+(1, 25),
+(1, 30),
+(1, 31),
 
-(2, 2, '2025-04-09'),
-(2, 6, '2025-04-10'),
-(2, 11, '2025-04-11'),
-(2, 14, '2025-04-11'),
-(2, 17, '2025-04-12'),
-(2, 20, '2025-04-13'),
-(2, 27, '2025-04-14'),
-(2, 32, '2025-04-15'),
-(2, 33, '2025-04-15'),
+(2, 2),
+(2, 6),
+(2, 11),
+(2, 14),
+(2, 17),
+(2, 20),
+(2, 27),
+(2, 32),
+(2, 33),
 
-(3, 1, '2025-04-08'),
-(3, 4, '2025-04-09'),
-(3, 5, '2025-04-09'),
-(3, 8, '2025-04-10'),
-(3, 9, '2025-04-10'),
-(3, 10, '2025-04-10'),
-(3, 13, '2025-04-11'),
-(3, 15, '2025-04-12'),
-(3, 16, '2025-04-13'),
-(3, 19, '2025-04-14'),
-(3, 22, '2025-04-14'),
-(3, 23, '2025-04-14'),
-(3, 24, '2025-04-15');
+(3, 1),
+(3, 4),
+(3, 5),
+(3, 8),
+(3, 9),
+(3, 10),
+(3, 13),
+(3, 15),
+(3, 16),
+(3, 19),
+(3, 22),
+(3, 23),
+(3, 24);

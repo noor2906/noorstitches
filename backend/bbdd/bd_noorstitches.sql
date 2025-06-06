@@ -8,10 +8,16 @@ CREATE TABLE usuarios (
     nombre VARCHAR(255) NOT NULL,
     apellidos VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    passwd VARCHAR(255) NOT NULL, 
-    foto_perfil VARCHAR(255) NOT NULL DEFAULT 'user.png', 
-    telefono VARCHAR(15) NOT NULL -- VARCHAR(15) para incluir prefijos internacionales en el futuro
+    passwd VARCHAR(255) NOT NULL,
+    foto_perfil VARCHAR(255) NOT NULL DEFAULT 'user.png',
+    telefono VARCHAR(15) NOT NULL,
+    direccion VARCHAR(255) NOT NULL,
+    ciudad VARCHAR(100) NOT NULL,
+    provincia VARCHAR(100) NOT NULL,
+    codigo_postal VARCHAR(10) NOT NULL,
+    pais VARCHAR(100) NOT NULL
 );
+
 
 -- Tabla de categorías
 CREATE TABLE categorias (
@@ -73,7 +79,7 @@ CREATE TABLE productos_guardados (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     id_usuario BIGINT NOT NULL,
     id_producto BIGINT NOT NULL,
-    fecha_guardado DATETIME NOT NULL,
+    -- fecha_guardado DATETIME NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
     FOREIGN KEY (id_producto) REFERENCES productos(id)
 );

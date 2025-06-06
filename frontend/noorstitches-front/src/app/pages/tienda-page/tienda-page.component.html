@@ -1,78 +1,122 @@
-<div class="container-fluid d-flex flex-column justify-content-center align-items-center w-100 gap-3 m-0 px-5 separacion-header-home">
-    <!-- productos destacados-->
-    <div class="row p-5 d-flex justify-content-start gap-5 w-100">
-        <div class="row p-0 m-0 divider-con-borde">
-            <p class="h3">Tienda</p>
-        </div>
-
-        <div class="row mb-4">
-
-            <!-- Buscador -->
-            <div class="col-md-4 d-flex gap-3">
-                <input class="form-control mr-sm-2" 
-                        type="search" 
-                        placeholder="Buscar productos..." 
-                        aria-label="Search"
-                        (input)="onSearch(txtSearch.value)"
-                        #txtSearch
-                >
-            </div>
-
-            <div class="col-4"></div>
-
-            <!-- Filtros -->
-            <div class="col-md-4">
-                <select class="form-select" aria-label="Default select example" (change)="filtrarPorSubcategoria($event)">
-                    <option selected value="">Filtrar por categoria</option>
-                    @for (categoria of categoriasConSubcategorias(); track categoria.id) { 
-                        <optgroup [label]="categoria.nombre">
-                            @for (sub of categoria.subcategorias; track sub.id) {
-                                <option [value]="sub.id">{{ sub.nombre }}</option>
-                            }
-                        </optgroup>
-                    }
-                </select>
-            </div>
-
-        </div>
-
-        <div class="grid-productos m-0 w-100">
-            @if (productosABuscar().length === 0) {
-                Ésta categoria no tiene productos aún :(
-            } @else {
-                  @for (producto of productosABuscar(); track producto.id) {
-                    <a class="tarjeta-producto text-decoration-none" [routerLink]="['/productos', producto.id]" [state]="{ origen: 'tienda' }">
-                        <div class="w-100" style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem;">
-                            @if (producto.urlImagen != null) {
-                                <img src={{producto.urlImagen}} alt={{producto.nombre}} class="img-fluid w-100 h-100 object-fit-cover p-3 rounded-5">
-                            } @else {
-                                <img src="http://localhost:8888/imgs/productos/por_defecto.webp" alt={{producto.nombre}} class="img-fluid w-100 h-100 object-fit-cover p-3 rounded-5">
-                            }
-                        </div>
-                        <div class="d-flex flex-column gap-2 mt-2 px-3">
-                            <h4 class="text-black medium text-break mt-3">{{ producto.nombre }}</h4>
-                            <div class="d-flex justify-content-between align-items-center m-0 p-0"> 
-                                <p class="text-black bold fs-4">{{(producto.precio ?? 0) | precioEuro}}</p>
-                                @if (listaIdProductosFavoritos().includes(producto.id!)) {
-                                    <button type="button" 
-                                            class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer" 
-                                            (click)="$event.preventDefault(); $event.stopPropagation(); favorito(producto.id!)">
-                                        <mat-icon class="text-morado-intermedio-1">favorite</mat-icon>
-                                    </button>
-                                } @else {
-                                    <button type="button" 
-                                            class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer" 
-                                            (click)="$event.preventDefault(); $event.stopPropagation(); favorito(producto.id!)">
-                                        <span class="material-symbols-outlined text-morado-intermedio-1">favorite</span>
-                                    </button>
-                                }
-                            </div>
-                        </div>
-                    </a> 
-                }
-            }
-          
-        </div>
+<div
+  class="container-fluid d-flex flex-column justify-content-center align-items-center w-100 gap-3 m-0 px-5 separacion-header-home"
+>
+  <!-- productos destacados-->
+  <div class="row p-5 d-flex justify-content-start gap-5 w-100">
+    <div class="row p-0 m-0 divider-con-borde">
+      <p class="h3">Tienda</p>
     </div>
 
+    <div class="row mb-4">
+      <!-- Buscador -->
+      <div class="col-md-4 d-flex gap-3">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Buscar productos..."
+          aria-label="Search"
+          (input)="onSearch(txtSearch.value)"
+          #txtSearch
+        />
+      </div>
+
+      <div class="col-4"></div>
+
+      <!-- Filtros -->
+      <div class="col-md-4">
+        <select class="form-select" (change)="filtrarPorSubcategoria($event)">
+          <option value="" [selected]="idSubcategoria === 0">
+            Filtrar por categoría
+          </option>
+
+          @for (categoria of categoriasConSubcategorias(); track categoria.id) {
+          <optgroup [label]="categoria.nombre">
+            @for (sub of categoria.subcategorias; track sub.id) {
+            <option
+              [value]="sub.id.toString()"
+              [selected]="sub.id === idSubcategoria"
+            >
+              {{ sub.nombre }}
+            </option>
+            }
+          </optgroup>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="grid-productos m-0 w-100">
+      @if (sinResultados) {
+      <p class="text-muted mt-3 fs-5">
+        @if (hayBusqueda) { Búsqueda no encontrada: {{ textoBusqueda() }} :( }
+        @else if (hayFiltroCategoria) { Esta categoría no tiene productos aún :(
+        } @else { No hay productos disponibles :( }
+      </p>
+      } @else { @for (producto of productosABuscar(); track producto.id) {
+      <a
+        class="tarjeta-producto text-decoration-none"
+        [routerLink]="['/productos', producto.id]"
+        [state]="{ origen: 'tienda' }"
+      >
+        <div
+          class="w-100"
+          style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem"
+        >
+          @if (producto.urlImagen != null) {
+          <img
+            src="{{ producto.urlImagen }}"
+            alt="{{ producto.nombre }}"
+            class="img-fluid w-100 h-100 object-fit-cover p-3 rounded-5"
+          />
+          } @else {
+          <img
+            src="http://localhost:8888/imgs/productos/por_defecto.webp"
+            alt="{{ producto.nombre }}"
+            class="img-fluid w-100 h-100 object-fit-cover p-3 rounded-5"
+          />
+          }
+        </div>
+        <div class="d-flex flex-column gap-2 mt-2 px-3">
+          <h4 class="text-black medium text-break mt-3">
+            {{ producto.nombre }}
+          </h4>
+          <div
+            class="d-flex justify-content-between align-items-center m-0 p-0"
+          >
+            <p class="text-black bold fs-4">
+              {{ producto.precio ?? 0 | precioEuro }}
+            </p>
+            @if (listaIdProductosFavoritos().includes(producto.id!)) {
+            <button
+              type="button"
+              class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer"
+              (click)="
+                $event.preventDefault();
+                $event.stopPropagation();
+                favorito(producto.id!)
+              "
+            >
+              <mat-icon class="text-morado-intermedio-1">favorite</mat-icon>
+            </button>
+            } @else {
+            <button
+              type="button"
+              class="btn-link bg-transparent border-0 p-0 m-0 cursor-pointer"
+              (click)="
+                $event.preventDefault();
+                $event.stopPropagation();
+                favorito(producto.id!)
+              "
+            >
+              <span class="material-symbols-outlined text-morado-intermedio-1"
+                >favorite</span
+              >
+            </button>
+            }
+          </div>
+        </div>
+      </a>
+      } }
+    </div>
+  </div>
 </div>

@@ -6,9 +6,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +38,9 @@ public class UsuarioRestController {
 	
 	@Autowired
 	private PedidoService pedidoService;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	// Listar los usuarios 
 	 @GetMapping("")
@@ -91,18 +96,20 @@ public class UsuarioRestController {
 	// Salvar usuarios
 	@PostMapping("/registro")
 	public ResponseEntity<UsuarioDTO> registro(@RequestBody UsuarioDTO usuarioDTO) {
-		
-		log.info(UsuarioRestController.class.getSimpleName() + " - add: Salvamos los datos del usuario:" + usuarioDTO.toString());
-		
-		UsuarioDTO usuarioInsertado = new UsuarioDTO();
-		usuarioInsertado = usuarioService.save(usuarioDTO);
-		
-		if(usuarioInsertado != null) {
-			return new ResponseEntity<>(usuarioInsertado, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}	
+	    log.info(UsuarioRestController.class.getSimpleName() + " - add: Salvamos los datos del usuario:" + usuarioDTO.toString());
+
+	    try {
+	        UsuarioDTO usuarioInsertado = usuarioService.save(usuarioDTO);
+	        return new ResponseEntity<>(usuarioInsertado, HttpStatus.OK);
+	    } catch (DataIntegrityViolationException e) {
+	        log.error("Error al registrar el usuario: posible duplicado de email - " + e.getMessage());
+	        return new ResponseEntity<>(HttpStatus.CONFLICT); // 409
+	    } catch (Exception e) {
+	        log.error("Error inesperado al registrar el usuario: " + e.getMessage());
+	        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	    }
+	}
+
 	
 	 // Actualizacion de clientes
 	 @PutMapping("/update")
@@ -143,11 +150,9 @@ public class UsuarioRestController {
 	     String email = usuarioDTO.getEmail();
 	     String password = usuarioDTO.getPassword();
 
-	     // Lógica para autenticar (ejemplo simplificado)
 	     UsuarioDTO usuarioBuscadoDTO = usuarioService.findByEmail(email);
-	     
-	     //Comprobar la contraseña que me llega
-	     if (usuarioBuscadoDTO != null && usuarioBuscadoDTO.getPassword().equals(password)) {
+
+	     if (usuarioBuscadoDTO != null && passwordEncoder.matches(password, usuarioBuscadoDTO.getPassword())) {
 	         return new ResponseEntity<>(usuarioBuscadoDTO, HttpStatus.OK);
 	     } else {
 	         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

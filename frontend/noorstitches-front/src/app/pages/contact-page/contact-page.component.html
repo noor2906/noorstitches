@@ -112,22 +112,25 @@
                   <input
                     type="text"
                     class="form-control border-morado-intermedio-1"
-                    [class.is-invalid]="contactForm.get('nombre')?.invalid && (contactForm.get('nombre')?.touched || contactForm.get('nombre')?.dirty)"
+                    [class.is-invalid]="
+                      contactForm.get('nombre')?.invalid &&
+                      (contactForm.get('nombre')?.touched ||
+                        contactForm.get('nombre')?.dirty)
+                    "
                     formControlName="nombre"
                     id="nombre"
                     placeholder="Ingresa tu nombre"
                   />
                   <label for="nombre" class="text-morado-oscuro">Nombre</label>
-                   @if (contactForm.get('nombre')?.errors?.['required'] && (contactForm.get('nombre')?.touched || contactForm.get('nombre')?.dirty)) {
-                        <div class="invalid-feedback">
-                            El nombre es obligatorio
-                        </div>
-                    }
-                    @if (contactForm.get('nombre')?.errors?.['pattern']) {
-                        <div class="invalid-feedback">
-                            Debe tener al menos 2 letras y solo caracteres válidos
-                        </div>
-                    }
+                  @if (contactForm.get('nombre')?.errors?.['required'] &&
+                  (contactForm.get('nombre')?.touched ||
+                  contactForm.get('nombre')?.dirty)) {
+                  <div class="invalid-feedback">El nombre es obligatorio</div>
+                  } @if (contactForm.get('nombre')?.errors?.['pattern']) {
+                  <div class="invalid-feedback">
+                    Debe tener al menos 2 letras y solo caracteres válidos
+                  </div>
+                  }
                 </div>
               </div>
 
@@ -137,21 +140,22 @@
                   <input
                     type="email"
                     class="form-control border-morado-intermedio-1"
-                    [class.is-invalid]="contactForm.get('email')?.invalid && (contactForm.get('email')?.touched || contactForm.get('email')?.dirty)"
+                    [class.is-invalid]="
+                      contactForm.get('email')?.invalid &&
+                      (contactForm.get('email')?.touched ||
+                        contactForm.get('email')?.dirty)
+                    "
                     formControlName="email"
                     id="email"
                     placeholder="Tu email"
                   />
                   <label for="email" class="text-morado-oscuro">Email</label>
-                   @if (contactForm.get('email')?.errors?.['required'] && (contactForm.get('email')?.touched || contactForm.get('email')?.dirty)) {
-                      <div class="invalid-feedback">
-                          El email es obligatorio
-                      </div>
-                  }
-                  @if (contactForm.get('email')?.errors?.['pattern']) {
-                      <div class="invalid-feedback">
-                          Formato de email inválido
-                      </div>
+                  @if (contactForm.get('email')?.errors?.['required'] &&
+                  (contactForm.get('email')?.touched ||
+                  contactForm.get('email')?.dirty)) {
+                  <div class="invalid-feedback">El email es obligatorio</div>
+                  } @if (contactForm.get('email')?.errors?.['pattern']) {
+                  <div class="invalid-feedback">Formato de email inválido</div>
                   }
                 </div>
               </div>
@@ -162,22 +166,26 @@
                   <input
                     type="text"
                     class="form-control border-morado-intermedio-1"
-                    [class.is-invalid]="contactForm.get('asunto')?.invalid && (contactForm.get('asunto')?.touched || contactForm.get('asunto')?.dirty)"
+                    [class.is-invalid]="
+                      contactForm.get('asunto')?.invalid &&
+                      (contactForm.get('asunto')?.touched ||
+                        contactForm.get('asunto')?.dirty)
+                    "
                     formControlName="asunto"
                     id="asunto"
                     placeholder="Asunto"
                   />
                   <label for="asunto" class="text-morado-oscuro">Asunto</label>
-                    @if (contactForm.get('asunto')?.errors?.['required'] && (contactForm.get('asunto')?.touched || contactForm.get('asunto')?.dirty)) {
-                        <div class="invalid-feedback">
-                            El asunto es obligatorio
-                        </div>
-                    }
-                    @if (contactForm.get('asunto')?.errors?.['pattern']) {
-                        <div class="invalid-feedback">
-                          El asunto debe tener al menos 3 caracteres y solo usar letras, números o signos de puntuación válidos.                        
-                        </div>
-                    }
+                  @if (contactForm.get('asunto')?.errors?.['required'] &&
+                  (contactForm.get('asunto')?.touched ||
+                  contactForm.get('asunto')?.dirty)) {
+                  <div class="invalid-feedback">El asunto es obligatorio</div>
+                  } @if (contactForm.get('asunto')?.errors?.['pattern']) {
+                  <div class="invalid-feedback">
+                    El asunto debe tener al menos 3 caracteres y solo usar
+                    letras, números o signos de puntuación válidos.
+                  </div>
+                  }
                 </div>
               </div>
 
@@ -186,7 +194,11 @@
                 <div class="form-floating">
                   <select
                     class="form-select border-morado-intermedio-1"
-                    [class.is-invalid]="contactForm.get('motivo')?.invalid && (contactForm.get('motivo')?.touched || contactForm.get('motivo')?.dirty)"
+                    [class.is-invalid]="
+                      contactForm.get('motivo')?.invalid &&
+                      (contactForm.get('motivo')?.touched ||
+                        contactForm.get('motivo')?.dirty)
+                    "
                     formControlName="motivo"
                     id="motivo"
                   >
@@ -202,10 +214,12 @@
                   <label for="motivo" class="text-morado-oscuro"
                     >Motivo de contacto</label
                   >
-                  @if (contactForm.get('motivo')?.errors?.['required'] && (contactForm.get('motivo')?.touched || contactForm.get('motivo')?.dirty)) {
-                      <div class="invalid-feedback">
-                          El motivo de contacto es obligatorio
-                      </div>
+                  @if (contactForm.get('motivo')?.errors?.['required'] &&
+                  (contactForm.get('motivo')?.touched ||
+                  contactForm.get('motivo')?.dirty)) {
+                  <div class="invalid-feedback">
+                    El motivo de contacto es obligatorio
+                  </div>
                   }
                 </div>
               </div>
@@ -215,39 +229,47 @@
                 <div class="form-floating">
                   <textarea
                     class="form-control border-morado-intermedio-1"
-                    [class.is-invalid]="contactForm.get('mensaje')?.invalid && (contactForm.get('mensaje')?.touched || contactForm.get('mensaje')?.dirty)"
+                    [class.is-invalid]="
+                      contactForm.get('mensaje')?.invalid &&
+                      (contactForm.get('mensaje')?.touched ||
+                        contactForm.get('mensaje')?.dirty)
+                    "
                     placeholder="Tu mensaje"
                     formControlName="mensaje"
                     id="mensaje"
-                    style="height: 150px; resize: none;"
+                    style="height: 150px; resize: none"
                   ></textarea>
                   <label for="mensaje" class="text-morado-oscuro"
                     >Mensaje</label
                   >
-                  @if (contactForm.get('mensaje')?.errors?.['required'] && (contactForm.get('mensaje')?.touched || contactForm.get('mensaje')?.dirty)) {
-                      <div class="invalid-feedback">
-                          El mensaje es obligatorio
-                      </div>
-                  }
-                  @if (contactForm.get('mensaje')?.errors?.['minlength']) {
-                      <div class="invalid-feedback">
-                          El mensaje debe tener al menos 10 caracteres
-                      </div>
-                  }
-                  @if (contactForm.get('mensaje')?.errors?.['maxlength'] && (contactForm.get('mensaje')?.touched || contactForm.get('mensaje')?.dirty)) {
-                    <div class="invalid-feedback">
-                      El mensaje no puede superar los 500 caracteres.
-                    </div>
+                  @if (contactForm.get('mensaje')?.errors?.['required'] &&
+                  (contactForm.get('mensaje')?.touched ||
+                  contactForm.get('mensaje')?.dirty)) {
+                  <div class="invalid-feedback">El mensaje es obligatorio</div>
+                  } @if (contactForm.get('mensaje')?.errors?.['minlength']) {
+                  <div class="invalid-feedback">
+                    El mensaje debe tener al menos 10 caracteres
+                  </div>
+                  } @if (contactForm.get('mensaje')?.errors?.['maxlength'] &&
+                  (contactForm.get('mensaje')?.touched ||
+                  contactForm.get('mensaje')?.dirty)) {
+                  <div class="invalid-feedback">
+                    El mensaje no puede superar los 500 caracteres.
+                  </div>
                   }
                 </div>
               </div>
 
-               <!-- AceptaPolitica -->
+              <!-- AceptaPolitica -->
               <div class="col-12">
                 <div class="form-check">
                   <input
                     class="form-check-input border-morado-intermedio-1"
-                    [class.is-invalid]="contactForm.get('aceptaPolitica')?.invalid && (contactForm.get('aceptaPolitica')?.touched || contactForm.get('aceptaPolitica')?.dirty)"
+                    [class.is-invalid]="
+                      contactForm.get('aceptaPolitica')?.invalid &&
+                      (contactForm.get('aceptaPolitica')?.touched ||
+                        contactForm.get('aceptaPolitica')?.dirty)
+                    "
                     type="checkbox"
                     formControlName="aceptaPolitica"
                     id="politica"
@@ -258,10 +280,12 @@
                   >
                     He leído y acepto la política de privacidad
                   </label>
-                  @if (contactForm.get('aceptaPolitica')?.errors?.['required'] && (contactForm.get('aceptaPolitica')?.touched || contactForm.get('aceptaPolitica')?.dirty)) {
-                      <div class="invalid-feedback">
-                          Debes aceptar la política de privacidad
-                      </div>
+                  @if (contactForm.get('aceptaPolitica')?.errors?.['required']
+                  && (contactForm.get('aceptaPolitica')?.touched ||
+                  contactForm.get('aceptaPolitica')?.dirty)) {
+                  <div class="invalid-feedback">
+                    Debes aceptar la política de privacidad
+                  </div>
                   }
                 </div>
               </div>

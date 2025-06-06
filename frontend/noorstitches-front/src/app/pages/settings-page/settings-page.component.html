@@ -498,11 +498,12 @@
           <!-- Lista de pedidos -->
           <div class="row g-4">
             @if (pedidosUserFiltrados()!.length === 0) {
-              <div class="col-12 text-center mt-5">
-                <p class="text-muted mt-3 fs-5">No tienes pedidos en este estado.</p>
-              </div>
-            } @else {
-            @for (pedido of pedidosUserFiltrados(); track pedido.id) {
+            <div class="col-12 text-center mt-5">
+              <p class="text-muted mt-3 fs-5">
+                No tienes pedidos en este estado.
+              </p>
+            </div>
+            } @else { @for (pedido of pedidosUserFiltrados(); track pedido.id) {
             <div class="col-12">
               <div class="card border-morado-intermedio-1 rounded-4">
                 <div class="card-body p-4">
@@ -590,8 +591,7 @@
                 </div>
               </div>
             </div>
-            }
-          }
+            } }
           </div>
         </div>
       </div>

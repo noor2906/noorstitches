@@ -1,274 +1,361 @@
-<div class="container-fluid d-flex justify-content-center align-items-center background-image-tulipanes separacion-header-home">
-    <div class="d-flex justify-content-center align-items-center row w-85" style="height: 65%;">
-        <div class="col-1"></div>
+<div
+  class="container-fluid d-flex justify-content-center align-items-center background-image-tulipanes separacion-header-home"
+>
+  <div
+    class="d-flex justify-content-center align-items-center row w-85"
+    style="height: 65%"
+  >
+    <div class="col-1"></div>
 
-        <div class="d-flex flex-column justify-content-center align-items-center gap-3 bg-morado-intermedio-2 text-blanco p-5 col-5 h-100 shadow"
-            style="border-top-left-radius: 8px; border-bottom-left-radius: 1rem;">
-            <h2 class="text-blanco bold">Registro</h2>
-             <form [formGroup]="registerForm" (ngSubmit)="registro()" class="w-100 d-flex flex-column justify-content-center align-items-center gap-3">
-                <div class="row">
-                    <div class="col-md-6">
+    <div
+      class="d-flex flex-column justify-content-center align-items-center gap-3 bg-morado-intermedio-2 text-blanco p-5 col-5 h-100 shadow"
+      style="border-top-left-radius: 8px; border-bottom-left-radius: 1rem"
+    >
+      <h2 class="text-blanco bold">Registro</h2>
+      <form
+        [formGroup]="registerForm"
+        (ngSubmit)="registro()"
+        class="w-100 d-flex flex-column justify-content-center align-items-center gap-3"
+      >
+        <div class="row">
+          <div class="col-md-6">
+            <!-- Nombre -->
+            <div class="mb-2">
+              <label for="name" class="form-label text-blanco">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="
+                  registerForm.get('nombre')?.invalid &&
+                  (registerForm.get('nombre')?.touched ||
+                    registerForm.get('nombre')?.dirty)
+                "
+                id="name"
+                placeholder="Ingresa tu nombre"
+                formControlName="nombre"
+              />
 
-                        <!-- Nombre -->
-                        <div class="mb-2">
-                            <label for="name" class="form-label text-blanco">Nombre</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   [class.is-invalid]="registerForm.get('nombre')?.invalid && (registerForm.get('nombre')?.touched || registerForm.get('nombre')?.dirty)"
-                                   id="name" 
-                                   placeholder="Ingresa tu nombre"
-                                   formControlName="nombre">
-                            
-                            @if (registerForm.get('nombre')?.errors?.['required'] && (registerForm.get('nombre')?.touched || registerForm.get('nombre')?.dirty)) {
-                                <div class="invalid-feedback">
-                                    El nombre es obligatorio
-                                </div>
-                            }
-                            @if (registerForm.get('nombre')?.errors?.['pattern']) {
-                                <div class="invalid-feedback">
-                                    Debe tener al menos 2 letras y solo caracteres válidos
-                                </div>
-                            }
-                        </div>
-
-                        <!-- Apellidos -->
-                        <div class="mb-2">
-                            <label for="apellidos" class="form-label text-blanco">Apellidos</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   [class.is-invalid]="registerForm.get('apellidos')?.invalid && (registerForm.get('apellidos')?.touched || registerForm.get('apellidos')?.dirty)"
-                                   id="apellidos" 
-                                   placeholder="Ingresa tus apellidos"
-                                   formControlName="apellidos">
-                            @if (registerForm.get('apellidos')?.errors?.['required'] && (registerForm.get('apellidos')?.touched || registerForm.get('apellidos')?.dirty)) {
-                                <div class="invalid-feedback">
-                                    Los apellidos son obligatorios
-                                </div>
-                            }
-                            @if (registerForm.get('apellidos')?.errors?.['pattern']) {
-                                <div class="invalid-feedback">
-                                    Formato inválido (mínimo 2 letras por apellido)
-                                </div>
-                            }
-                        </div>
-
-                        <!-- Email -->
-                        <div class="mb-2">
-                            <label for="email" class="form-label text-blanco">Email</label>
-                            <input type="email" 
-                                   class="form-control" 
-                                   [class.is-invalid]="registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)"
-                                   id="email" 
-                                   placeholder="Ingresa tu email"
-                                   formControlName="email">
-                            @if (registerForm.get('email')?.errors?.['required'] && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)) {
-                                <div class="invalid-feedback">
-                                    El email es obligatorio
-                                </div>
-                            }
-                            @if (registerForm.get('email')?.errors?.['pattern']) {
-                                <div class="invalid-feedback">
-                                    Formato de email inválido
-                                </div>
-                            }
-                            @if (registerForm.get('email')?.errors?.['emailDuplicado']) {
-                                <div class="invalid-feedback">
-                                    Este email ya está registrado
-                                </div>
-                            }
-                        </div>
-
-                        <!-- Teléfono -->
-                        <div class="mb-2">
-                            <label for="telefono" class="form-label text-blanco">Teléfono</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   [class.is-invalid]="registerForm.get('telefono')?.invalid && (registerForm.get('telefono')?.touched || registerForm.get('telefono')?.dirty)"
-                                   id="telefono" 
-                                   placeholder="Ej: 612345678"
-                                   formControlName="telefono">
-                            @if (registerForm.get('telefono')?.errors?.['required'] && (registerForm.get('telefono')?.touched || registerForm.get('telefono')?.dirty)) {
-                                <div class="invalid-feedback">
-                                    El teléfono es obligatorio
-                                </div>
-                            }
-                            @if (registerForm.get('telefono')?.errors?.['pattern']) {
-                                <div class="invalid-feedback">
-                                    Debe tener entre 9 y 15 dígitos
-                                </div>
-                            }
-                        </div>
-
-                        <!-- direccion -->
-                        <div class="mb-2">
-                            <label for="direccion" class="form-label text-blanco">Dirección</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   [class.is-invalid]="registerForm.get('direccion')?.invalid && (registerForm.get('direccion')?.touched || registerForm.get('direccion')?.dirty)"
-                                   id="direccion" 
-                                   placeholder="Calle, número, piso..."
-                                   formControlName="direccion">
-                            @if (registerForm.get('direccion')?.errors?.['required'] && (registerForm.get('direccion')?.touched || registerForm.get('direccion')?.dirty)) {
-                                <div class="invalid-feedback">
-                                    La dirección es obligatoria
-                                </div>
-                            }
-                            @if (registerForm.get('direccion')?.errors?.['minlength']) {
-                                <div class="invalid-feedback">
-                                    La dirección debe tener al menos 5 caracteres
-                                </div>
-                            }
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <!-- Contraseña -->
-                        <div class="mb-2">
-                            <label for="password" class="form-label text-blanco">Contraseña</label>
-                            <input type="password" 
-                                   class="form-control" 
-                                   [class.is-invalid]="registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)"
-                                   id="password" 
-                                   placeholder="Ingresa tu contraseña"
-                                   formControlName="password">
-                            @if (registerForm.get('password')?.errors?.['required'] && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)) {
-                                <div class="invalid-feedback">
-                                    La contraseña es obligatoria
-                                </div>
-                            }
-                            @if (registerForm.get('password')?.errors?.['pattern']) {
-                                <div class="invalid-feedback">
-                                    Mínimo 8 caracteres, una mayúscula, una minúscula y un número
-                                </div>
-                            }
-                        </div>
-
-                       <!-- Confirmar Contraseña -->
-                        <div class="mb-2">
-                            <label for="passwordConfirm" class="form-label text-blanco">Repetir contraseña</label>
-                            <input type="password" 
-                                class="form-control" 
-                                [class.is-invalid]="(registerForm.get('passwordConfirm')?.invalid && (registerForm.get('passwordConfirm')?.touched || registerForm.get('passwordConfirm')?.dirty)) || (registerForm.hasError('mismatch') && registerForm.get('passwordConfirm')?.dirty)"
-                                id="passwordConfirm" 
-                                placeholder="Repite la contraseña"
-                                formControlName="passwordConfirm">
-                            
-                            @if (registerForm.get('passwordConfirm')?.errors?.['required'] && (registerForm.get('passwordConfirm')?.touched || registerForm.get('passwordConfirm')?.dirty)) {
-                                <div class="invalid-feedback">
-                                    Debes repetir la contraseña
-                                </div>
-                            }
-                            @if (registerForm.hasError('mismatch') && registerForm.get('passwordConfirm')?.dirty) {
-                                <div class="invalid-feedback">
-                                    Las contraseñas no coinciden
-                                </div>
-                            }
-                        </div>
-
-                        <!-- Ciudad -->
-                        <div class="mb-2">
-                            <label for="ciudad" class="form-label text-blanco">Ciudad</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   [class.is-invalid]="registerForm.get('ciudad')?.invalid && (registerForm.get('ciudad')?.touched || registerForm.get('ciudad')?.dirty)"
-                                   id="ciudad" 
-                                   placeholder="Tu ciudad"
-                                   formControlName="ciudad">
-                            @if (registerForm.get('ciudad')?.errors?.['required'] && (registerForm.get('ciudad')?.touched || registerForm.get('ciudad')?.dirty)) {
-                                <div class="invalid-feedback">
-                                    La ciudad es obligatoria
-                                </div>
-                            }
-                            @if (registerForm.get('ciudad')?.errors?.['pattern']) {
-                                <div class="invalid-feedback">
-                                    Solo se permiten letras y espacios
-                                </div>
-                            }
-                        </div>
-
-                        <!-- Provincia -->
-                        <div class="mb-2">
-                            <label for="provincia" class="form-label text-blanco">Provincia</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   [class.is-invalid]="registerForm.get('provincia')?.invalid && (registerForm.get('provincia')?.touched || registerForm.get('provincia')?.dirty)"
-                                   id="provincia" 
-                                   placeholder="Tu provincia"
-                                   formControlName="provincia">
-                            @if (registerForm.get('provincia')?.errors?.['required'] && (registerForm.get('provincia')?.touched || registerForm.get('provincia')?.dirty)) {
-                                <div class="invalid-feedback">
-                                    La provincia es obligatoria
-                                </div>
-                            }
-                            @if (registerForm.get('provincia')?.errors?.['pattern']) {
-                                <div class="invalid-feedback">
-                                    Solo se permiten letras y espacios
-                                </div>
-                            }
-                        </div>
-
-                        <!-- Código Postal y País en la misma fila -->
-                        <div class="row mb-2">
-                            <div class="col-6">
-                                <label for="codigoPostal" class="form-label text-blanco">C.P.</label>
-                                <input type="text" 
-                                       class="form-control" 
-                                       [class.is-invalid]="registerForm.get('codigoPostal')?.invalid && (registerForm.get('codigoPostal')?.touched || registerForm.get('codigoPostal')?.dirty)"
-                                       id="codigoPostal" 
-                                       placeholder="12345"
-                                       formControlName="codigoPostal">
-                                @if (registerForm.get('codigoPostal')?.errors?.['required'] && (registerForm.get('codigoPostal')?.touched || registerForm.get('codigoPostal')?.dirty)) {
-                                    <div class="invalid-feedback">
-                                        El C.P. es obligatorio
-                                    </div>
-                                }
-                                @if (registerForm.get('codigoPostal')?.errors?.['pattern']) {
-                                    <div class="invalid-feedback">
-                                        Formato inválido (5 dígitos)
-                                    </div>
-                                }
-                            </div>
-                            <div class="col-6">
-                                <label for="pais" class="form-label text-blanco">País</label>
-                                <input type="text" 
-                                       class="form-control" 
-                                       [class.is-invalid]="registerForm.get('pais')?.invalid && (registerForm.get('pais')?.touched || registerForm.get('pais')?.dirty)"
-                                       id="pais" 
-                                       placeholder="España"
-                                       formControlName="pais">
-                                @if (registerForm.get('pais')?.errors?.['required'] && (registerForm.get('pais')?.touched || registerForm.get('pais')?.dirty)) {
-                                    <div class="invalid-feedback">
-                                        El país es obligatorio
-                                    </div>
-                                }
-                                @if (registerForm.get('pais')?.errors?.['pattern']) {
-                                    <div class="invalid-feedback">
-                                        Solo se permiten letras y espacios
-                                    </div>
-                                }
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <button type="submit" class="btn bg-morado-intermedio-1 text-blanco w-50">Registrarse</button>
-                <div class="text-center">
-                    <a href="/" class="text-morado-intermedio-1">¿Ya tienes cuenta? ¡Inicia sesión!</a>
-                </div>
-            </form>
-        </div>
-
-        <div class="d-flex flex-column justify-content-center align-items-center gap-4 p-5 bg-blanco col-5 h-100 w-25"
-            style="border-top-right-radius: 8px; border-bottom-right-radius: 1rem;">
-            <h2 class="text-morado-intermedio-2 bold text-wrap">Te damos la bienvenida a nuestra comunidad crochetera <3</h2>
-            <div class="w-75" style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem;">
-                <img src="../../../assets/imgs/tulipanes.webp" alt="tulipanes crochet"
-                    class="img-fluid w-100 h-100 object-fit-cover">
+              @if (registerForm.get('nombre')?.errors?.['required'] &&
+              (registerForm.get('nombre')?.touched ||
+              registerForm.get('nombre')?.dirty)) {
+              <div class="invalid-feedback">El nombre es obligatorio</div>
+              } @if (registerForm.get('nombre')?.errors?.['pattern']) {
+              <div class="invalid-feedback">
+                Debe tener al menos 2 letras y solo caracteres válidos
+              </div>
+              }
             </div>
-        </div>
 
-        <div class="col-1"></div>
+            <!-- Apellidos -->
+            <div class="mb-2">
+              <label for="apellidos" class="form-label text-blanco"
+                >Apellidos</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="
+                  registerForm.get('apellidos')?.invalid &&
+                  (registerForm.get('apellidos')?.touched ||
+                    registerForm.get('apellidos')?.dirty)
+                "
+                id="apellidos"
+                placeholder="Ingresa tus apellidos"
+                formControlName="apellidos"
+              />
+              @if (registerForm.get('apellidos')?.errors?.['required'] &&
+              (registerForm.get('apellidos')?.touched ||
+              registerForm.get('apellidos')?.dirty)) {
+              <div class="invalid-feedback">Los apellidos son obligatorios</div>
+              } @if (registerForm.get('apellidos')?.errors?.['pattern']) {
+              <div class="invalid-feedback">
+                Formato inválido (mínimo 2 letras por apellido)
+              </div>
+              }
+            </div>
+
+            <!-- Email -->
+            <div class="mb-2">
+              <label for="email" class="form-label text-blanco">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                [class.is-invalid]="
+                  registerForm.get('email')?.invalid &&
+                  (registerForm.get('email')?.touched ||
+                    registerForm.get('email')?.dirty)
+                "
+                id="email"
+                placeholder="Ingresa tu email"
+                formControlName="email"
+              />
+              @if (registerForm.get('email')?.errors?.['required'] &&
+              (registerForm.get('email')?.touched ||
+              registerForm.get('email')?.dirty)) {
+              <div class="invalid-feedback">El email es obligatorio</div>
+              } @if (registerForm.get('email')?.errors?.['pattern']) {
+              <div class="invalid-feedback">Formato de email inválido</div>
+              } @if (registerForm.get('email')?.errors?.['emailDuplicado']) {
+              <div class="invalid-feedback">Este email ya está registrado</div>
+              }
+            </div>
+
+            <!-- Teléfono -->
+            <div class="mb-2">
+              <label for="telefono" class="form-label text-blanco"
+                >Teléfono</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="
+                  registerForm.get('telefono')?.invalid &&
+                  (registerForm.get('telefono')?.touched ||
+                    registerForm.get('telefono')?.dirty)
+                "
+                id="telefono"
+                placeholder="Ej: 612345678"
+                formControlName="telefono"
+              />
+              @if (registerForm.get('telefono')?.errors?.['required'] &&
+              (registerForm.get('telefono')?.touched ||
+              registerForm.get('telefono')?.dirty)) {
+              <div class="invalid-feedback">El teléfono es obligatorio</div>
+              } @if (registerForm.get('telefono')?.errors?.['pattern']) {
+              <div class="invalid-feedback">
+                Debe tener entre 9 y 15 dígitos
+              </div>
+              }
+            </div>
+
+            <!-- direccion -->
+            <div class="mb-2">
+              <label for="direccion" class="form-label text-blanco"
+                >Dirección</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="
+                  registerForm.get('direccion')?.invalid &&
+                  (registerForm.get('direccion')?.touched ||
+                    registerForm.get('direccion')?.dirty)
+                "
+                id="direccion"
+                placeholder="Calle, número, piso..."
+                formControlName="direccion"
+              />
+              @if (registerForm.get('direccion')?.errors?.['required'] &&
+              (registerForm.get('direccion')?.touched ||
+              registerForm.get('direccion')?.dirty)) {
+              <div class="invalid-feedback">La dirección es obligatoria</div>
+              } @if (registerForm.get('direccion')?.errors?.['minlength']) {
+              <div class="invalid-feedback">
+                La dirección debe tener al menos 5 caracteres
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <!-- Contraseña -->
+            <div class="mb-2">
+              <label for="password" class="form-label text-blanco"
+                >Contraseña</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                [class.is-invalid]="
+                  registerForm.get('password')?.invalid &&
+                  (registerForm.get('password')?.touched ||
+                    registerForm.get('password')?.dirty)
+                "
+                id="password"
+                placeholder="Ingresa tu contraseña"
+                formControlName="password"
+              />
+              @if (registerForm.get('password')?.errors?.['required'] &&
+              (registerForm.get('password')?.touched ||
+              registerForm.get('password')?.dirty)) {
+              <div class="invalid-feedback">La contraseña es obligatoria</div>
+              } @if (registerForm.get('password')?.errors?.['pattern']) {
+              <div class="invalid-feedback">
+                Mínimo 8 caracteres, una mayúscula, una minúscula y un número
+              </div>
+              }
+            </div>
+
+            <!-- Confirmar Contraseña -->
+            <div class="mb-2">
+              <label for="passwordConfirm" class="form-label text-blanco"
+                >Repetir contraseña</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                [class.is-invalid]="
+                  (registerForm.get('passwordConfirm')?.invalid &&
+                    (registerForm.get('passwordConfirm')?.touched ||
+                      registerForm.get('passwordConfirm')?.dirty)) ||
+                  (registerForm.hasError('mismatch') &&
+                    registerForm.get('passwordConfirm')?.dirty)
+                "
+                id="passwordConfirm"
+                placeholder="Repite la contraseña"
+                formControlName="passwordConfirm"
+              />
+
+              @if (registerForm.get('passwordConfirm')?.errors?.['required'] &&
+              (registerForm.get('passwordConfirm')?.touched ||
+              registerForm.get('passwordConfirm')?.dirty)) {
+              <div class="invalid-feedback">Debes repetir la contraseña</div>
+              } @if (registerForm.hasError('mismatch') &&
+              registerForm.get('passwordConfirm')?.dirty) {
+              <div class="invalid-feedback">Las contraseñas no coinciden</div>
+              }
+            </div>
+
+            <!-- Ciudad -->
+            <div class="mb-2">
+              <label for="ciudad" class="form-label text-blanco">Ciudad</label>
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="
+                  registerForm.get('ciudad')?.invalid &&
+                  (registerForm.get('ciudad')?.touched ||
+                    registerForm.get('ciudad')?.dirty)
+                "
+                id="ciudad"
+                placeholder="Tu ciudad"
+                formControlName="ciudad"
+              />
+              @if (registerForm.get('ciudad')?.errors?.['required'] &&
+              (registerForm.get('ciudad')?.touched ||
+              registerForm.get('ciudad')?.dirty)) {
+              <div class="invalid-feedback">La ciudad es obligatoria</div>
+              } @if (registerForm.get('ciudad')?.errors?.['pattern']) {
+              <div class="invalid-feedback">
+                Solo se permiten letras y espacios
+              </div>
+              }
+            </div>
+
+            <!-- Provincia -->
+            <div class="mb-2">
+              <label for="provincia" class="form-label text-blanco"
+                >Provincia</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="
+                  registerForm.get('provincia')?.invalid &&
+                  (registerForm.get('provincia')?.touched ||
+                    registerForm.get('provincia')?.dirty)
+                "
+                id="provincia"
+                placeholder="Tu provincia"
+                formControlName="provincia"
+              />
+              @if (registerForm.get('provincia')?.errors?.['required'] &&
+              (registerForm.get('provincia')?.touched ||
+              registerForm.get('provincia')?.dirty)) {
+              <div class="invalid-feedback">La provincia es obligatoria</div>
+              } @if (registerForm.get('provincia')?.errors?.['pattern']) {
+              <div class="invalid-feedback">
+                Solo se permiten letras y espacios
+              </div>
+              }
+            </div>
+
+            <!-- Código Postal y País en la misma fila -->
+            <div class="row mb-2">
+              <div class="col-6">
+                <label for="codigoPostal" class="form-label text-blanco"
+                  >C.P.</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="
+                    registerForm.get('codigoPostal')?.invalid &&
+                    (registerForm.get('codigoPostal')?.touched ||
+                      registerForm.get('codigoPostal')?.dirty)
+                  "
+                  id="codigoPostal"
+                  placeholder="12345"
+                  formControlName="codigoPostal"
+                />
+                @if (registerForm.get('codigoPostal')?.errors?.['required'] &&
+                (registerForm.get('codigoPostal')?.touched ||
+                registerForm.get('codigoPostal')?.dirty)) {
+                <div class="invalid-feedback">El C.P. es obligatorio</div>
+                } @if (registerForm.get('codigoPostal')?.errors?.['pattern']) {
+                <div class="invalid-feedback">Formato inválido (5 dígitos)</div>
+                }
+              </div>
+              <div class="col-6">
+                <label for="pais" class="form-label text-blanco">País</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="
+                    registerForm.get('pais')?.invalid &&
+                    (registerForm.get('pais')?.touched ||
+                      registerForm.get('pais')?.dirty)
+                  "
+                  id="pais"
+                  placeholder="España"
+                  formControlName="pais"
+                />
+                @if (registerForm.get('pais')?.errors?.['required'] &&
+                (registerForm.get('pais')?.touched ||
+                registerForm.get('pais')?.dirty)) {
+                <div class="invalid-feedback">El país es obligatorio</div>
+                } @if (registerForm.get('pais')?.errors?.['pattern']) {
+                <div class="invalid-feedback">
+                  Solo se permiten letras y espacios
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="btn bg-morado-intermedio-1 text-blanco w-50"
+        >
+          Registrarse
+        </button>
+        <div class="text-center">
+          <a href="/" class="text-morado-intermedio-1"
+            >¿Ya tienes cuenta? ¡Inicia sesión!</a
+          >
+        </div>
+      </form>
     </div>
+
+    <div
+      class="d-flex flex-column justify-content-center align-items-center gap-4 p-5 bg-blanco col-5 h-100 w-25"
+      style="border-top-right-radius: 8px; border-bottom-right-radius: 1rem"
+    >
+      <h2 class="text-morado-intermedio-2 bold text-wrap">
+        Te damos la bienvenida a nuestra comunidad crochetera <3
+      </h2>
+      <div
+        class="w-75"
+        style="aspect-ratio: 4/3; overflow: hidden; border-radius: 1rem"
+      >
+        <img
+          src="../../../assets/imgs/tulipanes.webp"
+          alt="tulipanes crochet"
+          class="img-fluid w-100 h-100 object-fit-cover"
+        />
+      </div>
+    </div>
+
+    <div class="col-1"></div>
+  </div>
 </div>

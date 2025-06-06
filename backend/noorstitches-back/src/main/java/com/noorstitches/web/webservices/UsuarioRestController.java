@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -95,18 +96,20 @@ public class UsuarioRestController {
 	// Salvar usuarios
 	@PostMapping("/registro")
 	public ResponseEntity<UsuarioDTO> registro(@RequestBody UsuarioDTO usuarioDTO) {
-		
-		log.info(UsuarioRestController.class.getSimpleName() + " - add: Salvamos los datos del usuario:" + usuarioDTO.toString());
-		
-		UsuarioDTO usuarioInsertado = new UsuarioDTO();
-		usuarioInsertado = usuarioService.save(usuarioDTO);
-		
-		if(usuarioInsertado != null) {
-			return new ResponseEntity<>(usuarioInsertado, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}	
+	    log.info(UsuarioRestController.class.getSimpleName() + " - add: Salvamos los datos del usuario:" + usuarioDTO.toString());
+
+	    try {
+	        UsuarioDTO usuarioInsertado = usuarioService.save(usuarioDTO);
+	        return new ResponseEntity<>(usuarioInsertado, HttpStatus.OK);
+	    } catch (DataIntegrityViolationException e) {
+	        log.error("Error al registrar el usuario: posible duplicado de email - " + e.getMessage());
+	        return new ResponseEntity<>(HttpStatus.CONFLICT); // 409
+	    } catch (Exception e) {
+	        log.error("Error inesperado al registrar el usuario: " + e.getMessage());
+	        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	    }
+	}
+
 	
 	 // Actualizacion de clientes
 	 @PutMapping("/update")

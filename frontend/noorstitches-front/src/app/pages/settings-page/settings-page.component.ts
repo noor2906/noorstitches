@@ -50,6 +50,11 @@ export class SettingsPageComponent implements OnInit {
       passwordConfirm: ['', [Validators.required]],
       telefono: ['', [Validators.required, Validators.pattern(FormUtils.telefonoPattern)]],
       fotoPerfil: ['', [Validators.required, Validators.minLength(5)]],
+      direccion: ['', [Validators.required, Validators.pattern(FormUtils.direccionPattern)]],
+      ciudad: ['', [Validators.required, Validators.pattern(FormUtils.ciudadPattern)]],
+      provincia: ['', [Validators.required, Validators.pattern(FormUtils.provinciaPattern)]],
+      codigoPostal: ['', [Validators.required, Validators.pattern(FormUtils.codigoPostalPattern)]],
+      pais: ['', [Validators.required, Validators.pattern(FormUtils.paisPattern)]]
   }, {
       validators: this.passwordMatchValidator // Validador personalizado
   });
@@ -75,7 +80,12 @@ export class SettingsPageComponent implements OnInit {
               apellidos: user.apellidos,
               email: user.email,
               telefono: user.telefono,
-              fotoPerfil: "user.png"
+              fotoPerfil: "user.png",
+              direccion: user.direccion ?? '',
+              ciudad: user.ciudad ?? '',
+              provincia: user.provincia ?? '',
+              codigoPostal: user.codigoPostal ?? '',
+              pais: user.pais ?? ''
             });
           }
         },
@@ -102,7 +112,7 @@ export class SettingsPageComponent implements OnInit {
       return;
     }
 
-    const { nombre, apellidos, email, password, passwordConfirm, telefono, fotoPerfil } = this.userForm.value;
+    const { nombre, apellidos, email, password, passwordConfirm, telefono, fotoPerfil, direccion, ciudad, provincia, codigoPostal, pais } = this.userForm.value;
 
     // Verificar si las contraseñas coinciden
     if (password !== passwordConfirm) {
@@ -117,7 +127,12 @@ export class SettingsPageComponent implements OnInit {
       email: email ?? '',
       password: password ?? '',
       telefono: telefono ?? '',
-      fotoPerfil: fotoPerfil ?? ''
+      fotoPerfil: fotoPerfil ?? '',
+      direccion: direccion ?? '',
+      ciudad: ciudad ?? '',
+      provincia: provincia ?? '',
+      codigoPostal: codigoPostal ?? '',
+      pais: pais ?? '',
     };
 
     console.log(userActualizado);

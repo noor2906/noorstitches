@@ -46,6 +46,21 @@ public class Usuario {
 	@Column(name = "telefono")	
 	private String telefono;
 	
+	@Column(name = "direccion")	
+	private String direccion;
+	
+	@Column(name = "ciudad")	
+	private String ciudad;
+	
+	@Column(name = "provincia")	
+	private String provincia;
+	
+	@Column(name = "codigo_postal")	
+	private String codigoPostal;
+	
+	@Column(name = "pais")	
+	private String pais;
+	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	@ToString.Exclude
 	private List<Pedido> listaPedidos;

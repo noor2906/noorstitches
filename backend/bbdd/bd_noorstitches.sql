@@ -11,7 +11,7 @@ CREATE TABLE usuarios (
     passwd VARCHAR(255) NOT NULL,
     foto_perfil VARCHAR(255) NOT NULL DEFAULT 'user.png',
     telefono VARCHAR(15) NOT NULL,
-    calle VARCHAR(255) NOT NULL,
+    direccion VARCHAR(255) NOT NULL,
     ciudad VARCHAR(100) NOT NULL,
     provincia VARCHAR(100) NOT NULL,
     codigo_postal VARCHAR(10) NOT NULL,

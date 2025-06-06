@@ -71,6 +71,11 @@
                                     Formato de email inválido
                                 </div>
                             }
+                            @if (registerForm.get('email')?.errors?.['emailDuplicado']) {
+                                <div class="invalid-feedback">
+                                    Este email ya está registrado
+                                </div>
+                            }
                         </div>
 
                         <!-- Teléfono -->
@@ -90,6 +95,27 @@
                             @if (registerForm.get('telefono')?.errors?.['pattern']) {
                                 <div class="invalid-feedback">
                                     Debe tener entre 9 y 15 dígitos
+                                </div>
+                            }
+                        </div>
+
+                        <!-- direccion -->
+                        <div class="mb-2">
+                            <label for="direccion" class="form-label text-blanco">Dirección</label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   [class.is-invalid]="registerForm.get('direccion')?.invalid && (registerForm.get('direccion')?.touched || registerForm.get('direccion')?.dirty)"
+                                   id="direccion" 
+                                   placeholder="Calle, número, piso..."
+                                   formControlName="direccion">
+                            @if (registerForm.get('direccion')?.errors?.['required'] && (registerForm.get('direccion')?.touched || registerForm.get('direccion')?.dirty)) {
+                                <div class="invalid-feedback">
+                                    La dirección es obligatoria
+                                </div>
+                            }
+                            @if (registerForm.get('direccion')?.errors?.['minlength']) {
+                                <div class="invalid-feedback">
+                                    La dirección debe tener al menos 5 caracteres
                                 </div>
                             }
                         </div>
@@ -141,26 +167,89 @@
                             }
                         </div>
 
-                        <!-- Foto de Perfil
+                        <!-- Ciudad -->
                         <div class="mb-2">
-                            <label for="fotoPerfil" class="form-label text-blanco">Foto de Perfil</label>
+                            <label for="ciudad" class="form-label text-blanco">Ciudad</label>
                             <input type="text" 
                                    class="form-control" 
-                                   [class.is-invalid]="registerForm.get('fotoPerfil')?.invalid && (registerForm.get('fotoPerfil')?.touched || registerForm.get('fotoPerfil')?.dirty)"
-                                   id="fotoPerfil"
-                                   placeholder="URL de tu foto de perfil"
-                                   formControlName="fotoPerfil">
-                            @if (registerForm.get('fotoPerfil')?.errors?.['required'] && (registerForm.get('fotoPerfil')?.touched || registerForm.get('fotoPerfil')?.dirty)) {
+                                   [class.is-invalid]="registerForm.get('ciudad')?.invalid && (registerForm.get('ciudad')?.touched || registerForm.get('ciudad')?.dirty)"
+                                   id="ciudad" 
+                                   placeholder="Tu ciudad"
+                                   formControlName="ciudad">
+                            @if (registerForm.get('ciudad')?.errors?.['required'] && (registerForm.get('ciudad')?.touched || registerForm.get('ciudad')?.dirty)) {
                                 <div class="invalid-feedback">
-                                    La URL de la foto es obligatoria
+                                    La ciudad es obligatoria
                                 </div>
                             }
-                            @if (registerForm.get('fotoPerfil')?.errors?.['minlength']) {
+                            @if (registerForm.get('ciudad')?.errors?.['pattern']) {
                                 <div class="invalid-feedback">
-                                    La URL debe tener al menos 9 caracteres
+                                    Solo se permiten letras y espacios
                                 </div>
                             }
-                        </div> -->
+                        </div>
+
+                        <!-- Provincia -->
+                        <div class="mb-2">
+                            <label for="provincia" class="form-label text-blanco">Provincia</label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   [class.is-invalid]="registerForm.get('provincia')?.invalid && (registerForm.get('provincia')?.touched || registerForm.get('provincia')?.dirty)"
+                                   id="provincia" 
+                                   placeholder="Tu provincia"
+                                   formControlName="provincia">
+                            @if (registerForm.get('provincia')?.errors?.['required'] && (registerForm.get('provincia')?.touched || registerForm.get('provincia')?.dirty)) {
+                                <div class="invalid-feedback">
+                                    La provincia es obligatoria
+                                </div>
+                            }
+                            @if (registerForm.get('provincia')?.errors?.['pattern']) {
+                                <div class="invalid-feedback">
+                                    Solo se permiten letras y espacios
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Código Postal y País en la misma fila -->
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <label for="codigoPostal" class="form-label text-blanco">C.P.</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       [class.is-invalid]="registerForm.get('codigoPostal')?.invalid && (registerForm.get('codigoPostal')?.touched || registerForm.get('codigoPostal')?.dirty)"
+                                       id="codigoPostal" 
+                                       placeholder="12345"
+                                       formControlName="codigoPostal">
+                                @if (registerForm.get('codigoPostal')?.errors?.['required'] && (registerForm.get('codigoPostal')?.touched || registerForm.get('codigoPostal')?.dirty)) {
+                                    <div class="invalid-feedback">
+                                        El C.P. es obligatorio
+                                    </div>
+                                }
+                                @if (registerForm.get('codigoPostal')?.errors?.['pattern']) {
+                                    <div class="invalid-feedback">
+                                        Formato inválido (5 dígitos)
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-6">
+                                <label for="pais" class="form-label text-blanco">País</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       [class.is-invalid]="registerForm.get('pais')?.invalid && (registerForm.get('pais')?.touched || registerForm.get('pais')?.dirty)"
+                                       id="pais" 
+                                       placeholder="España"
+                                       formControlName="pais">
+                                @if (registerForm.get('pais')?.errors?.['required'] && (registerForm.get('pais')?.touched || registerForm.get('pais')?.dirty)) {
+                                    <div class="invalid-feedback">
+                                        El país es obligatorio
+                                    </div>
+                                }
+                                @if (registerForm.get('pais')?.errors?.['pattern']) {
+                                    <div class="invalid-feedback">
+                                        Solo se permiten letras y espacios
+                                    </div>
+                                }
+                            </div>
+                        </div>
 
                     </div>
                 </div>

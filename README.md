@@ -1,6 +1,6 @@
 # 🧶 NoorStitches
 
-Tienda online de productos y materiales de crochet, desarrollada como Trabajo Fin de Ciclo (DAW).  
+Tienda online de productos y materiales de crochet, desarrollada como Proyecto Fin de Ciclo (DAW).  
 Incluye un frontend en Angular y un backend en Spring Boot con persistencia en MySQL.
 
 ---
@@ -21,8 +21,9 @@ Incluye un frontend en Angular y un backend en Spring Boot con persistencia en M
 
 ```
 noorstitches/
-├── frontend/     → Aplicación Angular
-└── backend/      → Aplicación Spring Boot
+├── frontend/       → Proyecto Angular con componentes, servicios y estilos
+├── backend/        → Proyecto Spring Boot con controladores, servicios, repositorios, etc.
+                    → Scripts SQL para creación e inserción de datos
 ```
 
 ---

@@ -24,25 +24,36 @@
             <div class="col-md-4">
               <select 
                 class="form-select" 
-                [value]="idSubcategoria"
-                (change)="filtrarPorSubcategoria($event)">
-                
-                <option value="">Filtrar por categoría</option>
+                (change)="filtrarPorSubcategoria($event)"
+                >
+                <option 
+                    value="" 
+                    [selected]="idSubcategoria === 0"
+                >
+                    Filtrar por categoría
+                </option>
 
                 @for (categoria of categoriasConSubcategorias(); track categoria.id) {
                     <optgroup [label]="categoria.nombre">
                     @for (sub of categoria.subcategorias; track sub.id) {
-                        <option [value]="sub.id">{{ sub.nombre }}</option>
+                        <option 
+                        [value]="sub.id.toString()"
+                        [selected]="sub.id === idSubcategoria"
+                        >
+                        {{ sub.nombre }}
+                        </option>
                     }
                     </optgroup>
                 }
-            </select>
+                </select>
+
+
             </div>
         </div>
 
         <div class="grid-productos m-0 w-100">
             @if (productosABuscar().length === 0) {
-                Ésta categoria no tiene productos aún :(
+                <p class="text-muted mt-3 fs-5"> Ésta categoria no tiene productos aún :(</p>
             } @else {
                   @for (producto of productosABuscar(); track producto.id) {
                     <a class="tarjeta-producto text-decoration-none" [routerLink]="['/productos', producto.id]" [state]="{ origen: 'tienda' }">

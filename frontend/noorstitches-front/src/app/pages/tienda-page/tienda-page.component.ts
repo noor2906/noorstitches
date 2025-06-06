@@ -46,6 +46,9 @@ export class TiendaPageComponent implements OnInit{
     'Handmade_otros': 'Otros (handmade)',
     'Merceria_otros': 'Otros (mercería)',
     'Kits_otros': 'Otros (kits)',
+    'Kit_crochet': 'Kits de crochet',
+    'Kit_herramientas': 'Kits de herramientas',
+    'Llaveros_metal': 'Llaveros de metal',
   };
 
 
@@ -132,21 +135,22 @@ export class TiendaPageComponent implements OnInit{
   }
 
 
-  filtrarPorSubcategoria(event: Event) {
-    const value = (event.target as HTMLSelectElement).value;
-    const idSub = value ? Number(value) : null;
-    
-    this.subcategoriaPage.set(idSub || 0);
-    
-    if (!idSub) {
-      this.productosABuscar.set(this.productosTienda());
-      return;
-    }
+ filtrarPorSubcategoria(event: Event) {
+  const value = (event.target as HTMLSelectElement).value;
+  const idSub = value ? Number(value) : 0; // Si no hay valor, 0 (todas las categorías)
 
+  this.idSubcategoria = idSub;       // actualizar la variable para que el binding funcione
+  this.subcategoriaPage.set(idSub);  // actualizar la señal (si la usas en otros sitios)
+
+  if (idSub === 0) {
+    this.productosABuscar.set(this.productosTienda());
+  } else {
     this.productosABuscar.set(
       this.productosTienda().filter(p => p.subcategoriaDTO.id === idSub)
     );
   }
+}
+
 
   cargarFavoritosByUser() {
     this.productoFavoritoService.findAllFavoritosByUser(this.idUser).subscribe(

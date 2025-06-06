@@ -32,7 +32,7 @@ noorstitches/
 
 ### 🔹 Frontend
 
-1. Abre la terminal en la carpeta `frontend/`.
+1. Abre la terminal en la carpeta `frontend/noorstitches-front`.
 2. Ejecuta el siguiente comando:
    ```bash
    npm install
@@ -45,8 +45,8 @@ noorstitches/
 
 ### 🔹 Backend
 
-1. Abre el proyecto en tu IDE (Eclipse, IntelliJ...).
-2. Asegúrate de tener creada la base de datos MySQL y actualiza `application.properties` si es necesario.
+1. Abre el proyecto en tu IDE (Eclipse, IntelliJ...) en la carpeta `backend/noorstitches-back`.
+2. Asegúrate de tener creada la base de datos MySQL ejecutando `backend/bbdd/bd_noorstitches.sql` y actualiza `application.properties` si es necesario.
 3. Ejecuta lo siguiente:
    ```bash
    mvn clean
@@ -89,7 +89,8 @@ noorstitches/
 
 ## 💡 Contacto
 
-Si quieres más información o tienes dudas, puedes contactar a la autora del proyecto a través de los datos que aparecen en el documento original del TFG.
+Si tienes cualquier duda o te interesa saber más sobre el proyecto, puedes contactarme a través de:
 
-📧 nalosag@gmail.com  
-🔗 [LinkedIn](https://www.linkedin.com/in/noor-aloune-sagouma-113b44369/)
+- 📧 **Correo**: [nalosag@gmail.com](mailto:nalosag@gmail.com)  
+- 🔗 **LinkedIn**: [Noor Aloune Sagouma](https://www.linkedin.com/in/noor-aloune-sagouma-113b44369/)
+

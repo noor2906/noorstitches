@@ -36,7 +36,8 @@ export class TiendaPageComponent implements OnInit{
   idUser = Number(localStorage.getItem('idUser'));
   listaIdProductosFavoritos = signal<number[]>([]); // id de los productos favoritos del usuario
   subcategoriaPage = signal<number>(0); // Subcategoría seleccionada
-  
+  textoBusqueda = signal<string>(''); // Texto de búsqueda
+
   idSubcategoria: number  = 0;
 
   subcategoriaNombresNuevosMap: { 
@@ -91,6 +92,8 @@ export class TiendaPageComponent implements OnInit{
 
   // Función para filtrar productos al buscar
   onSearch(query: string) {
+    this.textoBusqueda.set(query); 
+
     const filtered = this.productosTienda().filter(product =>
       product.nombre?.toLowerCase().includes(query.toLowerCase())
     );
@@ -212,6 +215,18 @@ export class TiendaPageComponent implements OnInit{
               console.error('Error eliminando favorito:', err);
           }
       });
+  }
+
+ get hayBusqueda(): boolean {
+    return this.textoBusqueda().trim().length > 0;
+  }
+
+  get hayFiltroCategoria(): boolean {
+    return this.idSubcategoria != 0;
+  }
+
+  get sinResultados(): boolean {
+    return this.productosABuscar().length === 0;
   }
 
 }

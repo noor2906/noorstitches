@@ -52,8 +52,16 @@
         </div>
 
         <div class="grid-productos m-0 w-100">
-            @if (productosABuscar().length === 0) {
-                <p class="text-muted mt-3 fs-5"> Ésta categoria no tiene productos aún :(</p>
+         @if (sinResultados) {
+            <p class="text-muted mt-3 fs-5">
+                @if (hayBusqueda) {
+                Búsqueda no encontrada: {{ textoBusqueda() }} :(
+                } @else if (hayFiltroCategoria) {
+                Esta categoría no tiene productos aún :(
+                } @else {
+                No hay productos disponibles :(
+                }
+            </p>
             } @else {
                   @for (producto of productosABuscar(); track producto.id) {
                     <a class="tarjeta-producto text-decoration-none" [routerLink]="['/productos', producto.id]" [state]="{ origen: 'tienda' }">

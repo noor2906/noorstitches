@@ -85,6 +85,8 @@ export class CarritoPageComponent implements OnInit {
       if (linea.cantidad < 5) {
         const nuevaCantidad = linea.cantidad + 1;
         this.updateCantidad(linea, nuevaCantidad);
+      } else {
+        this.alertService.error('Noorstitches', '¡Oops! Solo puedes añadir hasta 5 unidades de este producto en tu carrito :)');
       }
     }
   }
@@ -143,6 +145,19 @@ export class CarritoPageComponent implements OnInit {
     this.lineaPedidoService.eliminarLineaPedido(idLineaPedido).subscribe({
       next: () => {
         console.log('Línea eliminada correctamente');
+        // ✅ Traer pedido actualizado
+    if (this.ultimoPedido()?.id) {
+      this.pedidoService.findPedidosByUser(this.idUser()).subscribe({
+        next: (pedidos) => {
+          const pedidoActualizado = pedidos.find(
+            (p) => p.id === this.ultimoPedido()?.id
+          );
+          if (pedidoActualizado) {
+            this.ultimoPedido.set(pedidoActualizado);
+          }
+        },
+      });
+    }
       },
       error: (err) => {
         console.error('Error al eliminar:', err);

@@ -19,7 +19,7 @@ export class FormUtils {
   static motivoPattern = '^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]{3,}$';
 
   // Direccion: letras, números, espacios, comas, puntos, º y ª. Mínimo 5 caracteres.
-  static direccionPattern = "^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9ºª.,\\s]{5,}$";
+  static direccionPattern = "^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9ºª.,/\\s-]{5,}$";
 
   // Ciudad: solo letras y espacios, mínimo 2 letras
   static ciudadPattern = "^[A-Za-zÁÉÍÓÚáéíóúÑñ]{2,}(\\s[A-Za-zÁÉÍÓÚáéíóúÑñ]{2,})*$";

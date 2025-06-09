@@ -15,7 +15,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Se aplica a todos los endpoints
-                        .allowedOrigins("https://noorstitches-deploy.netlify.app/") //una vez se suba a Netlify por ejemplo, agregaremos: "https://tu-app.netlify.app"
+                        .allowedOrigins("https://noorstitches-deploy.netlify.app") //una vez se suba a Netlify por ejemplo, agregaremos: "https://tu-app.netlify.app"
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

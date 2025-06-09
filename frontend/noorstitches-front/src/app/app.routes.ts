@@ -4,6 +4,10 @@ import { noAuthGuard } from './guards/no-auth.guard';
 
 export const routes: Routes = [
     {
+        path: '**',
+        redirectTo: 'home',  
+    },
+    {
         path: '', 
         canActivate: [noAuthGuard],  // protege el login para no entrar si ya estás logueada
         loadComponent: () => import('./pages/login-page/login-page.component').then(m => m.LoginPageComponent)

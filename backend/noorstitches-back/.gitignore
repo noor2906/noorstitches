@@ -38,10 +38,6 @@ out/
 /nbdist/
 /.nb-gradle/
 
-# === Maven Wrapper ===
-!.mvn/wrapper/maven-wrapper.jar
-.mvn/
-
 # === Sistema Operativo ===
 .DS_Store
 Thumbs.db

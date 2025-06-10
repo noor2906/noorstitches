@@ -53,9 +53,9 @@ public class ProductoDTO implements Serializable {
     	
     	// Solo generar la URL si hay nombre de imagen
         if(p.getImagen() != null && !p.getImagen().isEmpty()){
-            productoDTO.setUrlImagen("https://motivated-appreciation-production-531d.up.railway.app/imgs/productos/"+ p.getSubcategoria().getCategoria().getNombre().toLowerCase() + "/" + p.getImagen());
+            productoDTO.setUrlImagen("https://noorstitches-production.up.railway.app/imgs/productos/"+ p.getSubcategoria().getCategoria().getNombre().toLowerCase() + "/" + p.getImagen());
         }else {
-            productoDTO.setUrlImagen("https://motivated-appreciation-production-531d.up.railway.app/imgs/productos/por_defecto.webp");
+            productoDTO.setUrlImagen("https://noorstitches-production.up.railway.app/imgs/productos/por_defecto.webp");
         }
     	
     	

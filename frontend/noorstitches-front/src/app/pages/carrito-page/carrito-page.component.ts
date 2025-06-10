@@ -161,12 +161,7 @@ export class CarritoPageComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al eliminar:', err);
-        // Opcional: Mostrar mensaje de error al usuario
-        alert('No se pudo eliminar el producto. Por favor intenta nuevamente.');
-
-        // 3. Si quieres, puedes recargar los datos como último recurso
-
-        //this.findPedidoByUser();
+        this.alertService.error("Ups, hubo un error", "No se pudo eliminar el producto. Por favor intenta nuevamente.");
       },
     });
   }

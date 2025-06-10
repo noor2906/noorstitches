@@ -5,7 +5,7 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
 # Copia todo el contenido del proyecto al contenedor
-COPY . .
+COPY . ./
 
 # Da permisos de ejecución al wrapper de Maven
 RUN chmod +x ./mvnw

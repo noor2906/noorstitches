@@ -36,9 +36,9 @@ public class SubcategoriaDTO {
 
      // Solo generar la URL si hay nombre de imagen
         if(s.getImagen() != null && !s.getImagen().isEmpty()){
-            sDTO.setUrlImagen("https://motivated-appreciation-production-531d.up.railway.app/imgs/subcategorias/"+ s.getImagen());
+            sDTO.setUrlImagen("https://noorstitches-production.up.railway.app/imgs/subcategorias/"+ s.getImagen());
         }else {
-            sDTO.setUrlImagen("https://motivated-appreciation-production-531d.up.railway.app/imgs/subcategorias/subcategoria_por_defecto.webp");
+            sDTO.setUrlImagen("https://noorstitches-production.up.railway.app/imgs/subcategorias/subcategoria_por_defecto.webp");
         }
 
 		// Retorna el DTO

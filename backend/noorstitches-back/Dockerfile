@@ -1,5 +1,5 @@
-# Usa la imagen oficial con JDK 21
-FROM eclipse-temurin:21-jdk
+# Usa la imagen oficial con JDK 17
+FROM eclipse-temurin:17-jdk
 
 # Carpeta de trabajo dentro del contenedor
 WORKDIR /app

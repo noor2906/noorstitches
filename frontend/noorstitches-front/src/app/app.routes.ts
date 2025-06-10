@@ -51,7 +51,24 @@ export const routes: Routes = [
     {
         path: 'settings',
         canActivate: [authGuardGuard],
-        loadComponent: () => import('./pages/settings-page/settings-page.component').then(m => m.SettingsPageComponent)
+        loadComponent: () => import('./pages/settings-page/settings-page.component').then(m => m.SettingsPageComponent),
+        children: [
+            {
+                path: '', 
+                pathMatch: 'full',
+                redirectTo: 'mi-perfil' 
+            },
+            {
+                path: 'mi-perfil',
+                canActivate: [authGuardGuard],
+                loadComponent: () => import('./pages/settings-page/mi-perfil/mi-perfil.component').then(m => m.MiPerfilComponent)
+            },
+            {
+                path: 'mis-pedidos',
+                canActivate: [authGuardGuard],
+                loadComponent: () => import('./pages/settings-page/mis-pedidos/mis-pedidos.component').then(m => m.MisPedidosComponent)
+            }
+        ]
     },
     {
         path: 'favoritos',

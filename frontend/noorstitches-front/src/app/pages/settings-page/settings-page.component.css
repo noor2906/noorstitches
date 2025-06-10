@@ -20,6 +20,10 @@
   background-color: transparent;
   color: var(--morado-oscuro) !important;
   border-color: var(--morado-intermedio-2);
+
+  mat-icon {
+    color: var(--morado-intermedio-1) !important;
+  }
 }
 
 /* Estilo para hover en botones inactivos */
